@@ -1,0 +1,47 @@
+var _user$project$Vec$touchesBound = F2(
+	function (b1, b2) {
+		return !((_elm_lang$core$Native_Utils.cmp(b1.x, b2.x + b2.w) > 0) || ((_elm_lang$core$Native_Utils.cmp(b1.y, b2.y + b2.h) > 0) || ((_elm_lang$core$Native_Utils.cmp(b1.x + b1.w, b2.x) < 0) || (_elm_lang$core$Native_Utils.cmp(b1.y + b1.h, b2.y) < 0))));
+	});
+var _user$project$Vec$isFar = F2(
+	function (_p1, _p0) {
+		var _p2 = _p1;
+		var _p3 = _p0;
+		return (_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(_p2._0 - _p3._0),
+			3) > 0) || (_elm_lang$core$Native_Utils.cmp(
+			_elm_lang$core$Basics$abs(_p2._1 - _p3._1),
+			3) > 0);
+	});
+var _user$project$Vec$toBound = F2(
+	function (v1, v2) {
+		var _p4 = v2;
+		var x2 = _p4._0;
+		var y2 = _p4._1;
+		var _p5 = v1;
+		var x1 = _p5._0;
+		var y1 = _p5._1;
+		var _p6 = {
+			ctor: '_Tuple2',
+			_0: A2(_elm_lang$core$Basics$min, x1, x2),
+			_1: A2(_elm_lang$core$Basics$min, y1, y2)
+		};
+		var x = _p6._0;
+		var y = _p6._1;
+		var _p7 = {
+			ctor: '_Tuple2',
+			_0: A2(_elm_lang$core$Basics$max, x1, x2) - x,
+			_1: A2(_elm_lang$core$Basics$max, y1, y2) - y
+		};
+		var w = _p7._0;
+		var h = _p7._1;
+		return {x: x, y: y, w: w, h: h};
+	});
+var _user$project$Vec$newBound = {x: 0, y: 0, w: 0, h: 0};
+var _user$project$Vec$Bound = F4(
+	function (a, b, c, d) {
+		return {x: a, y: b, w: c, h: d};
+	});
+var _user$project$Vec$Vec2 = F2(
+	function (a, b) {
+		return {ctor: 'Vec2', _0: a, _1: b};
+	});

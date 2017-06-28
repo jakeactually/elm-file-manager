@@ -1,0 +1,165 @@
+var _user$project$Main_Update$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'EnvMsg':
+				return A2(_user$project$Env$handleEnvMsg, _p0._0, model);
+			case 'Upload':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{showContextMenu: false}),
+					_1: _user$project$Port$upload(model.dir)
+				};
+			case 'Uploaded':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							files: {
+								ctor: '::',
+								_0: {name: _p0._0, isDir: false},
+								_1: model.files
+							}
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'OpenNameDialog':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							showNameDialog: true,
+							name: function () {
+								var _p1 = model.caller;
+								if (_p1.ctor === 'Just') {
+									return _p1._0.name;
+								} else {
+									return '';
+								}
+							}(),
+							showContextMenu: false
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'CloseNameDialog':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{showNameDialog: false}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Name':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{name: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'NewDir':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{showNameDialog: false}),
+					_1: A3(_user$project$Action$newDir, model.api, model.dir, model.name)
+				};
+			case 'Rename':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{showNameDialog: false}),
+					_1: function () {
+						var _p2 = model.caller;
+						if (_p2.ctor === 'Just') {
+							return A4(_user$project$Action$rename, model.api, model.dir, _p2._0.name, model.name);
+						} else {
+							return _elm_lang$core$Platform_Cmd$none;
+						}
+					}()
+				};
+			case 'Cut':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{clipboardDir: model.dir, clipboardFiles: model.selected, showContextMenu: false}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Paste':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							clipboardFiles: {ctor: '[]'},
+							showContextMenu: false
+						}),
+					_1: function () {
+						var _p3 = model.caller;
+						if (_p3.ctor === 'Just') {
+							var _p4 = _p3._0;
+							return _p4.isDir ? A4(
+								_user$project$Action$move,
+								model.api,
+								model.clipboardDir,
+								model.clipboardFiles,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									model.dir,
+									A2(_elm_lang$core$Basics_ops['++'], _p4.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
+						} else {
+							return _elm_lang$core$Platform_Cmd$none;
+						}
+					}()
+				};
+			case 'Delete':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{showContextMenu: false}),
+					_1: A3(_user$project$Action$delete, model.api, model.dir, model.selected)
+				};
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$Main_Update$init = function (_p5) {
+	var _p6 = _p5;
+	var _p8 = _p6.dir_;
+	var _p7 = _p6.api_;
+	return A2(
+		F2(
+			function (v0, v1) {
+				return {ctor: '_Tuple2', _0: v0, _1: v1};
+			}),
+		{
+			api: _p7,
+			dir: _p8,
+			pos1: A2(_user$project$Vec$Vec2, 0, 0),
+			pos2: A2(_user$project$Vec$Vec2, 0, 0),
+			mouseDown: false,
+			ctrl: false,
+			caller: _elm_lang$core$Maybe$Nothing,
+			showBound: false,
+			bound: _user$project$Vec$newBound,
+			showContextMenu: false,
+			files: {ctor: '[]'},
+			bounds: {ctor: '[]'},
+			selected: {ctor: '[]'},
+			selectedBin: {ctor: '[]'},
+			drag: false,
+			clipboardDir: '',
+			clipboardFiles: {ctor: '[]'},
+			showNameDialog: false,
+			name: ''
+		},
+		A2(_user$project$Action$getLs, _p7, _p8));
+};

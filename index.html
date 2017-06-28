@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link rel="stylesheet" href="frontend.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+</head>
+<body>
+
+    <div id="file-manager-container"></div>
+
+    <script>
+        const fm = document.querySelector('#file-manager-container');
+        const api_ = "http://localhost/api.php";
+        const dir_ = "/"
+        const app = Elm.Main.embed(fm, { api_, dir_ });
+
+        app.ports.askName.subscribe(question => {
+            const answer = prompt(question);
+            app.ports.rename.send(answer);
+        });
+
+        app.ports.getBounds.subscribe(() => {
+            const els = Array.from(document.querySelectorAll('.file'));
+            const bounds = els.map(el => {
+                const bound = el.getBoundingClientRect();
+                return {
+                    x: Math.floor(bound.left),
+                    y: Math.floor(bound.top),
+                    w: Math.floor(bound.width),
+                    h: Math.floor(bound.height)
+                };
+            });
+            app.ports.boundsGotten.send(bounds);
+        });
+
+        app.ports.upload.subscribe(dir => {
+            const input = document.querySelector('#file-input');
+            const files = Array.from(input.files);
+            files.forEach(file => {
+                const formData = new FormData();
+                formData.append("req", 'upload');
+                formData.append("dir", dir);
+                formData.append("file", file);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', api_);
+                xhr.send(formData);
+                xhr.onload = () => app.ports.uploaded.send(xhr.responseText);
+            });
+        });
+    </script>
+
+</body>
+</html>

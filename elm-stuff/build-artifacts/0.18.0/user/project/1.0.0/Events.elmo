@@ -1,0 +1,57 @@
+var _user$project$Events$op = F2(
+	function (b1, b2) {
+		return {stopPropagation: b1, preventDefault: b2};
+	});
+var _user$project$Events$onChange = function ($function) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		_elm_lang$core$Json_Decode$succeed($function));
+};
+var _user$project$Events$onContextMenu = function ($function) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'contextmenu',
+		A2(_user$project$Events$op, true, true),
+		_elm_lang$core$Json_Decode$succeed($function));
+};
+var _user$project$Events$onMouseUp = function ($function) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'mouseup',
+		A2(_user$project$Events$op, true, false),
+		_elm_lang$core$Json_Decode$succeed($function));
+};
+var _user$project$Events$onMouseMove = function ($function) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'mousemove',
+		A2(_user$project$Events$op, true, true),
+		A3(
+			_elm_lang$core$Json_Decode$map2,
+			F2(
+				function (x, y) {
+					return $function(
+						A2(_user$project$Vec$Vec2, x, y));
+				}),
+			A2(_elm_lang$core$Json_Decode$field, 'clientX', _elm_lang$core$Json_Decode$int),
+			A2(_elm_lang$core$Json_Decode$field, 'clientY', _elm_lang$core$Json_Decode$int)));
+};
+var _user$project$Events$onMouseDown = function ($function) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'mousedown',
+		A2(_user$project$Events$op, true, false),
+		A4(
+			_elm_lang$core$Json_Decode$map3,
+			F3(
+				function (a, b, c) {
+					return A2(
+						$function,
+						A2(_user$project$Vec$Vec2, a, b),
+						c);
+				}),
+			A2(_elm_lang$core$Json_Decode$field, 'clientX', _elm_lang$core$Json_Decode$int),
+			A2(_elm_lang$core$Json_Decode$field, 'clientY', _elm_lang$core$Json_Decode$int),
+			A2(_elm_lang$core$Json_Decode$field, 'ctrlKey', _elm_lang$core$Json_Decode$bool)));
+};

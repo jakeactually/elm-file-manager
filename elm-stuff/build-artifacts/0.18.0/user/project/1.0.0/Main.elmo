@@ -1,0 +1,30 @@
+var _user$project$Main$subscriptions = function (_p0) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _user$project$Port$boundsGotten(
+				function (_p1) {
+					return _user$project$Main_Model$EnvMsg(
+						_user$project$Main_Model$BoundsGotten(_p1));
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Port$uploaded(_user$project$Main_Model$Uploaded),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
+	{init: _user$project$Main_Update$init, view: _user$project$Main_View$view, update: _user$project$Main_Update$update, subscriptions: _user$project$Main$subscriptions})(
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (api_) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (dir_) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{api_: api_, dir_: dir_});
+				},
+				A2(_elm_lang$core$Json_Decode$field, 'dir_', _elm_lang$core$Json_Decode$string));
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'api_', _elm_lang$core$Json_Decode$string)));

@@ -1,0 +1,482 @@
+/* Main */
+
+/* Corrections */
+
+html { font-size: 14px; }
+body { margin: 0; font-family: "Roboto", sans-serif; }
+a, a:visited, a:focus { color: #2196F3; }
+a.no-dec { text-decoration: none; }
+.clear { clear: both; }
+iframe { border: none; }
+
+/* Utils */
+
+.full { position: absolute; height: 100%; width: 100%; left: 0; top: 0; }
+.bg { background-position: center; background-size: cover; }
+
+.rh { display: block; }
+.rs { display: none; }
+
+.s { width: 100%; height: 100px; }
+.s1 { width: 100%; height: 100px; }
+.s2 { display: none; width: 100%; height: 100px; }
+
+/* Grid */
+
+.f { display: flex; justify-content: center; align-items: center; }
+.fw { display: flex; flex-wrap: wrap; }
+.b1 { flex-basis: 100%; }
+.b2 { flex-basis: 50%; }
+.b3 { flex-basis: 33.33%; }
+.b2-3 { flex-basis: 66.66%; }
+.b4 { flex-basis: 25%; }
+.b3-4 { flex-basis: 75%; }
+
+.grid2 { display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr; grid-auto-rows: 100px; }
+.grid3 { display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr; grid-auto-rows: 100px; }
+.grid4 { display: grid; grid-gap: 10px; grid-template-columns: 1fr 1fr 1fr 1fr; grid-auto-rows: 100px; }
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .rh { display: none; }
+    .rs { display: block; }
+
+    .s1 { display: none; }
+    .s2 { display: block; }
+
+    .f { flex-direction: column; }
+
+    .b1, .b2, .b3, .b2-3, .b4, .b3-4 { flex-basis: 100%; }
+
+    .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+}
+
+/* Form */
+
+/* Input */
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+label .name {
+    font-weight: 700;
+}
+
+input:focus, textarea:focus, button:focus, select:focus {
+    outline: none;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 35px;
+    padding: 10px;
+    border: 1px solid #ECEFF1;
+    font-size: 1rem;
+}
+
+textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: none;
+    background-color: #ECEFF1;
+}
+
+input[type="text"]::-webkit-input-placeholder,
+input[type="email"]::-webkit-input-placeholder,
+input[type="password"]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #757575;
+}
+
+select {
+    display: block;
+}
+
+/* Button */
+
+button {
+    box-sizing: border-box;
+    min-width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    padding: 0 10px;
+    border: none;
+    background-color: #1565C0;
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition-duration: 400ms;
+}
+
+button:hover {
+    background-color: #2196F3;
+}
+
+button.right {
+    margin-right: 5px;
+}
+
+button.alert {
+    background-color: #F44336;
+}
+
+button.alert:hover {
+    background-color: #D32F2F;
+}
+
+button.success {
+    background-color: #8BC34A;
+}
+
+button.success:hover {
+    background-color: #689F38;
+}
+
+button.white {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+button.white:hover {
+    background-color: #ECEFF1;
+}
+
+button.min {
+  background-color: #FFFFFF;
+  color: #2196F3;
+}
+
+button.min.alert {
+  color: #F44336;
+}
+
+button.min.success {
+  color: #8BC34A;
+}
+
+button.min:hover {
+  background-color: #ECEFF1;
+}
+
+button.disabled {
+    background-color: #757575;
+}
+
+button.disabled:hover {
+    background-color: #757575;
+    color: #FFFFFF;
+    cursor: default;
+}
+
+button.disabled.white {
+    background-color: #FFFFFF;
+    color: #9E9E9E;
+}
+
+button.icon {
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    color: #1565C0;
+    background-color: transparent;
+}
+
+button.icon:hover {
+    color: #2196F3;
+    background-color: transparent;
+}
+
+button.icon.alert {
+    color: #F44336;
+}
+
+button.icon.alert:hover {
+    color: #D32F2F;
+}
+
+button.icon.success {
+    color: #8BC34A;
+}
+
+button.icon.success:hover {
+    color: #689F38;
+}
+
+button.link {
+    display: inline;
+    background-color: transparent;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    color: #2196F3;
+    line-height: 1;
+    text-decoration: underline;
+}
+
+button.div {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 0;
+}
+
+button.div i {
+    margin-right: 5px;
+}
+
+button.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-group {
+    display: flex;
+}
+
+.button-group button {
+    min-width: 0;
+    flex-grow: 1;
+    border-radius: 0;
+}
+
+.button-group button:not(:last-child) {
+    border-right: 1px solid #2196F3;
+}
+
+.button-group.borderless button {
+    border-right: none;
+}
+
+.button-group > button:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.button-group > button:last-child {
+    border-radius: 0 5px 5px 0;
+}
+
+.button-group a {
+    text-decoration: none;
+}
+
+.button-group a:first-child button {
+    border-radius: 5px 0 0 5px;
+}
+
+.button-group a:last-child button {
+    border-radius: 0 5px 5px 0;
+}
+
+.button-group form {
+    display: flex;
+}
+
+.button-group form:last-child button {
+    border-radius: 0 5px 5px 0;
+}
+
+.button-group input[type="text"] {
+    width: 40px;
+    height: 30px;
+    text-align: right;
+}
+
+/* Modal */
+
+.screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.screen .modal {
+  padding: 20px;
+  background-color: #FFFFFF;
+}
+
+/* Wordpress */
+
+/* Header */
+
+#header {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    height: 77px;
+    padding: 0 15px;
+    border-bottom: 3px solid #ECEFF1;
+    background-color: #FFFFFF;
+}
+
+#header .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: 1140px;
+}
+
+.menu-item a {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+/* Content */
+
+main {
+    margin-top: 75px;
+    padding-top: 20px;
+}
+
+/* Footer */
+
+#footer {
+    display: flex;
+    justify-content: center;
+    background-color: #ECEFF1;
+    padding: 15px;
+}
+
+#footer .wrap {
+    flex-basis: 1140px;
+}
+
+/* Desktop */
+
+@media (min-width: 768px) {
+    .menu {
+        display: flex;
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu > .menu-item {
+        display: block;
+    }
+
+    .menu > .menu-item > a {
+        display: flex;
+        align-items: center;
+        height: 75px;
+        padding: 0 10px;
+    }
+
+    .menu > .menu-item:hover {
+        background-color: #ECEFF1;
+    }
+
+    .sub-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        box-sizing: border-box;
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        visibility: hidden;
+        background-color: #ECEFF1;
+    }
+
+    .menu-item:hover .sub-menu {
+        visibility: visible;
+    }
+
+    .sub-menu .menu-item {
+        display: block;
+        padding: 10px 0;
+        width: 300px;
+        text-align: right;
+    }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .menu {
+        padding: 0;
+        margin: 0;
+    }
+
+    .menu-item {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .sub-menu {
+        box-sizing: border-box;
+        padding-left: 10px;
+        border-left: 2px solid #1565C0;
+    }
+
+    #open, #close {
+        color: #2196F3;
+    }
+
+    #side {
+        box-sizing: border-box;
+        position: fixed;
+        left: -100%;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 20px;
+        border-right: 3px solid #ECEFF1;
+        background-color: #FFFFFF;
+        z-index: 2;
+    }
+
+    #close {
+        position: absolute;
+        right: 15px;
+        top: 25px;
+    }
+}
+
+/* Contact form 7 */
+
+span.wpcf7-not-valid-tip {
+    color: #F44336;
+}
+
+div.wpcf7-response-output {
+    padding: 10px 20px;
+    margin: 0;
+    margin-top: 20px;
+    color: #FFFFFF;
+}
+
+div.wpcf7-validation-errors {
+    border: none;
+    background-color: #FFEB3B;
+    color: #000000;
+}
+
+div.wpcf7-mail-sent-ng {
+    border: none;
+    background-color: #F44336;
+}

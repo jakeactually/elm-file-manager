@@ -1,0 +1,786 @@
+var _user$project$Main_View$nameDialog = F2(
+	function (name, $new) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('screen'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('modal'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$label,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('name'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Nombre'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$input,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$type_('text'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$value(name),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onInput(_user$project$Main_Model$Name),
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('min alert right'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$CloseNameDialog),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Cancelar'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('min'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(
+														$new ? _user$project$Main_Model$NewDir : _user$project$Main_Model$Rename),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Aceptar'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Main_View$toPx = function (n) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(n),
+		'px');
+};
+var _user$project$Main_View$renderCount = function (model) {
+	return model.drag ? A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('count'),
+			_1: {
+				ctor: '::',
+				_0: function () {
+					var _p0 = model.pos2;
+					var x = _p0._0;
+					var y = _p0._1;
+					return _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'left',
+								_1: _user$project$Main_View$toPx(x + 5)
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'top',
+									_1: _user$project$Main_View$toPx(y - 25)
+								},
+								_1: {ctor: '[]'}
+							}
+						});
+				}(),
+				_1: {ctor: '[]'}
+			}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(
+				_elm_lang$core$Basics$toString(
+					_elm_lang$core$List$length(model.selected))),
+			_1: {ctor: '[]'}
+		}) : A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{ctor: '[]'});
+};
+var _user$project$Main_View$contextMenu = F4(
+	function (_p1, maybe, paste, many) {
+		var _p2 = _p1;
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$id('context-menu'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'left',
+								_1: _user$project$Main_View$toPx(_p2._0)
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'top',
+									_1: _user$project$Main_View$toPx(_p2._1)
+								},
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			function () {
+				var _p3 = maybe;
+				if (_p3.ctor === 'Just') {
+					return {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$button,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class(
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'div white',
+										many ? ' disabled' : '')),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$OpenNameDialog),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: _user$project$Util$icon2('mode_edit'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Cambiar nombre'),
+									_1: {ctor: '[]'}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('div white'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Cut),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _user$project$Util$icon2('content_cut'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Cortar'),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class(
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												'div white',
+												(paste && _p3._0.isDir) ? ' disabled' : '')),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Paste),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _user$project$Util$icon2('content_paste'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Pegar'),
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$button,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('div white'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Delete),
+												_1: {ctor: '[]'}
+											}
+										},
+										{
+											ctor: '::',
+											_0: _user$project$Util$icon2('delete'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Eliminar'),
+												_1: {ctor: '[]'}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					};
+				} else {
+					return {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$label,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('button white'),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Events$onChange(_user$project$Main_Model$Upload),
+									_1: {ctor: '[]'}
+								}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$input,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('file-input'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$type_('file'),
+											_1: {
+												ctor: '::',
+												_0: A2(_elm_lang$html$Html_Attributes$attribute, 'multiple', ''),
+												_1: {ctor: '[]'}
+											}
+										}
+									},
+									{ctor: '[]'}),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Util$icon2('file_upload'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Subir'),
+										_1: {ctor: '[]'}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('div white'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$OpenNameDialog),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _user$project$Util$icon2('create_new_folder'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Nueva carpeta'),
+										_1: {ctor: '[]'}
+									}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class(
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												'div white',
+												paste ? ' disabled' : '')),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Paste),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _user$project$Util$icon2('content_paste'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html$text('Pegar'),
+											_1: {ctor: '[]'}
+										}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					};
+				}
+			}());
+	});
+var _user$project$Main_View$renderHelper = function (model) {
+	return model.showBound ? A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('helper'),
+			_1: {
+				ctor: '::',
+				_0: function () {
+					var b = model.bound;
+					return _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'left',
+								_1: _user$project$Main_View$toPx(b.x)
+							},
+							_1: {
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'top',
+									_1: _user$project$Main_View$toPx(b.y)
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'width',
+										_1: _user$project$Main_View$toPx(b.w)
+									},
+									_1: {
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'height',
+											_1: _user$project$Main_View$toPx(b.h)
+										},
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						});
+				}(),
+				_1: {ctor: '[]'}
+			}
+		},
+		{ctor: '[]'}) : A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{ctor: '[]'});
+};
+var _user$project$Main_View$getExt = function (name) {
+	return A2(
+		_elm_lang$core$Maybe$withDefault,
+		'',
+		_elm_lang$core$List$head(
+			_elm_lang$core$List$reverse(
+				A2(_elm_lang$core$String$split, '.', name))));
+};
+var _user$project$Main_View$renderFileThumb = F3(
+	function (api, dir, file) {
+		return A2(
+			_elm_lang$core$List$member,
+			_user$project$Main_View$getExt(file),
+			{
+				ctor: '::',
+				_0: 'jpg',
+				_1: {
+					ctor: '::',
+					_0: 'jpeg',
+					_1: {
+						ctor: '::',
+						_0: 'png',
+						_1: {
+							ctor: '::',
+							_0: 'PNG',
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}) ? A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('full bg'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'backgroundImage',
+								_1: A2(
+									_elm_lang$core$Basics_ops['++'],
+									'url(\"',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										api,
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'?req=thumb&dir=',
+											A2(
+												_elm_lang$core$Basics_ops['++'],
+												dir,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													'&image=',
+													A2(
+														_elm_lang$core$Basics_ops['++'],
+														_elm_lang$http$Http$encodeUri(file),
+														'\")'))))))
+							},
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			{ctor: '[]'}) : A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('icon-thumb icon-file'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A3(_user$project$Util$icon, 'insert_drive_file', '', _user$project$Main_Model$None),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Main_View$renderThumb = F3(
+	function (api, dir, _p4) {
+		var _p5 = _p4;
+		return _p5.isDir ? A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('icon-thumb icon-folder'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A3(_user$project$Util$icon, 'folder', '', _user$project$Main_Model$None),
+				_1: {ctor: '[]'}
+			}) : A3(_user$project$Main_View$renderFileThumb, api, dir, _p5.name);
+	});
+var _user$project$Main_View$renderFile = F3(
+	function (_p6, i, file) {
+		var _p7 = _p6;
+		var _p8 = _p7.dir;
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'file',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							A2(_elm_lang$core$List$member, file, _p7.selected) ? ' selected' : '',
+							(_elm_lang$core$Native_Utils.eq(_p8, _p7.clipboardDir) && A2(_elm_lang$core$List$member, file, _p7.clipboardFiles)) ? ' cut' : ''))),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$title(file.name),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Events$onMouseDown(
+							F2(
+								function (x, y) {
+									return _user$project$Main_Model$EnvMsg(
+										A3(
+											_user$project$Main_Model$MouseDown,
+											_elm_lang$core$Maybe$Just(file),
+											x,
+											y));
+								})),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Events$onMouseUp(
+								_user$project$Main_Model$EnvMsg(
+									_user$project$Main_Model$MouseUp(
+										_elm_lang$core$Maybe$Just(file)))),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Events$onContextMenu(
+									_user$project$Main_Model$EnvMsg(
+										_user$project$Main_Model$ContextMenu(
+											_elm_lang$core$Maybe$Just(file)))),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Events$onDoubleClick(
+										file.isDir ? _user$project$Main_Model$EnvMsg(
+											_user$project$Main_Model$GetLs(
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													_p8,
+													A2(_elm_lang$core$Basics_ops['++'], file.name, '/')))) : _user$project$Main_Model$None),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('thumb'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A3(_user$project$Main_View$renderThumb, _p7.api, _p8, file),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('name'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(file.name),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$Main_View$back = function (route) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		'/',
+		A2(
+			_elm_lang$core$String$join,
+			'/',
+			A2(
+				_elm_lang$core$Maybe$withDefault,
+				{ctor: '[]'},
+				A2(
+					_elm_lang$core$Maybe$andThen,
+					_elm_lang$core$List$tail,
+					_elm_lang$core$List$tail(
+						_elm_lang$core$List$reverse(
+							A2(_elm_lang$core$String$split, '/', route)))))));
+};
+var _user$project$Main_View$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id('file-manager'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class(
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'full',
+								model.drag ? ' drag' : '')),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Events$onMouseDown(
+								F2(
+									function (x, y) {
+										return _user$project$Main_Model$EnvMsg(
+											A3(_user$project$Main_Model$MouseDown, _elm_lang$core$Maybe$Nothing, x, y));
+									})),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Events$onMouseMove(
+									function (_p9) {
+										return _user$project$Main_Model$EnvMsg(
+											_user$project$Main_Model$MouseMove(_p9));
+									}),
+								_1: {
+									ctor: '::',
+									_0: _user$project$Events$onMouseUp(
+										_user$project$Main_Model$EnvMsg(
+											_user$project$Main_Model$MouseUp(_elm_lang$core$Maybe$Nothing))),
+									_1: {
+										ctor: '::',
+										_0: _user$project$Events$onContextMenu(
+											_user$project$Main_Model$EnvMsg(
+												_user$project$Main_Model$ContextMenu(_elm_lang$core$Maybe$Nothing))),
+										_1: {ctor: '[]'}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('route'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A3(
+								_user$project$Util$icon,
+								'arrow_back',
+								'Regresar',
+								_user$project$Main_Model$EnvMsg(
+									_user$project$Main_Model$GetLs(
+										_user$project$Main_View$back(model.dir)))),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(model.dir),
+								_1: {ctor: '[]'}
+							}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('files'),
+								_1: {ctor: '[]'}
+							},
+							A2(
+								_elm_lang$core$List$indexedMap,
+								_user$project$Main_View$renderFile(model),
+								model.files)),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main_View$renderHelper(model),
+							_1: {
+								ctor: '::',
+								_0: _user$project$Main_View$renderCount(model),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{ctor: '[]'},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html$text(
+												_elm_lang$core$Basics$toString(model)),
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: model.showContextMenu ? A4(
+					_user$project$Main_View$contextMenu,
+					model.pos1,
+					model.caller,
+					_elm_lang$core$List$isEmpty(model.clipboardFiles),
+					_elm_lang$core$Native_Utils.cmp(
+						_elm_lang$core$List$length(model.selected),
+						1) > 0) : A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{ctor: '[]'}),
+				_1: {
+					ctor: '::',
+					_0: model.showNameDialog ? A2(
+						_user$project$Main_View$nameDialog,
+						model.name,
+						!_user$project$Util$isJust(model.caller)) : A2(
+						_elm_lang$html$Html$div,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
