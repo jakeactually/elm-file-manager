@@ -9,8 +9,16 @@ var _user$project$Main$subscriptions = function (_p0) {
 				}),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Port$uploaded(_user$project$Main_Model$Uploaded),
-				_1: {ctor: '[]'}
+				_0: _user$project$Port$filesAmount(_user$project$Main_Model$FilesAmount),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Port$progress(_user$project$Main_Model$Progress),
+					_1: {
+						ctor: '::',
+						_0: _user$project$Port$uploaded(_user$project$Main_Model$Uploaded),
+						_1: {ctor: '[]'}
+					}
+				}
 			}
 		});
 };

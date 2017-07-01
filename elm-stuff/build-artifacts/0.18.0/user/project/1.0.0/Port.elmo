@@ -1,9 +1,3 @@
-var _user$project$Port$askName = _elm_lang$core$Native_Platform.outgoingPort(
-	'askName',
-	function (v) {
-		return v;
-	});
-var _user$project$Port$rename = _elm_lang$core$Native_Platform.incomingPort('rename', _elm_lang$core$Json_Decode$string);
 var _user$project$Port$getBounds = _elm_lang$core$Native_Platform.outgoingPort(
 	'getBounds',
 	function (v) {
@@ -39,4 +33,22 @@ var _user$project$Port$upload = _elm_lang$core$Native_Platform.outgoingPort(
 	function (v) {
 		return v;
 	});
-var _user$project$Port$uploaded = _elm_lang$core$Native_Platform.incomingPort('uploaded', _elm_lang$core$Json_Decode$string);
+var _user$project$Port$filesAmount = _elm_lang$core$Native_Platform.incomingPort('filesAmount', _elm_lang$core$Json_Decode$int);
+var _user$project$Port$progress = _elm_lang$core$Native_Platform.incomingPort('progress', _elm_lang$core$Json_Decode$int);
+var _user$project$Port$cancel = _elm_lang$core$Native_Platform.outgoingPort(
+	'cancel',
+	function (v) {
+		return null;
+	});
+var _user$project$Port$uploaded = _elm_lang$core$Native_Platform.incomingPort(
+	'uploaded',
+	_elm_lang$core$Json_Decode$null(
+		{ctor: '_Tuple0'}));
+var _user$project$Port$download = _elm_lang$core$Native_Platform.outgoingPort(
+	'download',
+	function (v) {
+		return _elm_lang$core$Native_List.toArray(v).map(
+			function (v) {
+				return v;
+			});
+	});

@@ -15,5 +15,7 @@ main = Html.programWithFlags
 subscriptions : Model -> Sub Msg
 subscriptions _ = Sub.batch
   [ boundsGotten (EnvMsg << BoundsGotten)
+  , filesAmount FilesAmount
+  , progress Progress
   , uploaded Uploaded
   ]

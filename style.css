@@ -1,35 +1,47 @@
-#file-manager {
-  box-sizing: border-box;
-  padding: 20px;
-}
-
-#files {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 #route {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #ECEFF1;
 }
 
 #route button {
+  display: flex;
+  align-items: center;
   margin-right: 10px;
 }
 
+#route .text {
+  flex-grow: 1;
+  padding: 5px;
+  /*background-color: #FFFFFF;*/
+}
+
+#files {
+  box-sizing: border-box;
+  height: calc(100vh - 46px);
+  padding: 20px;
+  overflow: auto;
+}
+
+#files > div {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .file {
+  padding: 10px;
   margin: 0 10px 10px 0;
-  outline: 1px solid #ECEFF1;
   cursor: default;
 }
 
 .file:hover {
-  outline: 2px solid #ECEFF1;
+  background-color: #E3F2FD;
 }
 
 .file.selected {
-  outline: 2px solid #2196F3;
+  background-color: #BBDEFB;
 }
 
 .drag .file.selected, .file.cut {
@@ -40,6 +52,18 @@
   position: relative;
   width: 120px;
   height: 120px;
+}
+
+.file .thumb.uploading {
+  display: flex;
+  align-items: center;
+  background-color: #ECEFF1;
+}
+
+.file .bar {
+  height: 9px;
+  margin-bottom: 3px;
+  background-color: #2196F3;
 }
 
 .file .icon-thumb {
@@ -58,17 +82,18 @@
   font-size: 3em;
 }
 
-.file .icon-folder i {
-  color: #FFC107;
+.file .icon-folder {
+  background-color: #FFC107;
 }
 
-.file .icon-file i {
-  color: #80DEEA;
+.file .icon-file {
+  background-color: #2196F3;
 }
 
 .file .name {
   width: 100px;
-  padding: 10px;
+  height: 36px;
+  margin-top: 10px;
   font-size: 0.8em;
 }
 
@@ -78,6 +103,7 @@
   background-color: rgba(33, 150, 243, 0.5);
   width: 100px;
   height: 100px;
+  pointer-events: none;
 }
 
 #count {
@@ -106,6 +132,10 @@
 
 #context-menu .disabled i {
   color: #757575;
+}
+
+#context-menu .cancel i {
+  color: #F44336;
 }
 
 label.button {

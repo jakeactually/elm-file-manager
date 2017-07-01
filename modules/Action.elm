@@ -4,12 +4,13 @@ import Json.Decode as Decode
 import Http exposing (encodeUri)
 import List exposing (head, map)
 import Main.Model exposing (..)
-import Maybe exposing (andThen, withDefault)
 import String exposing (join)
-import Util exposing ((!!))
 
 getLs : String -> String -> Cmd Msg
-getLs api dir = Http.send (EnvMsg << LsGotten) <| Http.get (api ++ "?req=ls&dir=" ++ dir) <| Decode.list fileDecoder
+getLs api dir
+   = Http.send (EnvMsg << LsGotten)
+  <| Http.get (api ++ "?req=ls&dir=" ++ dir)
+  <| Decode.list fileDecoder
 
 fileDecoder : Decode.Decoder File
 fileDecoder = Decode.map2 (\x y -> { name = x, isDir = y })
@@ -21,9 +22,6 @@ move api srcDir files dstDir
    = Http.send (EnvMsg << Refresh)
   <| Http.get (api ++ "?req=move&srcDir=" ++ encodeUri srcDir ++ "&files=" ++ encodeFiles files ++ "&dstDir=" ++ encodeUri dstDir)
   <| Decode.succeed ()
-
-getOne : String -> List Int -> List File -> String
-getOne dir idxs files = withDefault dir <| Maybe.map (\x -> dir ++ x.name ++ "/") <| andThen ((!!) files) <| head idxs
 
 encodeFiles : List File -> String
 encodeFiles files = join "," <| map (encodeUri << .name) files

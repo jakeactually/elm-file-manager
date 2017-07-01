@@ -82,15 +82,9 @@
     echo "null";
   }
 
-  function download($file) {
-    $file = $_GET['file'];
-    $file = $static . $route;
-    header("Location: $file");
-  }
-
-  function rename_($root, $file, $oldName, $newName) {
-    $oldName = $root . $file . $oldName;
-    $newName = getNextAvailable($root . $file . $newName);
+  function rename_($root, $dir, $oldName, $newName) {
+    $oldName = $root . $dir . $oldName;
+    $newName = getNextAvailable($root . $dir . $newName);
     rename($oldName, $newName);
     echo "null";
   }

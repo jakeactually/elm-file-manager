@@ -21,7 +21,11 @@ var _user$project$Main_Model$Model = function (a) {
 																return function (q) {
 																	return function (r) {
 																		return function (s) {
-																			return {api: a, dir: b, pos1: c, pos2: d, mouseDown: e, ctrl: f, caller: g, showBound: h, bound: i, showContextMenu: j, files: k, bounds: l, selected: m, selectedBin: n, drag: o, clipboardDir: p, clipboardFiles: q, showNameDialog: r, name: s};
+																			return function (t) {
+																				return function (u) {
+																					return {api: a, dir: b, pos1: c, pos2: d, mouseDown: e, ctrl: f, caller: g, files: h, showBound: i, bound: j, bounds: k, selected: l, drag: m, showContextMenu: n, selectedBin: o, filesAmount: p, progress: q, showNameDialog: r, name: s, clipboardDir: t, clipboardFiles: u};
+																				};
+																			};
 																		};
 																	};
 																};
@@ -50,6 +54,7 @@ var _user$project$Main_Model$Delete = {ctor: 'Delete'};
 var _user$project$Main_Model$Paste = {ctor: 'Paste'};
 var _user$project$Main_Model$Cut = {ctor: 'Cut'};
 var _user$project$Main_Model$Rename = {ctor: 'Rename'};
+var _user$project$Main_Model$Download = {ctor: 'Download'};
 var _user$project$Main_Model$NewDir = {ctor: 'NewDir'};
 var _user$project$Main_Model$Name = function (a) {
 	return {ctor: 'Name', _0: a};
@@ -58,6 +63,13 @@ var _user$project$Main_Model$CloseNameDialog = {ctor: 'CloseNameDialog'};
 var _user$project$Main_Model$OpenNameDialog = {ctor: 'OpenNameDialog'};
 var _user$project$Main_Model$Uploaded = function (a) {
 	return {ctor: 'Uploaded', _0: a};
+};
+var _user$project$Main_Model$Cancel = {ctor: 'Cancel'};
+var _user$project$Main_Model$Progress = function (a) {
+	return {ctor: 'Progress', _0: a};
+};
+var _user$project$Main_Model$FilesAmount = function (a) {
+	return {ctor: 'FilesAmount', _0: a};
 };
 var _user$project$Main_Model$Upload = {ctor: 'Upload'};
 var _user$project$Main_Model$EnvMsg = function (a) {

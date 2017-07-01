@@ -14,18 +14,13 @@
 </head>
 <body>
 
-    <div id="file-manager-container"></div>
+    <div id="fm"></div>
 
     <script>
-        const fm = document.querySelector('#file-manager-container');
+        const fm = document.querySelector('#fm');
         const api_ = "http://localhost/api.php";
         const dir_ = "/"
         const app = Elm.Main.embed(fm, { api_, dir_ });
-
-        app.ports.askName.subscribe(question => {
-            const answer = prompt(question);
-            app.ports.rename.send(answer);
-        });
 
         app.ports.getBounds.subscribe(() => {
             const els = Array.from(document.querySelectorAll('.file'));
@@ -44,17 +39,40 @@
         app.ports.upload.subscribe(dir => {
             const input = document.querySelector('#file-input');
             const files = Array.from(input.files);
-            files.forEach(file => {
+            app.ports.filesAmount.send(files.length);
+            upload(dir, files);
+        });
+
+        function upload(dir, files) {
+            if (files.length > 0) {
+                const file = files.shift();
+
                 const formData = new FormData();
-                formData.append("req", 'upload');
-                formData.append("dir", dir);
-                formData.append("file", file);
+                formData.append('req', 'upload');
+                formData.append('dir', dir);
+                formData.append('file', file);
 
                 const xhr = new XMLHttpRequest();
+                xhr.upload.onprogress = ev => {
+                    if (ev.lengthComputable) {
+                        app.ports.progress.send(Math.floor(ev.loaded * 100 / ev.total));
+                    }
+                };
+                xhr.upload.onload = ev => {
+                    app.ports.uploaded.send(null);
+                    upload(dir, files);
+                };
                 xhr.open('POST', api_);
                 xhr.send(formData);
-                xhr.onload = () => app.ports.uploaded.send(xhr.responseText);
-            });
+            }
+        }
+
+        app.ports.cancel.subscribe(() => {
+            location.reload();
+        });
+
+        app.ports.download.subscribe(files => {
+            files.forEach(file => window.open(`/static${file}`));
         });
     </script>
 

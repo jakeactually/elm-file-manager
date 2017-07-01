@@ -17,18 +17,20 @@ init { api_, dir_ } = (,)
   , mouseDown = False
   , ctrl = False
   , caller = Nothing
+  , files = []
   , showBound = False
   , bound = newBound
-  , showContextMenu = False
-  , files = []
   , bounds = []
   , selected = []
-  , selectedBin = []
   , drag = False
-  , clipboardDir = ""
-  , clipboardFiles = []
+  , showContextMenu = False
+  , selectedBin = []
+  , filesAmount = 0
+  , progress = 0
   , showNameDialog = False
   , name = ""
+  , clipboardDir = ""
+  , clipboardFiles = []
   }
   <| getLs api_ dir_
 
@@ -36,7 +38,10 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = case msg of
   EnvMsg msg -> handleEnvMsg msg model
   Upload -> ({ model | showContextMenu = False }, upload model.dir)
-  Uploaded name -> ({ model | files = { name = name, isDir = False } :: model.files }, Cmd.none)
+  FilesAmount amount -> ({ model | filesAmount = amount }, Cmd.none)
+  Progress progress -> ({ model | progress = progress }, Cmd.none)
+  Cancel -> (model, cancel ())
+  Uploaded () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.api model.dir)
   OpenNameDialog ->
     ( { model
       | showNameDialog = True
@@ -50,6 +55,7 @@ update msg model = case msg of
   CloseNameDialog -> ({ model | showNameDialog = False }, Cmd.none)
   Name name -> ({ model | name = name }, Cmd.none)
   NewDir -> ({ model | showNameDialog = False }, newDir model.api model.dir model.name)
+  Download -> ({ model | showContextMenu = False }, download <| map ((++) model.dir << .name) <| filter (not << .isDir) model.selected)
   Rename ->
     ( { model
       | showNameDialog = False

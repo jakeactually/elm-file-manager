@@ -16,18 +16,20 @@ type alias Model =
   , mouseDown : Bool
   , ctrl : Bool
   , caller : Maybe File
+  , files : List File
   , showBound : Bool
   , bound : Bound
-  , showContextMenu : Bool
-  , files : List File
   , bounds : List Bound
   , selected : List File
-  , selectedBin : List File
   , drag : Bool
-  , clipboardDir : String
-  , clipboardFiles : List File
+  , showContextMenu : Bool
+  , selectedBin : List File
+  , filesAmount : Int
+  , progress : Int
   , showNameDialog : Bool
   , name : String
+  , clipboardDir : String
+  , clipboardFiles : List File
   }
 
 type alias File =
@@ -38,11 +40,15 @@ type alias File =
 type Msg
   = EnvMsg EnvMsg
   | Upload
-  | Uploaded String
+  | FilesAmount Int
+  | Progress Int
+  | Cancel
+  | Uploaded ()
   | OpenNameDialog
   | CloseNameDialog
   | Name String
   | NewDir
+  | Download
   | Rename
   | Cut
   | Paste

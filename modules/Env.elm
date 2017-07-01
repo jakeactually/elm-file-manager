@@ -62,7 +62,7 @@ handleEnvMsg msg model = case msg of
       }
       , Cmd.none
     )
-  GetLs dir -> ({ model | dir = dir }, getLs model.api dir)
+  GetLs dir -> ({ model | dir = dir, files = [] }, getLs model.api dir)
   LsGotten result -> case result of
     Ok files -> ({ model | files = files, selected = [] }, Cmd.none)
     Err _ -> (model, Cmd.none)

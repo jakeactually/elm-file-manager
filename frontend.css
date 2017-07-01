@@ -141,32 +141,6 @@ button.success:hover {
     background-color: #689F38;
 }
 
-button.white {
-    background-color: #FFFFFF;
-    color: #000000;
-}
-
-button.white:hover {
-    background-color: #ECEFF1;
-}
-
-button.min {
-  background-color: #FFFFFF;
-  color: #2196F3;
-}
-
-button.min.alert {
-  color: #F44336;
-}
-
-button.min.success {
-  color: #8BC34A;
-}
-
-button.min:hover {
-  background-color: #ECEFF1;
-}
-
 button.disabled {
     background-color: #757575;
 }
@@ -175,11 +149,6 @@ button.disabled:hover {
     background-color: #757575;
     color: #FFFFFF;
     cursor: default;
-}
-
-button.disabled.white {
-    background-color: #FFFFFF;
-    color: #9E9E9E;
 }
 
 button.icon {
@@ -236,8 +205,22 @@ button.div i {
     margin-right: 5px;
 }
 
+button.white {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+button.white:hover {
+    background-color: #ECEFF1;
+}
+
+button.disabled.white {
+    background-color: #FFFFFF;
+    color: #9E9E9E;
+}
+
 button.center {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
 }
@@ -309,7 +292,7 @@ button.center {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.screen .modal {
+.modal {
   padding: 20px;
   background-color: #FFFFFF;
 }

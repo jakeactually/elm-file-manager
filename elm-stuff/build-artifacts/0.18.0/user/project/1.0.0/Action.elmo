@@ -96,27 +96,6 @@ var _user$project$Action$delete = F3(
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$Action$getOne = F3(
-	function (dir, idxs, files) {
-		return A2(
-			_elm_lang$core$Maybe$withDefault,
-			dir,
-			A2(
-				_elm_lang$core$Maybe$map,
-				function (x) {
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						dir,
-						A2(_elm_lang$core$Basics_ops['++'], x.name, '/'));
-				},
-				A2(
-					_elm_lang$core$Maybe$andThen,
-					F2(
-						function (x, y) {
-							return A2(_user$project$Util_ops['!!'], x, y);
-						})(files),
-					_elm_lang$core$List$head(idxs))));
-	});
 var _user$project$Action$move = F4(
 	function (api, srcDir, files, dstDir) {
 		return A2(
