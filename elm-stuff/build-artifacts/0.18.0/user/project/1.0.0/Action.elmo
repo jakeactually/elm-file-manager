@@ -1,19 +1,85 @@
+var _user$project$Action$encodeFiles = function (files) {
+	return A2(
+		_elm_lang$core$String$join,
+		',',
+		A2(
+			_elm_lang$core$List$map,
+			function (_p0) {
+				return _elm_lang$http$Http$encodeUri(
+					function (_) {
+						return _.name;
+					}(_p0));
+			},
+			files));
+};
+var _user$project$Action$url = function (string) {
+	return A2(_elm_lang$http$Http$stringBody, 'application/x-www-form-urlencoded', string);
+};
+var _user$project$Action$delete = F3(
+	function (api, dir, files) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p1) {
+				return _user$project$Main_Model$EnvMsg(
+					_user$project$Main_Model$Refresh(_p1));
+			},
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'req=delete&dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&files=',
+								_user$project$Action$encodeFiles(files))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
+var _user$project$Action$newDir = F3(
+	function (api, dir, newDir) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p2) {
+				return _user$project$Main_Model$EnvMsg(
+					_user$project$Main_Model$Refresh(_p2));
+			},
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'req=newDir&dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&newDir=',
+								_elm_lang$http$Http$encodeUri(newDir))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
 var _user$project$Action$rename = F4(
 	function (api, dir, oldName, newName) {
 		return A2(
 			_elm_lang$http$Http$send,
-			function (_p0) {
+			function (_p3) {
 				return _user$project$Main_Model$EnvMsg(
-					_user$project$Main_Model$Refresh(_p0));
+					_user$project$Main_Model$Refresh(_p3));
 			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'?req=rename&dir=',
+						'req=rename&dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -30,72 +96,6 @@ var _user$project$Action$rename = F4(
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$Action$newDir = F3(
-	function (api, dir, newDir) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p1) {
-				return _user$project$Main_Model$EnvMsg(
-					_user$project$Main_Model$Refresh(_p1));
-			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'?req=newDir&dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&newDir=',
-								_elm_lang$http$Http$encodeUri(newDir))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
-var _user$project$Action$encodeFiles = function (files) {
-	return A2(
-		_elm_lang$core$String$join,
-		',',
-		A2(
-			_elm_lang$core$List$map,
-			function (_p2) {
-				return _elm_lang$http$Http$encodeUri(
-					function (_) {
-						return _.name;
-					}(_p2));
-			},
-			files));
-};
-var _user$project$Action$delete = F3(
-	function (api, dir, files) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p3) {
-				return _user$project$Main_Model$EnvMsg(
-					_user$project$Main_Model$Refresh(_p3));
-			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'?req=delete&dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&files=',
-								_user$project$Action$encodeFiles(files))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
 var _user$project$Action$move = F4(
 	function (api, srcDir, files, dstDir) {
 		return A2(
@@ -104,14 +104,13 @@ var _user$project$Action$move = F4(
 				return _user$project$Main_Model$EnvMsg(
 					_user$project$Main_Model$Refresh(_p4));
 			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'?req=move&srcDir=',
+						'req=move&srcDir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(srcDir),

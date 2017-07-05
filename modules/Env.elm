@@ -3,13 +3,16 @@ module Env exposing (..)
 import Action exposing (..)
 import List exposing (filter, map, member)
 import Main.Model exposing (..)
-import Port exposing (getBounds)
+import Port exposing (close, getBounds)
 import Tuple exposing (first, second)
 import Util exposing (..)
 import Vec exposing (..)
 
 handleEnvMsg : EnvMsg -> Model -> (Model, Cmd Msg)
 handleEnvMsg msg model = case msg of
+  Open () -> ({ model | open = True }, Cmd.none)
+  Close -> ({ model | open = False, selected = [] }, close [])
+  Accept -> ({ model | open = False, selected = [] }, close <| map ((++) model.dir << .name) model.selected)
   MouseDown maybe pos1 ctrl ->
     ( { model
       | mouseDown = True
@@ -31,7 +34,7 @@ handleEnvMsg msg model = case msg of
       | pos2 = pos2
       , showBound = model.mouseDown && (not << isJust) model.caller
       , bound = toBound model.pos1 pos2
-      , drag = model.mouseDown && isJust model.caller && isFar model.pos1 pos2 
+      , drag = model.mouseDown && isJust model.caller && isFar model.pos1 pos2 && model.filesAmount <= 0
       }
       , Cmd.none
     )
@@ -62,9 +65,9 @@ handleEnvMsg msg model = case msg of
       }
       , Cmd.none
     )
-  GetLs dir -> ({ model | dir = dir, files = [] }, getLs model.api dir)
+  GetLs dir -> ({ model | dir = dir, files = [], load = True }, getLs model.api dir)
   LsGotten result -> case result of
-    Ok files -> ({ model | files = files, selected = [] }, Cmd.none)
+    Ok files -> ({ model | files = files, selected = [], load = False }, Cmd.none)
     Err _ -> (model, Cmd.none)
   Refresh result -> case result of
     Ok () -> (model, getLs model.api model.dir)

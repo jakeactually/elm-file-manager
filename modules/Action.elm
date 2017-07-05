@@ -1,7 +1,7 @@
 module Action exposing (..)
 
 import Json.Decode as Decode
-import Http exposing (encodeUri)
+import Http exposing (Body, encodeUri, stringBody)
 import List exposing (head, map)
 import Main.Model exposing (..)
 import String exposing (join)
@@ -20,8 +20,11 @@ fileDecoder = Decode.map2 (\x y -> { name = x, isDir = y })
 move : String -> String -> List File -> String -> Cmd Msg
 move api srcDir files dstDir
    = Http.send (EnvMsg << Refresh)
-  <| Http.get (api ++ "?req=move&srcDir=" ++ encodeUri srcDir ++ "&files=" ++ encodeFiles files ++ "&dstDir=" ++ encodeUri dstDir)
+  <| Http.post api (url <| "req=move&srcDir=" ++ encodeUri srcDir ++ "&files=" ++ encodeFiles files ++ "&dstDir=" ++ encodeUri dstDir)
   <| Decode.succeed ()
+
+url : String -> Body
+url string = stringBody "application/x-www-form-urlencoded" string
 
 encodeFiles : List File -> String
 encodeFiles files = join "," <| map (encodeUri << .name) files
@@ -29,17 +32,17 @@ encodeFiles files = join "," <| map (encodeUri << .name) files
 delete : String -> String -> List File -> Cmd Msg
 delete api dir files
    =  Http.send (EnvMsg << Refresh)
-  <|  Http.get (api ++ "?req=delete&dir=" ++ encodeUri dir ++ "&files=" ++ encodeFiles files)
+  <|  Http.post  api (url <| "req=delete&dir=" ++ encodeUri dir ++ "&files=" ++ encodeFiles files)
   <|  Decode.succeed ()
 
 newDir : String -> String -> String -> Cmd Msg
 newDir api dir newDir
    =  Http.send (EnvMsg << Refresh)
-  <|  Http.get (api ++ "?req=newDir&dir=" ++ encodeUri dir ++ "&newDir=" ++ encodeUri newDir)
+  <|  Http.post api (url <| "req=newDir&dir=" ++ encodeUri dir ++ "&newDir=" ++ encodeUri newDir)
   <|  Decode.succeed ()
 
 rename : String -> String -> String -> String -> Cmd Msg
 rename api dir oldName newName
    =  Http.send (EnvMsg << Refresh)
-  <|  Http.get (api ++ "?req=rename&dir=" ++ encodeUri dir ++ "&oldName=" ++ encodeUri oldName ++ "&newName=" ++ encodeUri newName)
+  <|  Http.post api (url <| "req=rename&dir=" ++ encodeUri dir ++ "&oldName=" ++ encodeUri oldName ++ "&newName=" ++ encodeUri newName)
   <|  Decode.succeed ()

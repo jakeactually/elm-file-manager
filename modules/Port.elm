@@ -12,3 +12,6 @@ port cancel : () -> Cmd msg
 port uploaded : (() -> msg) -> Sub msg
 
 port download : List String -> Cmd msg
+
+port open : (() -> msg) -> Sub msg
+port close : List String -> Cmd msg

@@ -23,7 +23,11 @@ var _user$project$Main_Model$Model = function (a) {
 																		return function (s) {
 																			return function (t) {
 																				return function (u) {
-																					return {api: a, dir: b, pos1: c, pos2: d, mouseDown: e, ctrl: f, caller: g, files: h, showBound: i, bound: j, bounds: k, selected: l, drag: m, showContextMenu: n, selectedBin: o, filesAmount: p, progress: q, showNameDialog: r, name: s, clipboardDir: t, clipboardFiles: u};
+																					return function (v) {
+																						return function (w) {
+																							return {api: a, dir: b, open: c, load: d, pos1: e, pos2: f, mouseDown: g, ctrl: h, caller: i, files: j, showBound: k, bound: l, bounds: m, selected: n, drag: o, showContextMenu: p, selectedBin: q, filesAmount: r, progress: s, showNameDialog: t, name: u, clipboardDir: v, clipboardFiles: w};
+																						};
+																					};
 																				};
 																			};
 																		};
@@ -100,3 +104,8 @@ var _user$project$Main_Model$MouseDown = F3(
 	function (a, b, c) {
 		return {ctor: 'MouseDown', _0: a, _1: b, _2: c};
 	});
+var _user$project$Main_Model$Accept = {ctor: 'Accept'};
+var _user$project$Main_Model$Close = {ctor: 'Close'};
+var _user$project$Main_Model$Open = function (a) {
+	return {ctor: 'Open', _0: a};
+};

@@ -113,56 +113,50 @@ var _user$project$Main_View$toPx = function (n) {
 		_elm_lang$core$Basics$toString(n),
 		'px');
 };
-var _user$project$Main_View$renderCount = function (model) {
-	return model.drag ? A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$id('count'),
-			_1: {
+var _user$project$Main_View$renderCount = F2(
+	function (_p0, selected) {
+		var _p1 = _p0;
+		return A2(
+			_elm_lang$html$Html$div,
+			{
 				ctor: '::',
-				_0: function () {
-					var _p0 = model.pos2;
-					var x = _p0._0;
-					var y = _p0._1;
-					return _elm_lang$html$Html_Attributes$style(
+				_0: _elm_lang$html$Html_Attributes$id('count'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
 						{
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
 								_0: 'left',
-								_1: _user$project$Main_View$toPx(x + 5)
+								_1: _user$project$Main_View$toPx(_p1._0 + 5)
 							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple2',
 									_0: 'top',
-									_1: _user$project$Main_View$toPx(y - 25)
+									_1: _user$project$Main_View$toPx(_p1._1 - 25)
 								},
 								_1: {ctor: '[]'}
 							}
-						});
-				}(),
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(
+						_elm_lang$core$List$length(selected))),
 				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(
-					_elm_lang$core$List$length(model.selected))),
-			_1: {ctor: '[]'}
-		}) : A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{ctor: '[]'});
-};
+			});
+	});
 var _user$project$Main_View$contextMenu = F5(
-	function (_p1, maybe, paste, many, filesAmount) {
-		var _p2 = _p1;
-		var _p6 = _p2._1;
-		var _p5 = _p2._0;
+	function (_p2, maybe, paste, many, filesAmount) {
+		var _p3 = _p2;
+		var _p6 = _p3._1;
+		var _p5 = _p3._0;
 		return (_elm_lang$core$Native_Utils.cmp(filesAmount, 0) > 0) ? A2(
 			_elm_lang$html$Html$div,
 			{
@@ -243,9 +237,8 @@ var _user$project$Main_View$contextMenu = F5(
 				}
 			},
 			function () {
-				var _p3 = maybe;
-				if (_p3.ctor === 'Just') {
-					var _p4 = _p3._0;
+				var _p4 = maybe;
+				if (_p4.ctor === 'Just') {
 					return {
 						ctor: '::',
 						_0: A2(
@@ -272,17 +265,16 @@ var _user$project$Main_View$contextMenu = F5(
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$button,
-								{
+								many ? {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'div white',
-											many ? ' disabled' : '')),
+									_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
+									_1: {ctor: '[]'}
+								} : {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('div white'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(
-											many ? _user$project$Main_Model$None : _user$project$Main_Model$OpenNameDialog),
+										_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$OpenNameDialog),
 										_1: {ctor: '[]'}
 									}
 								},
@@ -321,19 +313,18 @@ var _user$project$Main_View$contextMenu = F5(
 									ctor: '::',
 									_0: A2(
 										_elm_lang$html$Html$button,
-										{
+										(paste && _p4._0.isDir) ? {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class(
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													'div white',
-													(paste && _p4.isDir) ? '' : ' disabled')),
+											_0: _elm_lang$html$Html_Attributes$class('div white'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(
-													(paste && _p4.isDir) ? _user$project$Main_Model$Paste : _user$project$Main_Model$None),
+												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Paste),
 												_1: {ctor: '[]'}
 											}
+										} : {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
+											_1: {ctor: '[]'}
 										},
 										{
 											ctor: '::',
@@ -377,15 +368,7 @@ var _user$project$Main_View$contextMenu = F5(
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$label,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('button white'),
-								_1: {
-									ctor: '::',
-									_0: _user$project$Events$onChange(_user$project$Main_Model$Upload),
-									_1: {ctor: '[]'}
-								}
-							},
+							{ctor: '[]'},
 							{
 								ctor: '::',
 								_0: A2(
@@ -399,7 +382,11 @@ var _user$project$Main_View$contextMenu = F5(
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$multiple(true),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: _user$project$Events$onChange(_user$project$Main_Model$Upload),
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									},
@@ -440,19 +427,18 @@ var _user$project$Main_View$contextMenu = F5(
 								ctor: '::',
 								_0: A2(
 									_elm_lang$html$Html$button,
-									{
+									paste ? {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class(
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												'div white',
-												paste ? '' : ' disabled')),
+										_0: _elm_lang$html$Html_Attributes$class('div white'),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(
-												paste ? _user$project$Main_Model$Paste : _user$project$Main_Model$None),
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Paste),
 											_1: {ctor: '[]'}
 										}
+									} : {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
+										_1: {ctor: '[]'}
 									},
 									{
 										ctor: '::',
@@ -470,57 +456,51 @@ var _user$project$Main_View$contextMenu = F5(
 				}
 			}());
 	});
-var _user$project$Main_View$renderHelper = function (model) {
-	return model.showBound ? A2(
+var _user$project$Main_View$renderHelper = function (b) {
+	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$id('helper'),
 			_1: {
 				ctor: '::',
-				_0: function () {
-					var b = model.bound;
-					return _elm_lang$html$Html_Attributes$style(
-						{
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'left',
+							_1: _user$project$Main_View$toPx(b.x)
+						},
+						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: 'left',
-								_1: _user$project$Main_View$toPx(b.x)
+								_0: 'top',
+								_1: _user$project$Main_View$toPx(b.y)
 							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple2',
-									_0: 'top',
-									_1: _user$project$Main_View$toPx(b.y)
+									_0: 'width',
+									_1: _user$project$Main_View$toPx(b.w)
 								},
 								_1: {
 									ctor: '::',
 									_0: {
 										ctor: '_Tuple2',
-										_0: 'width',
-										_1: _user$project$Main_View$toPx(b.w)
+										_0: 'height',
+										_1: _user$project$Main_View$toPx(b.h)
 									},
-									_1: {
-										ctor: '::',
-										_0: {
-											ctor: '_Tuple2',
-											_0: 'height',
-											_1: _user$project$Main_View$toPx(b.h)
-										},
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
-						});
-				}(),
+						}
+					}),
 				_1: {ctor: '[]'}
 			}
 		},
-		{ctor: '[]'}) : A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
 		{ctor: '[]'});
 };
 var _user$project$Main_View$getExt = function (name) {
@@ -556,7 +536,7 @@ var _user$project$Main_View$renderFileThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('full bg'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb bg'),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$style(
@@ -594,7 +574,7 @@ var _user$project$Main_View$renderFileThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('icon-thumb icon-file'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb icon-file'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -617,7 +597,7 @@ var _user$project$Main_View$renderThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('icon-thumb icon-folder'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb icon-folder'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -694,18 +674,7 @@ var _user$project$Main_View$renderFile = F3(
 			},
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('thumb'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: A3(_user$project$Main_View$renderThumb, _p10.api, _p11, file),
-						_1: {ctor: '[]'}
-					}),
+				_0: A3(_user$project$Main_View$renderThumb, _p10.api, _p11, file),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -730,7 +699,7 @@ var _user$project$Main_View$renderUploading = F2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('file'),
+				_0: _elm_lang$html$Html_Attributes$class('file upload'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -739,7 +708,7 @@ var _user$project$Main_View$renderUploading = F2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('thumb uploading'),
+						_0: _elm_lang$html$Html_Attributes$class('thumb'),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -748,7 +717,7 @@ var _user$project$Main_View$renderUploading = F2(
 							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('bar'),
+								_0: _elm_lang$html$Html_Attributes$id('progress'),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$style(
@@ -804,14 +773,38 @@ var _user$project$Main_View$back = function (route) {
 var _user$project$Main_View$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('file-manager'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'display',
+							_1: model.open ? 'grid' : 'none'
+						},
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Events$onMouseMove(
+						function (_p12) {
+							return _user$project$Main_Model$None;
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
 		{
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$id('route'),
+					_0: _elm_lang$html$Html_Attributes$id('bar'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -837,7 +830,44 @@ var _user$project$Main_View$view = function (model) {
 								_0: _elm_lang$html$Html$text(model.dir),
 								_1: {ctor: '[]'}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: model.load ? A2(
+								_elm_lang$svg$Svg$svg,
+								{
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$width('25'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$height('25'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$svg$Svg$circle,
+										{
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$cx('50%'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$svg$Svg_Attributes$cy('50%'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$svg$Svg_Attributes$r('40%'),
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}) : A2(
+								_elm_lang$html$Html$div,
+								{ctor: '[]'},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}),
 			_1: {
@@ -862,9 +892,9 @@ var _user$project$Main_View$view = function (model) {
 								_1: {
 									ctor: '::',
 									_0: _user$project$Events$onMouseMove(
-										function (_p12) {
+										function (_p13) {
 											return _user$project$Main_Model$EnvMsg(
-												_user$project$Main_Model$MouseMove(_p12));
+												_user$project$Main_Model$MouseMove(_p13));
 										}),
 									_1: {
 										ctor: '::',
@@ -887,62 +917,107 @@ var _user$project$Main_View$view = function (model) {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
-							{ctor: '[]'},
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$List$reverse(
-									A2(
-										_elm_lang$core$List$map,
-										_user$project$Main_View$renderUploading(model.progress),
-										A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('drop'),
+								_1: {ctor: '[]'}
+							},
+							{ctor: '[]'}),
+						_1: A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$List$reverse(
 								A2(
-									_elm_lang$core$List$indexedMap,
-									_user$project$Main_View$renderFile(model),
-									model.files))),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$div,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(
-										_elm_lang$core$Basics$toString(model)),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
+									_elm_lang$core$List$map,
+									_user$project$Main_View$renderUploading(model.progress),
+									A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
+							A2(
+								_elm_lang$core$List$indexedMap,
+								_user$project$Main_View$renderFile(model),
+								model.files))
 					}),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Main_View$renderHelper(model),
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('control'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('alert right'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Main_Model$EnvMsg(_user$project$Main_Model$Close)),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Cancelar'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Main_Model$EnvMsg(_user$project$Main_Model$Accept)),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Aceptar'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Main_View$renderCount(model),
+						_0: model.showBound ? _user$project$Main_View$renderHelper(model.bound) : A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{ctor: '[]'}),
 						_1: {
 							ctor: '::',
-							_0: model.showContextMenu ? A5(
-								_user$project$Main_View$contextMenu,
-								model.pos1,
-								model.caller,
-								!_elm_lang$core$List$isEmpty(model.clipboardFiles),
-								_elm_lang$core$Native_Utils.cmp(
-									_elm_lang$core$List$length(model.selected),
-									1) > 0,
-								model.filesAmount) : A2(
+							_0: model.drag ? A2(_user$project$Main_View$renderCount, model.pos2, model.selected) : A2(
 								_elm_lang$html$Html$div,
 								{ctor: '[]'},
 								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
-								_0: model.showNameDialog ? A2(
-									_user$project$Main_View$nameDialog,
-									model.name,
-									!_user$project$Util$isJust(model.caller)) : A2(
+								_0: model.showContextMenu ? A5(
+									_user$project$Main_View$contextMenu,
+									model.pos1,
+									model.caller,
+									!_elm_lang$core$List$isEmpty(model.clipboardFiles),
+									_elm_lang$core$Native_Utils.cmp(
+										_elm_lang$core$List$length(model.selected),
+										1) > 0,
+									model.filesAmount) : A2(
 									_elm_lang$html$Html$div,
 									{ctor: '[]'},
 									{ctor: '[]'}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: model.showNameDialog ? A2(
+										_user$project$Main_View$nameDialog,
+										model.name,
+										!_user$project$Util$isJust(model.caller)) : A2(
+										_elm_lang$html$Html$div,
+										{ctor: '[]'},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}

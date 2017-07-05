@@ -11,6 +11,8 @@ type alias Flags =
 type alias Model =
   { api : String
   , dir : String
+  , open : Bool
+  , load : Bool
   , pos1 : Vec2
   , pos2 : Vec2
   , mouseDown : Bool
@@ -56,7 +58,10 @@ type Msg
   | None
 
 type EnvMsg
-  = MouseDown (Maybe File) Vec2 Bool
+  = Open ()
+  | Close
+  | Accept
+  | MouseDown (Maybe File) Vec2 Bool
   | BoundsGotten (List Bound)
   | MouseMove Vec2
   | MouseUp (Maybe File)

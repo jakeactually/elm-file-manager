@@ -46,15 +46,15 @@
     $req = $_GET['req'];
     if ($req == 'ls') ls($root, $_GET['dir']);
     if ($req == 'thumb') thumb($static, $_GET['dir'], $_GET['image']);
-    if ($req == 'newDir') newDir($root, $_GET['dir'], $_GET['newDir']);
-    if ($req == 'rename') rename_($root, $_GET['dir'], $_GET['oldName'], $_GET['newName']);
-    if ($req == 'move') move($root, $_GET['srcDir'], explode(",", $_GET['files']), $_GET['dstDir']);
-    if ($req == 'delete') delete_($root, $_GET['dir'], explode(",", $_GET['files']));
   }
 
   if (isset($_POST)) {
     $req = $_POST['req'];
     if ($req == 'upload') upload($root, $_POST['dir'], $_FILES['file']);
+    if ($req == 'newDir') newDir($root, $_POST['dir'], $_POST['newDir']);
+    if ($req == 'rename') rename_($root, $_POST['dir'], $_POST['oldName'], $_POST['newName']);
+    if ($req == 'move') move($root, $_POST['srcDir'], explode(",", $_POST['files']), $_POST['dstDir']);
+    if ($req == 'delete') delete_($root, $_POST['dir'], explode(",", $_POST['files']));
   }
 
   // Actions

@@ -52,3 +52,15 @@ var _user$project$Port$download = _elm_lang$core$Native_Platform.outgoingPort(
 				return v;
 			});
 	});
+var _user$project$Port$open = _elm_lang$core$Native_Platform.incomingPort(
+	'open',
+	_elm_lang$core$Json_Decode$null(
+		{ctor: '_Tuple0'}));
+var _user$project$Port$close = _elm_lang$core$Native_Platform.outgoingPort(
+	'close',
+	function (v) {
+		return _elm_lang$core$Native_List.toArray(v).map(
+			function (v) {
+				return v;
+			});
+	});

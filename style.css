@@ -1,33 +1,74 @@
-#route {
+#file-manager {
+  display: grid;
+  grid-template-rows: 50px 1fr 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#bar {
   display: flex;
   align-items: center;
-  padding: 10px;
   background-color: #ECEFF1;
+  padding: 0 25px;
 }
 
-#route button {
+#bar button {
   display: flex;
   align-items: center;
-  margin-right: 10px;
 }
 
-#route .text {
+#bar .text {
   flex-grow: 1;
-  padding: 5px;
-  /*background-color: #FFFFFF;*/
+  margin-left: 10px;
+}
+
+@keyframes dash {
+  0% { stroke-dasharray: 0% 0% 40% 210%; }
+  50% { stroke-dasharray: 0% 0% 210% 40%; }
+  100% { stroke-dasharray: 0% 210% 40% 0%; stroke-dashoffset: -38%; }
+}
+
+@keyframes rotation {
+  0% { }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#bar circle {
+  fill: none;
+  stroke: #1565C0;
+  stroke-width: 2px;
+  animation: dash 1.5s infinite;
+}
+
+#bar svg {
+  animation: rotation 3s linear infinite;
 }
 
 #files {
-  box-sizing: border-box;
-  height: calc(100vh - 46px);
-  padding: 20px;
-  overflow: auto;
-}
-
-#files > div {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  padding: 20px;
+  overflow: auto;
+  background-color: #FFFFFF;
+}
+
+#drop {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background-color: #2196F3;
+  opacity: 0.5;
 }
 
 .file {
@@ -49,37 +90,18 @@
 }
 
 .file .thumb {
-  position: relative;
   width: 120px;
   height: 120px;
 }
 
-.file .thumb.uploading {
-  display: flex;
-  align-items: center;
-  background-color: #ECEFF1;
-}
-
-.file .bar {
-  height: 9px;
-  margin-bottom: 3px;
-  background-color: #2196F3;
-}
-
-.file .icon-thumb {
+.file .icon-folder, .file .icon-file {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
 }
 
-.file .icon-thumb button {
-  cursor: default;
-}
-
-.file .icon-thumb  i {
-  font-size: 3em;
+.file img {
+  pointer-events: none;
 }
 
 .file .icon-folder {
@@ -90,11 +112,31 @@
   background-color: #2196F3;
 }
 
+.file.upload .thumb {
+  display: flex;
+  align-items: center;
+  background-color: #ECEFF1;
+}
+
+#progress {
+  height: 9px;
+  margin-bottom: 3px;
+  background-color: #2196F3;
+}
+
 .file .name {
   width: 100px;
   height: 36px;
   margin-top: 10px;
   font-size: 0.8em;
+}
+
+#control {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 25px;
+  background-color: #ECEFF1;
 }
 
 #helper {
@@ -138,7 +180,7 @@
   color: #F44336;
 }
 
-label.button {
+#context-menu label {
   display: flex;
   align-items: center;
   height: 40px;
@@ -147,14 +189,14 @@ label.button {
   cursor: pointer;
 }
 
-label.button:hover {
+#context-menu label:hover {
   background-color: #ECEFF1;
 }
 
-label.button input[type="file"] {
+#context-menu label input[type="file"] {
   display: none;
 }
 
-label.button i {
+#context-menu label i {
   margin-right: 5px;
 }

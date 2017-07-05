@@ -9033,6 +9033,347 @@ var _elm_lang$http$Http$StringPart = F2(
 	});
 var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 
+var _elm_lang$svg$Svg$map = _elm_lang$virtual_dom$VirtualDom$map;
+var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
+var _elm_lang$svg$Svg$svgNamespace = A2(
+	_elm_lang$virtual_dom$VirtualDom$property,
+	'namespace',
+	_elm_lang$core$Json_Encode$string('http://www.w3.org/2000/svg'));
+var _elm_lang$svg$Svg$node = F3(
+	function (name, attributes, children) {
+		return A3(
+			_elm_lang$virtual_dom$VirtualDom$node,
+			name,
+			{ctor: '::', _0: _elm_lang$svg$Svg$svgNamespace, _1: attributes},
+			children);
+	});
+var _elm_lang$svg$Svg$svg = _elm_lang$svg$Svg$node('svg');
+var _elm_lang$svg$Svg$foreignObject = _elm_lang$svg$Svg$node('foreignObject');
+var _elm_lang$svg$Svg$animate = _elm_lang$svg$Svg$node('animate');
+var _elm_lang$svg$Svg$animateColor = _elm_lang$svg$Svg$node('animateColor');
+var _elm_lang$svg$Svg$animateMotion = _elm_lang$svg$Svg$node('animateMotion');
+var _elm_lang$svg$Svg$animateTransform = _elm_lang$svg$Svg$node('animateTransform');
+var _elm_lang$svg$Svg$mpath = _elm_lang$svg$Svg$node('mpath');
+var _elm_lang$svg$Svg$set = _elm_lang$svg$Svg$node('set');
+var _elm_lang$svg$Svg$a = _elm_lang$svg$Svg$node('a');
+var _elm_lang$svg$Svg$defs = _elm_lang$svg$Svg$node('defs');
+var _elm_lang$svg$Svg$g = _elm_lang$svg$Svg$node('g');
+var _elm_lang$svg$Svg$marker = _elm_lang$svg$Svg$node('marker');
+var _elm_lang$svg$Svg$mask = _elm_lang$svg$Svg$node('mask');
+var _elm_lang$svg$Svg$pattern = _elm_lang$svg$Svg$node('pattern');
+var _elm_lang$svg$Svg$switch = _elm_lang$svg$Svg$node('switch');
+var _elm_lang$svg$Svg$symbol = _elm_lang$svg$Svg$node('symbol');
+var _elm_lang$svg$Svg$desc = _elm_lang$svg$Svg$node('desc');
+var _elm_lang$svg$Svg$metadata = _elm_lang$svg$Svg$node('metadata');
+var _elm_lang$svg$Svg$title = _elm_lang$svg$Svg$node('title');
+var _elm_lang$svg$Svg$feBlend = _elm_lang$svg$Svg$node('feBlend');
+var _elm_lang$svg$Svg$feColorMatrix = _elm_lang$svg$Svg$node('feColorMatrix');
+var _elm_lang$svg$Svg$feComponentTransfer = _elm_lang$svg$Svg$node('feComponentTransfer');
+var _elm_lang$svg$Svg$feComposite = _elm_lang$svg$Svg$node('feComposite');
+var _elm_lang$svg$Svg$feConvolveMatrix = _elm_lang$svg$Svg$node('feConvolveMatrix');
+var _elm_lang$svg$Svg$feDiffuseLighting = _elm_lang$svg$Svg$node('feDiffuseLighting');
+var _elm_lang$svg$Svg$feDisplacementMap = _elm_lang$svg$Svg$node('feDisplacementMap');
+var _elm_lang$svg$Svg$feFlood = _elm_lang$svg$Svg$node('feFlood');
+var _elm_lang$svg$Svg$feFuncA = _elm_lang$svg$Svg$node('feFuncA');
+var _elm_lang$svg$Svg$feFuncB = _elm_lang$svg$Svg$node('feFuncB');
+var _elm_lang$svg$Svg$feFuncG = _elm_lang$svg$Svg$node('feFuncG');
+var _elm_lang$svg$Svg$feFuncR = _elm_lang$svg$Svg$node('feFuncR');
+var _elm_lang$svg$Svg$feGaussianBlur = _elm_lang$svg$Svg$node('feGaussianBlur');
+var _elm_lang$svg$Svg$feImage = _elm_lang$svg$Svg$node('feImage');
+var _elm_lang$svg$Svg$feMerge = _elm_lang$svg$Svg$node('feMerge');
+var _elm_lang$svg$Svg$feMergeNode = _elm_lang$svg$Svg$node('feMergeNode');
+var _elm_lang$svg$Svg$feMorphology = _elm_lang$svg$Svg$node('feMorphology');
+var _elm_lang$svg$Svg$feOffset = _elm_lang$svg$Svg$node('feOffset');
+var _elm_lang$svg$Svg$feSpecularLighting = _elm_lang$svg$Svg$node('feSpecularLighting');
+var _elm_lang$svg$Svg$feTile = _elm_lang$svg$Svg$node('feTile');
+var _elm_lang$svg$Svg$feTurbulence = _elm_lang$svg$Svg$node('feTurbulence');
+var _elm_lang$svg$Svg$font = _elm_lang$svg$Svg$node('font');
+var _elm_lang$svg$Svg$linearGradient = _elm_lang$svg$Svg$node('linearGradient');
+var _elm_lang$svg$Svg$radialGradient = _elm_lang$svg$Svg$node('radialGradient');
+var _elm_lang$svg$Svg$stop = _elm_lang$svg$Svg$node('stop');
+var _elm_lang$svg$Svg$circle = _elm_lang$svg$Svg$node('circle');
+var _elm_lang$svg$Svg$ellipse = _elm_lang$svg$Svg$node('ellipse');
+var _elm_lang$svg$Svg$image = _elm_lang$svg$Svg$node('image');
+var _elm_lang$svg$Svg$line = _elm_lang$svg$Svg$node('line');
+var _elm_lang$svg$Svg$path = _elm_lang$svg$Svg$node('path');
+var _elm_lang$svg$Svg$polygon = _elm_lang$svg$Svg$node('polygon');
+var _elm_lang$svg$Svg$polyline = _elm_lang$svg$Svg$node('polyline');
+var _elm_lang$svg$Svg$rect = _elm_lang$svg$Svg$node('rect');
+var _elm_lang$svg$Svg$use = _elm_lang$svg$Svg$node('use');
+var _elm_lang$svg$Svg$feDistantLight = _elm_lang$svg$Svg$node('feDistantLight');
+var _elm_lang$svg$Svg$fePointLight = _elm_lang$svg$Svg$node('fePointLight');
+var _elm_lang$svg$Svg$feSpotLight = _elm_lang$svg$Svg$node('feSpotLight');
+var _elm_lang$svg$Svg$altGlyph = _elm_lang$svg$Svg$node('altGlyph');
+var _elm_lang$svg$Svg$altGlyphDef = _elm_lang$svg$Svg$node('altGlyphDef');
+var _elm_lang$svg$Svg$altGlyphItem = _elm_lang$svg$Svg$node('altGlyphItem');
+var _elm_lang$svg$Svg$glyph = _elm_lang$svg$Svg$node('glyph');
+var _elm_lang$svg$Svg$glyphRef = _elm_lang$svg$Svg$node('glyphRef');
+var _elm_lang$svg$Svg$textPath = _elm_lang$svg$Svg$node('textPath');
+var _elm_lang$svg$Svg$text_ = _elm_lang$svg$Svg$node('text');
+var _elm_lang$svg$Svg$tref = _elm_lang$svg$Svg$node('tref');
+var _elm_lang$svg$Svg$tspan = _elm_lang$svg$Svg$node('tspan');
+var _elm_lang$svg$Svg$clipPath = _elm_lang$svg$Svg$node('clipPath');
+var _elm_lang$svg$Svg$colorProfile = _elm_lang$svg$Svg$node('colorProfile');
+var _elm_lang$svg$Svg$cursor = _elm_lang$svg$Svg$node('cursor');
+var _elm_lang$svg$Svg$filter = _elm_lang$svg$Svg$node('filter');
+var _elm_lang$svg$Svg$script = _elm_lang$svg$Svg$node('script');
+var _elm_lang$svg$Svg$style = _elm_lang$svg$Svg$node('style');
+var _elm_lang$svg$Svg$view = _elm_lang$svg$Svg$node('view');
+
+var _elm_lang$svg$Svg_Attributes$writingMode = _elm_lang$virtual_dom$VirtualDom$attribute('writing-mode');
+var _elm_lang$svg$Svg_Attributes$wordSpacing = _elm_lang$virtual_dom$VirtualDom$attribute('word-spacing');
+var _elm_lang$svg$Svg_Attributes$visibility = _elm_lang$virtual_dom$VirtualDom$attribute('visibility');
+var _elm_lang$svg$Svg_Attributes$unicodeBidi = _elm_lang$virtual_dom$VirtualDom$attribute('unicode-bidi');
+var _elm_lang$svg$Svg_Attributes$textRendering = _elm_lang$virtual_dom$VirtualDom$attribute('text-rendering');
+var _elm_lang$svg$Svg_Attributes$textDecoration = _elm_lang$virtual_dom$VirtualDom$attribute('text-decoration');
+var _elm_lang$svg$Svg_Attributes$textAnchor = _elm_lang$virtual_dom$VirtualDom$attribute('text-anchor');
+var _elm_lang$svg$Svg_Attributes$stroke = _elm_lang$virtual_dom$VirtualDom$attribute('stroke');
+var _elm_lang$svg$Svg_Attributes$strokeWidth = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-width');
+var _elm_lang$svg$Svg_Attributes$strokeOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-opacity');
+var _elm_lang$svg$Svg_Attributes$strokeMiterlimit = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-miterlimit');
+var _elm_lang$svg$Svg_Attributes$strokeLinejoin = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-linejoin');
+var _elm_lang$svg$Svg_Attributes$strokeLinecap = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-linecap');
+var _elm_lang$svg$Svg_Attributes$strokeDashoffset = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-dashoffset');
+var _elm_lang$svg$Svg_Attributes$strokeDasharray = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-dasharray');
+var _elm_lang$svg$Svg_Attributes$stopOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('stop-opacity');
+var _elm_lang$svg$Svg_Attributes$stopColor = _elm_lang$virtual_dom$VirtualDom$attribute('stop-color');
+var _elm_lang$svg$Svg_Attributes$shapeRendering = _elm_lang$virtual_dom$VirtualDom$attribute('shape-rendering');
+var _elm_lang$svg$Svg_Attributes$pointerEvents = _elm_lang$virtual_dom$VirtualDom$attribute('pointer-events');
+var _elm_lang$svg$Svg_Attributes$overflow = _elm_lang$virtual_dom$VirtualDom$attribute('overflow');
+var _elm_lang$svg$Svg_Attributes$opacity = _elm_lang$virtual_dom$VirtualDom$attribute('opacity');
+var _elm_lang$svg$Svg_Attributes$mask = _elm_lang$virtual_dom$VirtualDom$attribute('mask');
+var _elm_lang$svg$Svg_Attributes$markerStart = _elm_lang$virtual_dom$VirtualDom$attribute('marker-start');
+var _elm_lang$svg$Svg_Attributes$markerMid = _elm_lang$virtual_dom$VirtualDom$attribute('marker-mid');
+var _elm_lang$svg$Svg_Attributes$markerEnd = _elm_lang$virtual_dom$VirtualDom$attribute('marker-end');
+var _elm_lang$svg$Svg_Attributes$lightingColor = _elm_lang$virtual_dom$VirtualDom$attribute('lighting-color');
+var _elm_lang$svg$Svg_Attributes$letterSpacing = _elm_lang$virtual_dom$VirtualDom$attribute('letter-spacing');
+var _elm_lang$svg$Svg_Attributes$kerning = _elm_lang$virtual_dom$VirtualDom$attribute('kerning');
+var _elm_lang$svg$Svg_Attributes$imageRendering = _elm_lang$virtual_dom$VirtualDom$attribute('image-rendering');
+var _elm_lang$svg$Svg_Attributes$glyphOrientationVertical = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-orientation-vertical');
+var _elm_lang$svg$Svg_Attributes$glyphOrientationHorizontal = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-orientation-horizontal');
+var _elm_lang$svg$Svg_Attributes$fontWeight = _elm_lang$virtual_dom$VirtualDom$attribute('font-weight');
+var _elm_lang$svg$Svg_Attributes$fontVariant = _elm_lang$virtual_dom$VirtualDom$attribute('font-variant');
+var _elm_lang$svg$Svg_Attributes$fontStyle = _elm_lang$virtual_dom$VirtualDom$attribute('font-style');
+var _elm_lang$svg$Svg_Attributes$fontStretch = _elm_lang$virtual_dom$VirtualDom$attribute('font-stretch');
+var _elm_lang$svg$Svg_Attributes$fontSize = _elm_lang$virtual_dom$VirtualDom$attribute('font-size');
+var _elm_lang$svg$Svg_Attributes$fontSizeAdjust = _elm_lang$virtual_dom$VirtualDom$attribute('font-size-adjust');
+var _elm_lang$svg$Svg_Attributes$fontFamily = _elm_lang$virtual_dom$VirtualDom$attribute('font-family');
+var _elm_lang$svg$Svg_Attributes$floodOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('flood-opacity');
+var _elm_lang$svg$Svg_Attributes$floodColor = _elm_lang$virtual_dom$VirtualDom$attribute('flood-color');
+var _elm_lang$svg$Svg_Attributes$filter = _elm_lang$virtual_dom$VirtualDom$attribute('filter');
+var _elm_lang$svg$Svg_Attributes$fill = _elm_lang$virtual_dom$VirtualDom$attribute('fill');
+var _elm_lang$svg$Svg_Attributes$fillRule = _elm_lang$virtual_dom$VirtualDom$attribute('fill-rule');
+var _elm_lang$svg$Svg_Attributes$fillOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('fill-opacity');
+var _elm_lang$svg$Svg_Attributes$enableBackground = _elm_lang$virtual_dom$VirtualDom$attribute('enable-background');
+var _elm_lang$svg$Svg_Attributes$dominantBaseline = _elm_lang$virtual_dom$VirtualDom$attribute('dominant-baseline');
+var _elm_lang$svg$Svg_Attributes$display = _elm_lang$virtual_dom$VirtualDom$attribute('display');
+var _elm_lang$svg$Svg_Attributes$direction = _elm_lang$virtual_dom$VirtualDom$attribute('direction');
+var _elm_lang$svg$Svg_Attributes$cursor = _elm_lang$virtual_dom$VirtualDom$attribute('cursor');
+var _elm_lang$svg$Svg_Attributes$color = _elm_lang$virtual_dom$VirtualDom$attribute('color');
+var _elm_lang$svg$Svg_Attributes$colorRendering = _elm_lang$virtual_dom$VirtualDom$attribute('color-rendering');
+var _elm_lang$svg$Svg_Attributes$colorProfile = _elm_lang$virtual_dom$VirtualDom$attribute('color-profile');
+var _elm_lang$svg$Svg_Attributes$colorInterpolation = _elm_lang$virtual_dom$VirtualDom$attribute('color-interpolation');
+var _elm_lang$svg$Svg_Attributes$colorInterpolationFilters = _elm_lang$virtual_dom$VirtualDom$attribute('color-interpolation-filters');
+var _elm_lang$svg$Svg_Attributes$clip = _elm_lang$virtual_dom$VirtualDom$attribute('clip');
+var _elm_lang$svg$Svg_Attributes$clipRule = _elm_lang$virtual_dom$VirtualDom$attribute('clip-rule');
+var _elm_lang$svg$Svg_Attributes$clipPath = _elm_lang$virtual_dom$VirtualDom$attribute('clip-path');
+var _elm_lang$svg$Svg_Attributes$baselineShift = _elm_lang$virtual_dom$VirtualDom$attribute('baseline-shift');
+var _elm_lang$svg$Svg_Attributes$alignmentBaseline = _elm_lang$virtual_dom$VirtualDom$attribute('alignment-baseline');
+var _elm_lang$svg$Svg_Attributes$zoomAndPan = _elm_lang$virtual_dom$VirtualDom$attribute('zoomAndPan');
+var _elm_lang$svg$Svg_Attributes$z = _elm_lang$virtual_dom$VirtualDom$attribute('z');
+var _elm_lang$svg$Svg_Attributes$yChannelSelector = _elm_lang$virtual_dom$VirtualDom$attribute('yChannelSelector');
+var _elm_lang$svg$Svg_Attributes$y2 = _elm_lang$virtual_dom$VirtualDom$attribute('y2');
+var _elm_lang$svg$Svg_Attributes$y1 = _elm_lang$virtual_dom$VirtualDom$attribute('y1');
+var _elm_lang$svg$Svg_Attributes$y = _elm_lang$virtual_dom$VirtualDom$attribute('y');
+var _elm_lang$svg$Svg_Attributes$xmlSpace = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:space');
+var _elm_lang$svg$Svg_Attributes$xmlLang = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:lang');
+var _elm_lang$svg$Svg_Attributes$xmlBase = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:base');
+var _elm_lang$svg$Svg_Attributes$xlinkType = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:type');
+var _elm_lang$svg$Svg_Attributes$xlinkTitle = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:title');
+var _elm_lang$svg$Svg_Attributes$xlinkShow = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:show');
+var _elm_lang$svg$Svg_Attributes$xlinkRole = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:role');
+var _elm_lang$svg$Svg_Attributes$xlinkHref = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:href');
+var _elm_lang$svg$Svg_Attributes$xlinkArcrole = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:arcrole');
+var _elm_lang$svg$Svg_Attributes$xlinkActuate = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:actuate');
+var _elm_lang$svg$Svg_Attributes$xChannelSelector = _elm_lang$virtual_dom$VirtualDom$attribute('xChannelSelector');
+var _elm_lang$svg$Svg_Attributes$x2 = _elm_lang$virtual_dom$VirtualDom$attribute('x2');
+var _elm_lang$svg$Svg_Attributes$x1 = _elm_lang$virtual_dom$VirtualDom$attribute('x1');
+var _elm_lang$svg$Svg_Attributes$xHeight = _elm_lang$virtual_dom$VirtualDom$attribute('x-height');
+var _elm_lang$svg$Svg_Attributes$x = _elm_lang$virtual_dom$VirtualDom$attribute('x');
+var _elm_lang$svg$Svg_Attributes$widths = _elm_lang$virtual_dom$VirtualDom$attribute('widths');
+var _elm_lang$svg$Svg_Attributes$width = _elm_lang$virtual_dom$VirtualDom$attribute('width');
+var _elm_lang$svg$Svg_Attributes$viewTarget = _elm_lang$virtual_dom$VirtualDom$attribute('viewTarget');
+var _elm_lang$svg$Svg_Attributes$viewBox = _elm_lang$virtual_dom$VirtualDom$attribute('viewBox');
+var _elm_lang$svg$Svg_Attributes$vertOriginY = _elm_lang$virtual_dom$VirtualDom$attribute('vert-origin-y');
+var _elm_lang$svg$Svg_Attributes$vertOriginX = _elm_lang$virtual_dom$VirtualDom$attribute('vert-origin-x');
+var _elm_lang$svg$Svg_Attributes$vertAdvY = _elm_lang$virtual_dom$VirtualDom$attribute('vert-adv-y');
+var _elm_lang$svg$Svg_Attributes$version = _elm_lang$virtual_dom$VirtualDom$attribute('version');
+var _elm_lang$svg$Svg_Attributes$values = _elm_lang$virtual_dom$VirtualDom$attribute('values');
+var _elm_lang$svg$Svg_Attributes$vMathematical = _elm_lang$virtual_dom$VirtualDom$attribute('v-mathematical');
+var _elm_lang$svg$Svg_Attributes$vIdeographic = _elm_lang$virtual_dom$VirtualDom$attribute('v-ideographic');
+var _elm_lang$svg$Svg_Attributes$vHanging = _elm_lang$virtual_dom$VirtualDom$attribute('v-hanging');
+var _elm_lang$svg$Svg_Attributes$vAlphabetic = _elm_lang$virtual_dom$VirtualDom$attribute('v-alphabetic');
+var _elm_lang$svg$Svg_Attributes$unitsPerEm = _elm_lang$virtual_dom$VirtualDom$attribute('units-per-em');
+var _elm_lang$svg$Svg_Attributes$unicodeRange = _elm_lang$virtual_dom$VirtualDom$attribute('unicode-range');
+var _elm_lang$svg$Svg_Attributes$unicode = _elm_lang$virtual_dom$VirtualDom$attribute('unicode');
+var _elm_lang$svg$Svg_Attributes$underlineThickness = _elm_lang$virtual_dom$VirtualDom$attribute('underline-thickness');
+var _elm_lang$svg$Svg_Attributes$underlinePosition = _elm_lang$virtual_dom$VirtualDom$attribute('underline-position');
+var _elm_lang$svg$Svg_Attributes$u2 = _elm_lang$virtual_dom$VirtualDom$attribute('u2');
+var _elm_lang$svg$Svg_Attributes$u1 = _elm_lang$virtual_dom$VirtualDom$attribute('u1');
+var _elm_lang$svg$Svg_Attributes$type_ = _elm_lang$virtual_dom$VirtualDom$attribute('type');
+var _elm_lang$svg$Svg_Attributes$transform = _elm_lang$virtual_dom$VirtualDom$attribute('transform');
+var _elm_lang$svg$Svg_Attributes$to = _elm_lang$virtual_dom$VirtualDom$attribute('to');
+var _elm_lang$svg$Svg_Attributes$title = _elm_lang$virtual_dom$VirtualDom$attribute('title');
+var _elm_lang$svg$Svg_Attributes$textLength = _elm_lang$virtual_dom$VirtualDom$attribute('textLength');
+var _elm_lang$svg$Svg_Attributes$targetY = _elm_lang$virtual_dom$VirtualDom$attribute('targetY');
+var _elm_lang$svg$Svg_Attributes$targetX = _elm_lang$virtual_dom$VirtualDom$attribute('targetX');
+var _elm_lang$svg$Svg_Attributes$target = _elm_lang$virtual_dom$VirtualDom$attribute('target');
+var _elm_lang$svg$Svg_Attributes$tableValues = _elm_lang$virtual_dom$VirtualDom$attribute('tableValues');
+var _elm_lang$svg$Svg_Attributes$systemLanguage = _elm_lang$virtual_dom$VirtualDom$attribute('systemLanguage');
+var _elm_lang$svg$Svg_Attributes$surfaceScale = _elm_lang$virtual_dom$VirtualDom$attribute('surfaceScale');
+var _elm_lang$svg$Svg_Attributes$style = _elm_lang$virtual_dom$VirtualDom$attribute('style');
+var _elm_lang$svg$Svg_Attributes$string = _elm_lang$virtual_dom$VirtualDom$attribute('string');
+var _elm_lang$svg$Svg_Attributes$strikethroughThickness = _elm_lang$virtual_dom$VirtualDom$attribute('strikethrough-thickness');
+var _elm_lang$svg$Svg_Attributes$strikethroughPosition = _elm_lang$virtual_dom$VirtualDom$attribute('strikethrough-position');
+var _elm_lang$svg$Svg_Attributes$stitchTiles = _elm_lang$virtual_dom$VirtualDom$attribute('stitchTiles');
+var _elm_lang$svg$Svg_Attributes$stemv = _elm_lang$virtual_dom$VirtualDom$attribute('stemv');
+var _elm_lang$svg$Svg_Attributes$stemh = _elm_lang$virtual_dom$VirtualDom$attribute('stemh');
+var _elm_lang$svg$Svg_Attributes$stdDeviation = _elm_lang$virtual_dom$VirtualDom$attribute('stdDeviation');
+var _elm_lang$svg$Svg_Attributes$startOffset = _elm_lang$virtual_dom$VirtualDom$attribute('startOffset');
+var _elm_lang$svg$Svg_Attributes$spreadMethod = _elm_lang$virtual_dom$VirtualDom$attribute('spreadMethod');
+var _elm_lang$svg$Svg_Attributes$speed = _elm_lang$virtual_dom$VirtualDom$attribute('speed');
+var _elm_lang$svg$Svg_Attributes$specularExponent = _elm_lang$virtual_dom$VirtualDom$attribute('specularExponent');
+var _elm_lang$svg$Svg_Attributes$specularConstant = _elm_lang$virtual_dom$VirtualDom$attribute('specularConstant');
+var _elm_lang$svg$Svg_Attributes$spacing = _elm_lang$virtual_dom$VirtualDom$attribute('spacing');
+var _elm_lang$svg$Svg_Attributes$slope = _elm_lang$virtual_dom$VirtualDom$attribute('slope');
+var _elm_lang$svg$Svg_Attributes$seed = _elm_lang$virtual_dom$VirtualDom$attribute('seed');
+var _elm_lang$svg$Svg_Attributes$scale = _elm_lang$virtual_dom$VirtualDom$attribute('scale');
+var _elm_lang$svg$Svg_Attributes$ry = _elm_lang$virtual_dom$VirtualDom$attribute('ry');
+var _elm_lang$svg$Svg_Attributes$rx = _elm_lang$virtual_dom$VirtualDom$attribute('rx');
+var _elm_lang$svg$Svg_Attributes$rotate = _elm_lang$virtual_dom$VirtualDom$attribute('rotate');
+var _elm_lang$svg$Svg_Attributes$result = _elm_lang$virtual_dom$VirtualDom$attribute('result');
+var _elm_lang$svg$Svg_Attributes$restart = _elm_lang$virtual_dom$VirtualDom$attribute('restart');
+var _elm_lang$svg$Svg_Attributes$requiredFeatures = _elm_lang$virtual_dom$VirtualDom$attribute('requiredFeatures');
+var _elm_lang$svg$Svg_Attributes$requiredExtensions = _elm_lang$virtual_dom$VirtualDom$attribute('requiredExtensions');
+var _elm_lang$svg$Svg_Attributes$repeatDur = _elm_lang$virtual_dom$VirtualDom$attribute('repeatDur');
+var _elm_lang$svg$Svg_Attributes$repeatCount = _elm_lang$virtual_dom$VirtualDom$attribute('repeatCount');
+var _elm_lang$svg$Svg_Attributes$renderingIntent = _elm_lang$virtual_dom$VirtualDom$attribute('rendering-intent');
+var _elm_lang$svg$Svg_Attributes$refY = _elm_lang$virtual_dom$VirtualDom$attribute('refY');
+var _elm_lang$svg$Svg_Attributes$refX = _elm_lang$virtual_dom$VirtualDom$attribute('refX');
+var _elm_lang$svg$Svg_Attributes$radius = _elm_lang$virtual_dom$VirtualDom$attribute('radius');
+var _elm_lang$svg$Svg_Attributes$r = _elm_lang$virtual_dom$VirtualDom$attribute('r');
+var _elm_lang$svg$Svg_Attributes$primitiveUnits = _elm_lang$virtual_dom$VirtualDom$attribute('primitiveUnits');
+var _elm_lang$svg$Svg_Attributes$preserveAspectRatio = _elm_lang$virtual_dom$VirtualDom$attribute('preserveAspectRatio');
+var _elm_lang$svg$Svg_Attributes$preserveAlpha = _elm_lang$virtual_dom$VirtualDom$attribute('preserveAlpha');
+var _elm_lang$svg$Svg_Attributes$pointsAtZ = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtZ');
+var _elm_lang$svg$Svg_Attributes$pointsAtY = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtY');
+var _elm_lang$svg$Svg_Attributes$pointsAtX = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtX');
+var _elm_lang$svg$Svg_Attributes$points = _elm_lang$virtual_dom$VirtualDom$attribute('points');
+var _elm_lang$svg$Svg_Attributes$pointOrder = _elm_lang$virtual_dom$VirtualDom$attribute('point-order');
+var _elm_lang$svg$Svg_Attributes$patternUnits = _elm_lang$virtual_dom$VirtualDom$attribute('patternUnits');
+var _elm_lang$svg$Svg_Attributes$patternTransform = _elm_lang$virtual_dom$VirtualDom$attribute('patternTransform');
+var _elm_lang$svg$Svg_Attributes$patternContentUnits = _elm_lang$virtual_dom$VirtualDom$attribute('patternContentUnits');
+var _elm_lang$svg$Svg_Attributes$pathLength = _elm_lang$virtual_dom$VirtualDom$attribute('pathLength');
+var _elm_lang$svg$Svg_Attributes$path = _elm_lang$virtual_dom$VirtualDom$attribute('path');
+var _elm_lang$svg$Svg_Attributes$panose1 = _elm_lang$virtual_dom$VirtualDom$attribute('panose-1');
+var _elm_lang$svg$Svg_Attributes$overlineThickness = _elm_lang$virtual_dom$VirtualDom$attribute('overline-thickness');
+var _elm_lang$svg$Svg_Attributes$overlinePosition = _elm_lang$virtual_dom$VirtualDom$attribute('overline-position');
+var _elm_lang$svg$Svg_Attributes$origin = _elm_lang$virtual_dom$VirtualDom$attribute('origin');
+var _elm_lang$svg$Svg_Attributes$orientation = _elm_lang$virtual_dom$VirtualDom$attribute('orientation');
+var _elm_lang$svg$Svg_Attributes$orient = _elm_lang$virtual_dom$VirtualDom$attribute('orient');
+var _elm_lang$svg$Svg_Attributes$order = _elm_lang$virtual_dom$VirtualDom$attribute('order');
+var _elm_lang$svg$Svg_Attributes$operator = _elm_lang$virtual_dom$VirtualDom$attribute('operator');
+var _elm_lang$svg$Svg_Attributes$offset = _elm_lang$virtual_dom$VirtualDom$attribute('offset');
+var _elm_lang$svg$Svg_Attributes$numOctaves = _elm_lang$virtual_dom$VirtualDom$attribute('numOctaves');
+var _elm_lang$svg$Svg_Attributes$name = _elm_lang$virtual_dom$VirtualDom$attribute('name');
+var _elm_lang$svg$Svg_Attributes$mode = _elm_lang$virtual_dom$VirtualDom$attribute('mode');
+var _elm_lang$svg$Svg_Attributes$min = _elm_lang$virtual_dom$VirtualDom$attribute('min');
+var _elm_lang$svg$Svg_Attributes$method = _elm_lang$virtual_dom$VirtualDom$attribute('method');
+var _elm_lang$svg$Svg_Attributes$media = _elm_lang$virtual_dom$VirtualDom$attribute('media');
+var _elm_lang$svg$Svg_Attributes$max = _elm_lang$virtual_dom$VirtualDom$attribute('max');
+var _elm_lang$svg$Svg_Attributes$mathematical = _elm_lang$virtual_dom$VirtualDom$attribute('mathematical');
+var _elm_lang$svg$Svg_Attributes$maskUnits = _elm_lang$virtual_dom$VirtualDom$attribute('maskUnits');
+var _elm_lang$svg$Svg_Attributes$maskContentUnits = _elm_lang$virtual_dom$VirtualDom$attribute('maskContentUnits');
+var _elm_lang$svg$Svg_Attributes$markerWidth = _elm_lang$virtual_dom$VirtualDom$attribute('markerWidth');
+var _elm_lang$svg$Svg_Attributes$markerUnits = _elm_lang$virtual_dom$VirtualDom$attribute('markerUnits');
+var _elm_lang$svg$Svg_Attributes$markerHeight = _elm_lang$virtual_dom$VirtualDom$attribute('markerHeight');
+var _elm_lang$svg$Svg_Attributes$local = _elm_lang$virtual_dom$VirtualDom$attribute('local');
+var _elm_lang$svg$Svg_Attributes$limitingConeAngle = _elm_lang$virtual_dom$VirtualDom$attribute('limitingConeAngle');
+var _elm_lang$svg$Svg_Attributes$lengthAdjust = _elm_lang$virtual_dom$VirtualDom$attribute('lengthAdjust');
+var _elm_lang$svg$Svg_Attributes$lang = _elm_lang$virtual_dom$VirtualDom$attribute('lang');
+var _elm_lang$svg$Svg_Attributes$keyTimes = _elm_lang$virtual_dom$VirtualDom$attribute('keyTimes');
+var _elm_lang$svg$Svg_Attributes$keySplines = _elm_lang$virtual_dom$VirtualDom$attribute('keySplines');
+var _elm_lang$svg$Svg_Attributes$keyPoints = _elm_lang$virtual_dom$VirtualDom$attribute('keyPoints');
+var _elm_lang$svg$Svg_Attributes$kernelUnitLength = _elm_lang$virtual_dom$VirtualDom$attribute('kernelUnitLength');
+var _elm_lang$svg$Svg_Attributes$kernelMatrix = _elm_lang$virtual_dom$VirtualDom$attribute('kernelMatrix');
+var _elm_lang$svg$Svg_Attributes$k4 = _elm_lang$virtual_dom$VirtualDom$attribute('k4');
+var _elm_lang$svg$Svg_Attributes$k3 = _elm_lang$virtual_dom$VirtualDom$attribute('k3');
+var _elm_lang$svg$Svg_Attributes$k2 = _elm_lang$virtual_dom$VirtualDom$attribute('k2');
+var _elm_lang$svg$Svg_Attributes$k1 = _elm_lang$virtual_dom$VirtualDom$attribute('k1');
+var _elm_lang$svg$Svg_Attributes$k = _elm_lang$virtual_dom$VirtualDom$attribute('k');
+var _elm_lang$svg$Svg_Attributes$intercept = _elm_lang$virtual_dom$VirtualDom$attribute('intercept');
+var _elm_lang$svg$Svg_Attributes$in2 = _elm_lang$virtual_dom$VirtualDom$attribute('in2');
+var _elm_lang$svg$Svg_Attributes$in_ = _elm_lang$virtual_dom$VirtualDom$attribute('in');
+var _elm_lang$svg$Svg_Attributes$ideographic = _elm_lang$virtual_dom$VirtualDom$attribute('ideographic');
+var _elm_lang$svg$Svg_Attributes$id = _elm_lang$virtual_dom$VirtualDom$attribute('id');
+var _elm_lang$svg$Svg_Attributes$horizOriginY = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-origin-y');
+var _elm_lang$svg$Svg_Attributes$horizOriginX = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-origin-x');
+var _elm_lang$svg$Svg_Attributes$horizAdvX = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-adv-x');
+var _elm_lang$svg$Svg_Attributes$height = _elm_lang$virtual_dom$VirtualDom$attribute('height');
+var _elm_lang$svg$Svg_Attributes$hanging = _elm_lang$virtual_dom$VirtualDom$attribute('hanging');
+var _elm_lang$svg$Svg_Attributes$gradientUnits = _elm_lang$virtual_dom$VirtualDom$attribute('gradientUnits');
+var _elm_lang$svg$Svg_Attributes$gradientTransform = _elm_lang$virtual_dom$VirtualDom$attribute('gradientTransform');
+var _elm_lang$svg$Svg_Attributes$glyphRef = _elm_lang$virtual_dom$VirtualDom$attribute('glyphRef');
+var _elm_lang$svg$Svg_Attributes$glyphName = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-name');
+var _elm_lang$svg$Svg_Attributes$g2 = _elm_lang$virtual_dom$VirtualDom$attribute('g2');
+var _elm_lang$svg$Svg_Attributes$g1 = _elm_lang$virtual_dom$VirtualDom$attribute('g1');
+var _elm_lang$svg$Svg_Attributes$fy = _elm_lang$virtual_dom$VirtualDom$attribute('fy');
+var _elm_lang$svg$Svg_Attributes$fx = _elm_lang$virtual_dom$VirtualDom$attribute('fx');
+var _elm_lang$svg$Svg_Attributes$from = _elm_lang$virtual_dom$VirtualDom$attribute('from');
+var _elm_lang$svg$Svg_Attributes$format = _elm_lang$virtual_dom$VirtualDom$attribute('format');
+var _elm_lang$svg$Svg_Attributes$filterUnits = _elm_lang$virtual_dom$VirtualDom$attribute('filterUnits');
+var _elm_lang$svg$Svg_Attributes$filterRes = _elm_lang$virtual_dom$VirtualDom$attribute('filterRes');
+var _elm_lang$svg$Svg_Attributes$externalResourcesRequired = _elm_lang$virtual_dom$VirtualDom$attribute('externalResourcesRequired');
+var _elm_lang$svg$Svg_Attributes$exponent = _elm_lang$virtual_dom$VirtualDom$attribute('exponent');
+var _elm_lang$svg$Svg_Attributes$end = _elm_lang$virtual_dom$VirtualDom$attribute('end');
+var _elm_lang$svg$Svg_Attributes$elevation = _elm_lang$virtual_dom$VirtualDom$attribute('elevation');
+var _elm_lang$svg$Svg_Attributes$edgeMode = _elm_lang$virtual_dom$VirtualDom$attribute('edgeMode');
+var _elm_lang$svg$Svg_Attributes$dy = _elm_lang$virtual_dom$VirtualDom$attribute('dy');
+var _elm_lang$svg$Svg_Attributes$dx = _elm_lang$virtual_dom$VirtualDom$attribute('dx');
+var _elm_lang$svg$Svg_Attributes$dur = _elm_lang$virtual_dom$VirtualDom$attribute('dur');
+var _elm_lang$svg$Svg_Attributes$divisor = _elm_lang$virtual_dom$VirtualDom$attribute('divisor');
+var _elm_lang$svg$Svg_Attributes$diffuseConstant = _elm_lang$virtual_dom$VirtualDom$attribute('diffuseConstant');
+var _elm_lang$svg$Svg_Attributes$descent = _elm_lang$virtual_dom$VirtualDom$attribute('descent');
+var _elm_lang$svg$Svg_Attributes$decelerate = _elm_lang$virtual_dom$VirtualDom$attribute('decelerate');
+var _elm_lang$svg$Svg_Attributes$d = _elm_lang$virtual_dom$VirtualDom$attribute('d');
+var _elm_lang$svg$Svg_Attributes$cy = _elm_lang$virtual_dom$VirtualDom$attribute('cy');
+var _elm_lang$svg$Svg_Attributes$cx = _elm_lang$virtual_dom$VirtualDom$attribute('cx');
+var _elm_lang$svg$Svg_Attributes$contentStyleType = _elm_lang$virtual_dom$VirtualDom$attribute('contentStyleType');
+var _elm_lang$svg$Svg_Attributes$contentScriptType = _elm_lang$virtual_dom$VirtualDom$attribute('contentScriptType');
+var _elm_lang$svg$Svg_Attributes$clipPathUnits = _elm_lang$virtual_dom$VirtualDom$attribute('clipPathUnits');
+var _elm_lang$svg$Svg_Attributes$class = _elm_lang$virtual_dom$VirtualDom$attribute('class');
+var _elm_lang$svg$Svg_Attributes$capHeight = _elm_lang$virtual_dom$VirtualDom$attribute('cap-height');
+var _elm_lang$svg$Svg_Attributes$calcMode = _elm_lang$virtual_dom$VirtualDom$attribute('calcMode');
+var _elm_lang$svg$Svg_Attributes$by = _elm_lang$virtual_dom$VirtualDom$attribute('by');
+var _elm_lang$svg$Svg_Attributes$bias = _elm_lang$virtual_dom$VirtualDom$attribute('bias');
+var _elm_lang$svg$Svg_Attributes$begin = _elm_lang$virtual_dom$VirtualDom$attribute('begin');
+var _elm_lang$svg$Svg_Attributes$bbox = _elm_lang$virtual_dom$VirtualDom$attribute('bbox');
+var _elm_lang$svg$Svg_Attributes$baseProfile = _elm_lang$virtual_dom$VirtualDom$attribute('baseProfile');
+var _elm_lang$svg$Svg_Attributes$baseFrequency = _elm_lang$virtual_dom$VirtualDom$attribute('baseFrequency');
+var _elm_lang$svg$Svg_Attributes$azimuth = _elm_lang$virtual_dom$VirtualDom$attribute('azimuth');
+var _elm_lang$svg$Svg_Attributes$autoReverse = _elm_lang$virtual_dom$VirtualDom$attribute('autoReverse');
+var _elm_lang$svg$Svg_Attributes$attributeType = _elm_lang$virtual_dom$VirtualDom$attribute('attributeType');
+var _elm_lang$svg$Svg_Attributes$attributeName = _elm_lang$virtual_dom$VirtualDom$attribute('attributeName');
+var _elm_lang$svg$Svg_Attributes$ascent = _elm_lang$virtual_dom$VirtualDom$attribute('ascent');
+var _elm_lang$svg$Svg_Attributes$arabicForm = _elm_lang$virtual_dom$VirtualDom$attribute('arabic-form');
+var _elm_lang$svg$Svg_Attributes$amplitude = _elm_lang$virtual_dom$VirtualDom$attribute('amplitude');
+var _elm_lang$svg$Svg_Attributes$allowReorder = _elm_lang$virtual_dom$VirtualDom$attribute('allowReorder');
+var _elm_lang$svg$Svg_Attributes$alphabetic = _elm_lang$virtual_dom$VirtualDom$attribute('alphabetic');
+var _elm_lang$svg$Svg_Attributes$additive = _elm_lang$virtual_dom$VirtualDom$attribute('additive');
+var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$attribute('accumulate');
+var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
+var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
+
 var _user$project$Vec$touchesBound = F2(
 	function (b1, b2) {
 		return !((_elm_lang$core$Native_Utils.cmp(b1.x, b2.x + b2.w) > 0) || ((_elm_lang$core$Native_Utils.cmp(b1.y, b2.y + b2.h) > 0) || ((_elm_lang$core$Native_Utils.cmp(b1.x + b1.w, b2.x) < 0) || (_elm_lang$core$Native_Utils.cmp(b1.y + b1.h, b2.y) < 0))));
@@ -9106,7 +9447,11 @@ var _user$project$Main_Model$Model = function (a) {
 																		return function (s) {
 																			return function (t) {
 																				return function (u) {
-																					return {api: a, dir: b, pos1: c, pos2: d, mouseDown: e, ctrl: f, caller: g, files: h, showBound: i, bound: j, bounds: k, selected: l, drag: m, showContextMenu: n, selectedBin: o, filesAmount: p, progress: q, showNameDialog: r, name: s, clipboardDir: t, clipboardFiles: u};
+																					return function (v) {
+																						return function (w) {
+																							return {api: a, dir: b, open: c, load: d, pos1: e, pos2: f, mouseDown: g, ctrl: h, caller: i, files: j, showBound: k, bound: l, bounds: m, selected: n, drag: o, showContextMenu: p, selectedBin: q, filesAmount: r, progress: s, showNameDialog: t, name: u, clipboardDir: v, clipboardFiles: w};
+																						};
+																					};
 																				};
 																			};
 																		};
@@ -9183,23 +9528,94 @@ var _user$project$Main_Model$MouseDown = F3(
 	function (a, b, c) {
 		return {ctor: 'MouseDown', _0: a, _1: b, _2: c};
 	});
+var _user$project$Main_Model$Accept = {ctor: 'Accept'};
+var _user$project$Main_Model$Close = {ctor: 'Close'};
+var _user$project$Main_Model$Open = function (a) {
+	return {ctor: 'Open', _0: a};
+};
 
+var _user$project$Action$encodeFiles = function (files) {
+	return A2(
+		_elm_lang$core$String$join,
+		',',
+		A2(
+			_elm_lang$core$List$map,
+			function (_p0) {
+				return _elm_lang$http$Http$encodeUri(
+					function (_) {
+						return _.name;
+					}(_p0));
+			},
+			files));
+};
+var _user$project$Action$url = function (string) {
+	return A2(_elm_lang$http$Http$stringBody, 'application/x-www-form-urlencoded', string);
+};
+var _user$project$Action$delete = F3(
+	function (api, dir, files) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p1) {
+				return _user$project$Main_Model$EnvMsg(
+					_user$project$Main_Model$Refresh(_p1));
+			},
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'req=delete&dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&files=',
+								_user$project$Action$encodeFiles(files))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
+var _user$project$Action$newDir = F3(
+	function (api, dir, newDir) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p2) {
+				return _user$project$Main_Model$EnvMsg(
+					_user$project$Main_Model$Refresh(_p2));
+			},
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'req=newDir&dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&newDir=',
+								_elm_lang$http$Http$encodeUri(newDir))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
 var _user$project$Action$rename = F4(
 	function (api, dir, oldName, newName) {
 		return A2(
 			_elm_lang$http$Http$send,
-			function (_p0) {
+			function (_p3) {
 				return _user$project$Main_Model$EnvMsg(
-					_user$project$Main_Model$Refresh(_p0));
+					_user$project$Main_Model$Refresh(_p3));
 			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'?req=rename&dir=',
+						'req=rename&dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -9216,72 +9632,6 @@ var _user$project$Action$rename = F4(
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$Action$newDir = F3(
-	function (api, dir, newDir) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p1) {
-				return _user$project$Main_Model$EnvMsg(
-					_user$project$Main_Model$Refresh(_p1));
-			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'?req=newDir&dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&newDir=',
-								_elm_lang$http$Http$encodeUri(newDir))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
-var _user$project$Action$encodeFiles = function (files) {
-	return A2(
-		_elm_lang$core$String$join,
-		',',
-		A2(
-			_elm_lang$core$List$map,
-			function (_p2) {
-				return _elm_lang$http$Http$encodeUri(
-					function (_) {
-						return _.name;
-					}(_p2));
-			},
-			files));
-};
-var _user$project$Action$delete = F3(
-	function (api, dir, files) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p3) {
-				return _user$project$Main_Model$EnvMsg(
-					_user$project$Main_Model$Refresh(_p3));
-			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'?req=delete&dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&files=',
-								_user$project$Action$encodeFiles(files))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
 var _user$project$Action$move = F4(
 	function (api, srcDir, files, dstDir) {
 		return A2(
@@ -9290,14 +9640,13 @@ var _user$project$Action$move = F4(
 				return _user$project$Main_Model$EnvMsg(
 					_user$project$Main_Model$Refresh(_p4));
 			},
-			A2(
-				_elm_lang$http$Http$get,
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					api,
+			A3(
+				_elm_lang$http$Http$post,
+				api,
+				_user$project$Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'?req=move&srcDir=',
+						'req=move&srcDir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(srcDir),
@@ -9387,6 +9736,18 @@ var _user$project$Port$uploaded = _elm_lang$core$Native_Platform.incomingPort(
 		{ctor: '_Tuple0'}));
 var _user$project$Port$download = _elm_lang$core$Native_Platform.outgoingPort(
 	'download',
+	function (v) {
+		return _elm_lang$core$Native_List.toArray(v).map(
+			function (v) {
+				return v;
+			});
+	});
+var _user$project$Port$open = _elm_lang$core$Native_Platform.incomingPort(
+	'open',
+	_elm_lang$core$Json_Decode$null(
+		{ctor: '_Tuple0'}));
+var _user$project$Port$close = _elm_lang$core$Native_Platform.outgoingPort(
+	'close',
 	function (v) {
 		return _elm_lang$core$Native_List.toArray(v).map(
 			function (v) {
@@ -9517,31 +9878,76 @@ var _user$project$Env$handleEnvMsg = F2(
 	function (msg, model) {
 		var _p0 = msg;
 		switch (_p0.ctor) {
+			case 'Open':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{open: true}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Close':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							open: false,
+							selected: {ctor: '[]'}
+						}),
+					_1: _user$project$Port$close(
+						{ctor: '[]'})
+				};
+			case 'Accept':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							open: false,
+							selected: {ctor: '[]'}
+						}),
+					_1: _user$project$Port$close(
+						A2(
+							_elm_lang$core$List$map,
+							function (_p1) {
+								return A2(
+									F2(
+										function (x, y) {
+											return A2(_elm_lang$core$Basics_ops['++'], x, y);
+										}),
+									model.dir,
+									function (_) {
+										return _.name;
+									}(_p1));
+							},
+							model.selected))
+				};
 			case 'MouseDown':
-				var _p4 = _p0._0;
-				var _p3 = _p0._2;
+				var _p5 = _p0._0;
+				var _p4 = _p0._2;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							mouseDown: true,
-							ctrl: _p3,
-							caller: _p4,
+							ctrl: _p4,
+							caller: _p5,
 							pos1: _p0._1,
 							selected: function () {
-								var _p1 = _p4;
-								if (_p1.ctor === 'Just') {
-									var _p2 = _p1._0;
-									return A2(_elm_lang$core$List$member, _p2, model.selected) ? (_p3 ? A2(
+								var _p2 = _p5;
+								if (_p2.ctor === 'Just') {
+									var _p3 = _p2._0;
+									return A2(_elm_lang$core$List$member, _p3, model.selected) ? (_p4 ? A2(
 										_elm_lang$core$List$filter,
 										F2(
 											function (x, y) {
 												return !_elm_lang$core$Native_Utils.eq(x, y);
-											})(_p2),
-										model.selected) : model.selected) : (_p3 ? {ctor: '::', _0: _p2, _1: model.selected} : {
+											})(_p3),
+										model.selected) : model.selected) : (_p4 ? {ctor: '::', _0: _p3, _1: model.selected} : {
 										ctor: '::',
-										_0: _p2,
+										_0: _p3,
 										_1: {ctor: '[]'}
 									});
 								} else {
@@ -9562,23 +9968,23 @@ var _user$project$Env$handleEnvMsg = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseMove':
-				var _p6 = _p0._0;
+				var _p7 = _p0._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							pos2: _p6,
-							showBound: model.mouseDown && function (_p5) {
-								return !_user$project$Util$isJust(_p5);
+							pos2: _p7,
+							showBound: model.mouseDown && function (_p6) {
+								return !_user$project$Util$isJust(_p6);
 							}(model.caller),
-							bound: A2(_user$project$Vec$toBound, model.pos1, _p6),
-							drag: model.mouseDown && (_user$project$Util$isJust(model.caller) && A2(_user$project$Vec$isFar, model.pos1, _p6))
+							bound: A2(_user$project$Vec$toBound, model.pos1, _p7),
+							drag: model.mouseDown && (_user$project$Util$isJust(model.caller) && (A2(_user$project$Vec$isFar, model.pos1, _p7) && (_elm_lang$core$Native_Utils.cmp(model.filesAmount, 0) < 1)))
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseUp':
-				var _p12 = _p0._0;
+				var _p13 = _p0._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -9592,19 +9998,19 @@ var _user$project$Env$handleEnvMsg = F2(
 										_elm_lang$core$Tuple$second,
 										A2(
 											_elm_lang$core$List$filter,
-											function (_p7) {
+											function (_p8) {
 												return A2(
 													_user$project$Vec$touchesBound,
 													model.bound,
-													_elm_lang$core$Tuple$first(_p7));
+													_elm_lang$core$Tuple$first(_p8));
 											},
 											A2(_user$project$Util$zip, model.bounds, model.files)));
 								} else {
-									var _p8 = _p12;
-									if (_p8.ctor === 'Just') {
+									var _p9 = _p13;
+									if (_p9.ctor === 'Just') {
 										return (model.drag || model.ctrl) ? model.selected : {
 											ctor: '::',
-											_0: _p8._0,
+											_0: _p9._0,
 											_1: {ctor: '[]'}
 										};
 									} else {
@@ -9615,11 +10021,11 @@ var _user$project$Env$handleEnvMsg = F2(
 							selectedBin: model.selected
 						}),
 					_1: function () {
-						var _p9 = _p12;
-						if (_p9.ctor === 'Just') {
-							var _p11 = _p9._0;
-							return (model.drag && (_p11.isDir && function (_p10) {
-								return !A2(_elm_lang$core$List$member, _p11, _p10);
+						var _p10 = _p13;
+						if (_p10.ctor === 'Just') {
+							var _p12 = _p10._0;
+							return (model.drag && (_p12.isDir && function (_p11) {
+								return !A2(_elm_lang$core$List$member, _p12, _p11);
 							}(model.selected))) ? A4(
 								_user$project$Action$move,
 								model.api,
@@ -9628,30 +10034,30 @@ var _user$project$Env$handleEnvMsg = F2(
 								A2(
 									_elm_lang$core$Basics_ops['++'],
 									'/',
-									A2(_elm_lang$core$Basics_ops['++'], _p11.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
+									A2(_elm_lang$core$Basics_ops['++'], _p12.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
 						} else {
 							return _elm_lang$core$Platform_Cmd$none;
 						}
 					}()
 				};
 			case 'ContextMenu':
-				var _p15 = _p0._0;
+				var _p16 = _p0._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							showContextMenu: function () {
-								var _p13 = _p15;
-								if (_p13.ctor === 'Just') {
-									return !(_elm_lang$core$Native_Utils.eq(model.dir, model.clipboardDir) && A2(_elm_lang$core$List$member, _p13._0, model.clipboardFiles));
+								var _p14 = _p16;
+								if (_p14.ctor === 'Just') {
+									return !(_elm_lang$core$Native_Utils.eq(model.dir, model.clipboardDir) && A2(_elm_lang$core$List$member, _p14._0, model.clipboardFiles));
 								} else {
 									return true;
 								}
 							}(),
 							selected: function () {
-								var _p14 = _p15;
-								if (_p14.ctor === 'Just') {
+								var _p15 = _p16;
+								if (_p15.ctor === 'Just') {
 									return model.selectedBin;
 								} else {
 									return {ctor: '[]'};
@@ -9661,27 +10067,29 @@ var _user$project$Env$handleEnvMsg = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'GetLs':
-				var _p16 = _p0._0;
+				var _p17 = _p0._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							dir: _p16,
-							files: {ctor: '[]'}
+							dir: _p17,
+							files: {ctor: '[]'},
+							load: true
 						}),
-					_1: A2(_user$project$Action$getLs, model.api, _p16)
+					_1: A2(_user$project$Action$getLs, model.api, _p17)
 				};
 			case 'LsGotten':
-				var _p17 = _p0._0;
-				if (_p17.ctor === 'Ok') {
+				var _p18 = _p0._0;
+				if (_p18.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								files: _p17._0,
-								selected: {ctor: '[]'}
+								files: _p18._0,
+								selected: {ctor: '[]'},
+								load: false
 							}),
 						_1: _elm_lang$core$Platform_Cmd$none
 					};
@@ -9689,8 +10097,8 @@ var _user$project$Env$handleEnvMsg = F2(
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 				}
 			default:
-				var _p18 = _p0._0;
-				if (_p18.ctor === 'Ok') {
+				var _p19 = _p0._0;
+				if (_p19.ctor === 'Ok') {
 					return {
 						ctor: '_Tuple2',
 						_0: model,
@@ -9845,7 +10253,7 @@ var _user$project$Main_Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{showNameDialog: false}),
+						{showNameDialog: false, load: true}),
 					_1: A3(_user$project$Action$newDir, model.api, model.dir, model.name)
 				};
 			case 'Download':
@@ -9882,7 +10290,7 @@ var _user$project$Main_Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{showNameDialog: false}),
+						{showNameDialog: false, load: true}),
 					_1: function () {
 						var _p4 = model.caller;
 						if (_p4.ctor === 'Just') {
@@ -9907,7 +10315,8 @@ var _user$project$Main_Update$update = F2(
 						model,
 						{
 							clipboardFiles: {ctor: '[]'},
-							showContextMenu: false
+							showContextMenu: false,
+							load: true
 						}),
 					_1: function () {
 						var _p5 = model.caller;
@@ -9923,7 +10332,7 @@ var _user$project$Main_Update$update = F2(
 									model.dir,
 									A2(_elm_lang$core$Basics_ops['++'], _p6.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
 						} else {
-							return _elm_lang$core$Platform_Cmd$none;
+							return A4(_user$project$Action$move, model.api, model.clipboardDir, model.clipboardFiles, model.dir);
 						}
 					}()
 				};
@@ -9932,7 +10341,7 @@ var _user$project$Main_Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{showContextMenu: false}),
+						{showContextMenu: false, load: true}),
 					_1: A3(_user$project$Action$delete, model.api, model.dir, model.selected)
 				};
 			default:
@@ -9951,6 +10360,8 @@ var _user$project$Main_Update$init = function (_p7) {
 		{
 			api: _p9,
 			dir: _p10,
+			open: false,
+			load: false,
 			pos1: A2(_user$project$Vec$Vec2, 0, 0),
 			pos2: A2(_user$project$Vec$Vec2, 0, 0),
 			mouseDown: false,
@@ -10089,56 +10500,50 @@ var _user$project$Main_View$toPx = function (n) {
 		_elm_lang$core$Basics$toString(n),
 		'px');
 };
-var _user$project$Main_View$renderCount = function (model) {
-	return model.drag ? A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$id('count'),
-			_1: {
+var _user$project$Main_View$renderCount = F2(
+	function (_p0, selected) {
+		var _p1 = _p0;
+		return A2(
+			_elm_lang$html$Html$div,
+			{
 				ctor: '::',
-				_0: function () {
-					var _p0 = model.pos2;
-					var x = _p0._0;
-					var y = _p0._1;
-					return _elm_lang$html$Html_Attributes$style(
+				_0: _elm_lang$html$Html_Attributes$id('count'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
 						{
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
 								_0: 'left',
-								_1: _user$project$Main_View$toPx(x + 5)
+								_1: _user$project$Main_View$toPx(_p1._0 + 5)
 							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple2',
 									_0: 'top',
-									_1: _user$project$Main_View$toPx(y - 25)
+									_1: _user$project$Main_View$toPx(_p1._1 - 25)
 								},
 								_1: {ctor: '[]'}
 							}
-						});
-				}(),
+						}),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(
+					_elm_lang$core$Basics$toString(
+						_elm_lang$core$List$length(selected))),
 				_1: {ctor: '[]'}
-			}
-		},
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html$text(
-				_elm_lang$core$Basics$toString(
-					_elm_lang$core$List$length(model.selected))),
-			_1: {ctor: '[]'}
-		}) : A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{ctor: '[]'});
-};
+			});
+	});
 var _user$project$Main_View$contextMenu = F5(
-	function (_p1, maybe, paste, many, filesAmount) {
-		var _p2 = _p1;
-		var _p6 = _p2._1;
-		var _p5 = _p2._0;
+	function (_p2, maybe, paste, many, filesAmount) {
+		var _p3 = _p2;
+		var _p6 = _p3._1;
+		var _p5 = _p3._0;
 		return (_elm_lang$core$Native_Utils.cmp(filesAmount, 0) > 0) ? A2(
 			_elm_lang$html$Html$div,
 			{
@@ -10219,9 +10624,8 @@ var _user$project$Main_View$contextMenu = F5(
 				}
 			},
 			function () {
-				var _p3 = maybe;
-				if (_p3.ctor === 'Just') {
-					var _p4 = _p3._0;
+				var _p4 = maybe;
+				if (_p4.ctor === 'Just') {
 					return {
 						ctor: '::',
 						_0: A2(
@@ -10248,17 +10652,16 @@ var _user$project$Main_View$contextMenu = F5(
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$button,
-								{
+								many ? {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class(
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											'div white',
-											many ? ' disabled' : '')),
+									_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
+									_1: {ctor: '[]'}
+								} : {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('div white'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(
-											many ? _user$project$Main_Model$None : _user$project$Main_Model$OpenNameDialog),
+										_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$OpenNameDialog),
 										_1: {ctor: '[]'}
 									}
 								},
@@ -10297,19 +10700,18 @@ var _user$project$Main_View$contextMenu = F5(
 									ctor: '::',
 									_0: A2(
 										_elm_lang$html$Html$button,
-										{
+										(paste && _p4._0.isDir) ? {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class(
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													'div white',
-													(paste && _p4.isDir) ? '' : ' disabled')),
+											_0: _elm_lang$html$Html_Attributes$class('div white'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(
-													(paste && _p4.isDir) ? _user$project$Main_Model$Paste : _user$project$Main_Model$None),
+												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Paste),
 												_1: {ctor: '[]'}
 											}
+										} : {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
+											_1: {ctor: '[]'}
 										},
 										{
 											ctor: '::',
@@ -10353,15 +10755,7 @@ var _user$project$Main_View$contextMenu = F5(
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$label,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('button white'),
-								_1: {
-									ctor: '::',
-									_0: _user$project$Events$onChange(_user$project$Main_Model$Upload),
-									_1: {ctor: '[]'}
-								}
-							},
+							{ctor: '[]'},
 							{
 								ctor: '::',
 								_0: A2(
@@ -10375,7 +10769,11 @@ var _user$project$Main_View$contextMenu = F5(
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$multiple(true),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: _user$project$Events$onChange(_user$project$Main_Model$Upload),
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									},
@@ -10416,19 +10814,18 @@ var _user$project$Main_View$contextMenu = F5(
 								ctor: '::',
 								_0: A2(
 									_elm_lang$html$Html$button,
-									{
+									paste ? {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class(
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												'div white',
-												paste ? '' : ' disabled')),
+										_0: _elm_lang$html$Html_Attributes$class('div white'),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(
-												paste ? _user$project$Main_Model$Paste : _user$project$Main_Model$None),
+											_0: _elm_lang$html$Html_Events$onClick(_user$project$Main_Model$Paste),
 											_1: {ctor: '[]'}
 										}
+									} : {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
+										_1: {ctor: '[]'}
 									},
 									{
 										ctor: '::',
@@ -10446,57 +10843,51 @@ var _user$project$Main_View$contextMenu = F5(
 				}
 			}());
 	});
-var _user$project$Main_View$renderHelper = function (model) {
-	return model.showBound ? A2(
+var _user$project$Main_View$renderHelper = function (b) {
+	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
 			_0: _elm_lang$html$Html_Attributes$id('helper'),
 			_1: {
 				ctor: '::',
-				_0: function () {
-					var b = model.bound;
-					return _elm_lang$html$Html_Attributes$style(
-						{
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'left',
+							_1: _user$project$Main_View$toPx(b.x)
+						},
+						_1: {
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: 'left',
-								_1: _user$project$Main_View$toPx(b.x)
+								_0: 'top',
+								_1: _user$project$Main_View$toPx(b.y)
 							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple2',
-									_0: 'top',
-									_1: _user$project$Main_View$toPx(b.y)
+									_0: 'width',
+									_1: _user$project$Main_View$toPx(b.w)
 								},
 								_1: {
 									ctor: '::',
 									_0: {
 										ctor: '_Tuple2',
-										_0: 'width',
-										_1: _user$project$Main_View$toPx(b.w)
+										_0: 'height',
+										_1: _user$project$Main_View$toPx(b.h)
 									},
-									_1: {
-										ctor: '::',
-										_0: {
-											ctor: '_Tuple2',
-											_0: 'height',
-											_1: _user$project$Main_View$toPx(b.h)
-										},
-										_1: {ctor: '[]'}
-									}
+									_1: {ctor: '[]'}
 								}
 							}
-						});
-				}(),
+						}
+					}),
 				_1: {ctor: '[]'}
 			}
 		},
-		{ctor: '[]'}) : A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
 		{ctor: '[]'});
 };
 var _user$project$Main_View$getExt = function (name) {
@@ -10532,7 +10923,7 @@ var _user$project$Main_View$renderFileThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('full bg'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb bg'),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$style(
@@ -10570,7 +10961,7 @@ var _user$project$Main_View$renderFileThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('icon-thumb icon-file'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb icon-file'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -10593,7 +10984,7 @@ var _user$project$Main_View$renderThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('icon-thumb icon-folder'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb icon-folder'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -10670,18 +11061,7 @@ var _user$project$Main_View$renderFile = F3(
 			},
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('thumb'),
-						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: A3(_user$project$Main_View$renderThumb, _p10.api, _p11, file),
-						_1: {ctor: '[]'}
-					}),
+				_0: A3(_user$project$Main_View$renderThumb, _p10.api, _p11, file),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -10706,7 +11086,7 @@ var _user$project$Main_View$renderUploading = F2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('file'),
+				_0: _elm_lang$html$Html_Attributes$class('file upload'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -10715,7 +11095,7 @@ var _user$project$Main_View$renderUploading = F2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('thumb uploading'),
+						_0: _elm_lang$html$Html_Attributes$class('thumb'),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -10724,7 +11104,7 @@ var _user$project$Main_View$renderUploading = F2(
 							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('bar'),
+								_0: _elm_lang$html$Html_Attributes$id('progress'),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$style(
@@ -10780,14 +11160,38 @@ var _user$project$Main_View$back = function (route) {
 var _user$project$Main_View$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
-		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('file-manager'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$style(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'display',
+							_1: model.open ? 'grid' : 'none'
+						},
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$Events$onMouseMove(
+						function (_p12) {
+							return _user$project$Main_Model$None;
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
 		{
 			ctor: '::',
 			_0: A2(
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$id('route'),
+					_0: _elm_lang$html$Html_Attributes$id('bar'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -10813,7 +11217,44 @@ var _user$project$Main_View$view = function (model) {
 								_0: _elm_lang$html$Html$text(model.dir),
 								_1: {ctor: '[]'}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: model.load ? A2(
+								_elm_lang$svg$Svg$svg,
+								{
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$width('25'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$height('25'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$svg$Svg$circle,
+										{
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$cx('50%'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$svg$Svg_Attributes$cy('50%'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$svg$Svg_Attributes$r('40%'),
+													_1: {ctor: '[]'}
+												}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}) : A2(
+								_elm_lang$html$Html$div,
+								{ctor: '[]'},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}),
 			_1: {
@@ -10838,9 +11279,9 @@ var _user$project$Main_View$view = function (model) {
 								_1: {
 									ctor: '::',
 									_0: _user$project$Events$onMouseMove(
-										function (_p12) {
+										function (_p13) {
 											return _user$project$Main_Model$EnvMsg(
-												_user$project$Main_Model$MouseMove(_p12));
+												_user$project$Main_Model$MouseMove(_p13));
 										}),
 									_1: {
 										ctor: '::',
@@ -10863,62 +11304,107 @@ var _user$project$Main_View$view = function (model) {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
-							{ctor: '[]'},
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$List$reverse(
-									A2(
-										_elm_lang$core$List$map,
-										_user$project$Main_View$renderUploading(model.progress),
-										A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('drop'),
+								_1: {ctor: '[]'}
+							},
+							{ctor: '[]'}),
+						_1: A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$List$reverse(
 								A2(
-									_elm_lang$core$List$indexedMap,
-									_user$project$Main_View$renderFile(model),
-									model.files))),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$div,
-								{ctor: '[]'},
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html$text(
-										_elm_lang$core$Basics$toString(model)),
-									_1: {ctor: '[]'}
-								}),
-							_1: {ctor: '[]'}
-						}
+									_elm_lang$core$List$map,
+									_user$project$Main_View$renderUploading(model.progress),
+									A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
+							A2(
+								_elm_lang$core$List$indexedMap,
+								_user$project$Main_View$renderFile(model),
+								model.files))
 					}),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Main_View$renderHelper(model),
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('control'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$button,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('alert right'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Main_Model$EnvMsg(_user$project$Main_Model$Close)),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Cancelar'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Main_Model$EnvMsg(_user$project$Main_Model$Accept)),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Aceptar'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Main_View$renderCount(model),
+						_0: model.showBound ? _user$project$Main_View$renderHelper(model.bound) : A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{ctor: '[]'}),
 						_1: {
 							ctor: '::',
-							_0: model.showContextMenu ? A5(
-								_user$project$Main_View$contextMenu,
-								model.pos1,
-								model.caller,
-								!_elm_lang$core$List$isEmpty(model.clipboardFiles),
-								_elm_lang$core$Native_Utils.cmp(
-									_elm_lang$core$List$length(model.selected),
-									1) > 0,
-								model.filesAmount) : A2(
+							_0: model.drag ? A2(_user$project$Main_View$renderCount, model.pos2, model.selected) : A2(
 								_elm_lang$html$Html$div,
 								{ctor: '[]'},
 								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
-								_0: model.showNameDialog ? A2(
-									_user$project$Main_View$nameDialog,
-									model.name,
-									!_user$project$Util$isJust(model.caller)) : A2(
+								_0: model.showContextMenu ? A5(
+									_user$project$Main_View$contextMenu,
+									model.pos1,
+									model.caller,
+									!_elm_lang$core$List$isEmpty(model.clipboardFiles),
+									_elm_lang$core$Native_Utils.cmp(
+										_elm_lang$core$List$length(model.selected),
+										1) > 0,
+									model.filesAmount) : A2(
 									_elm_lang$html$Html$div,
 									{ctor: '[]'},
 									{ctor: '[]'}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: model.showNameDialog ? A2(
+										_user$project$Main_View$nameDialog,
+										model.name,
+										!_user$project$Util$isJust(model.caller)) : A2(
+										_elm_lang$html$Html$div,
+										{ctor: '[]'},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}
 							}
 						}
 					}
@@ -10931,21 +11417,29 @@ var _user$project$Main$subscriptions = function (_p0) {
 	return _elm_lang$core$Platform_Sub$batch(
 		{
 			ctor: '::',
-			_0: _user$project$Port$boundsGotten(
+			_0: _user$project$Port$open(
 				function (_p1) {
 					return _user$project$Main_Model$EnvMsg(
-						_user$project$Main_Model$BoundsGotten(_p1));
+						_user$project$Main_Model$Open(_p1));
 				}),
 			_1: {
 				ctor: '::',
-				_0: _user$project$Port$filesAmount(_user$project$Main_Model$FilesAmount),
+				_0: _user$project$Port$boundsGotten(
+					function (_p2) {
+						return _user$project$Main_Model$EnvMsg(
+							_user$project$Main_Model$BoundsGotten(_p2));
+					}),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Port$progress(_user$project$Main_Model$Progress),
+					_0: _user$project$Port$filesAmount(_user$project$Main_Model$FilesAmount),
 					_1: {
 						ctor: '::',
-						_0: _user$project$Port$uploaded(_user$project$Main_Model$Uploaded),
-						_1: {ctor: '[]'}
+						_0: _user$project$Port$progress(_user$project$Main_Model$Progress),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Port$uploaded(_user$project$Main_Model$Uploaded),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}

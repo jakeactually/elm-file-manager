@@ -83,7 +83,7 @@ var _user$project$Main_Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{showNameDialog: false}),
+						{showNameDialog: false, load: true}),
 					_1: A3(_user$project$Action$newDir, model.api, model.dir, model.name)
 				};
 			case 'Download':
@@ -120,7 +120,7 @@ var _user$project$Main_Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{showNameDialog: false}),
+						{showNameDialog: false, load: true}),
 					_1: function () {
 						var _p4 = model.caller;
 						if (_p4.ctor === 'Just') {
@@ -145,7 +145,8 @@ var _user$project$Main_Update$update = F2(
 						model,
 						{
 							clipboardFiles: {ctor: '[]'},
-							showContextMenu: false
+							showContextMenu: false,
+							load: true
 						}),
 					_1: function () {
 						var _p5 = model.caller;
@@ -161,7 +162,7 @@ var _user$project$Main_Update$update = F2(
 									model.dir,
 									A2(_elm_lang$core$Basics_ops['++'], _p6.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
 						} else {
-							return _elm_lang$core$Platform_Cmd$none;
+							return A4(_user$project$Action$move, model.api, model.clipboardDir, model.clipboardFiles, model.dir);
 						}
 					}()
 				};
@@ -170,7 +171,7 @@ var _user$project$Main_Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{showContextMenu: false}),
+						{showContextMenu: false, load: true}),
 					_1: A3(_user$project$Action$delete, model.api, model.dir, model.selected)
 				};
 			default:
@@ -189,6 +190,8 @@ var _user$project$Main_Update$init = function (_p7) {
 		{
 			api: _p9,
 			dir: _p10,
+			open: false,
+			load: false,
 			pos1: A2(_user$project$Vec$Vec2, 0, 0),
 			pos2: A2(_user$project$Vec$Vec2, 0, 0),
 			mouseDown: false,

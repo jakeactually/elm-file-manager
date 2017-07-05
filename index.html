@@ -14,16 +14,27 @@
 </head>
 <body>
 
+    <button onclick="app.ports.open.send(null);" style="margin: 25px;">Elegir archivo</button>
+    <div id="text" style="margin-left: 25px;"></div>
     <div id="fm"></div>
 
     <script>
-        const fm = document.querySelector('#fm');
+        // Main
+
+        const fm = document.querySelector("#fm");
         const api_ = "http://localhost/api.php";
         const dir_ = "/"
         const app = Elm.Main.embed(fm, { api_, dir_ });
 
+        app.ports.open.send(null);
+        app.ports.close.subscribe(files => {
+            document.querySelector('#text').innerText = files.join(", ");
+        });
+
+        // Dependencies
+
         app.ports.getBounds.subscribe(() => {
-            const els = Array.from(document.querySelectorAll('.file'));
+            const els = Array.from(document.querySelectorAll('.file:not(.upload)'));
             const bounds = els.map(el => {
                 const bound = el.getBoundingClientRect();
                 return {
@@ -35,6 +46,26 @@
             });
             app.ports.boundsGotten.send(bounds);
         });
+
+        let observer = new MutationObserver(() => {
+            const files = document.body.querySelector('#files');
+            if (files) {
+                const drop = files.querySelector('#drop');
+                files.ondragenter = ev => drop.style.display = "block";
+                drop.ondragleave = () => drop.style.display = "none";
+                drop.ondragover= ev => ev.preventDefault();
+                drop.ondrop = ev => {
+                    ev.preventDefault();
+                    drop.style.display = "none";
+                    const dir = document.querySelector('#bar .text').innerText;
+                    const files_ = Array.from(ev.dataTransfer.files);
+                    app.ports.filesAmount.send(files_.length);
+                    upload(dir, files_);
+                };
+                observer = null;
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
 
         app.ports.upload.subscribe(dir => {
             const input = document.querySelector('#file-input');

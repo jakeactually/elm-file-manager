@@ -12,6 +12,8 @@ init : Flags -> (Model, Cmd Msg)
 init { api_, dir_ } = (,)
   { api = api_
   , dir = dir_
+  , open = False
+  , load = False
   , pos1 = Vec2 0 0
   , pos2 = Vec2 0 0
   , mouseDown = False
@@ -54,11 +56,12 @@ update msg model = case msg of
     )
   CloseNameDialog -> ({ model | showNameDialog = False }, Cmd.none)
   Name name -> ({ model | name = name }, Cmd.none)
-  NewDir -> ({ model | showNameDialog = False }, newDir model.api model.dir model.name)
+  NewDir -> ({ model | showNameDialog = False, load = True }, newDir model.api model.dir model.name)
   Download -> ({ model | showContextMenu = False }, download <| map ((++) model.dir << .name) <| filter (not << .isDir) model.selected)
   Rename ->
     ( { model
       | showNameDialog = False
+      , load = True
       },
       case model.caller of
         Just file -> Action.rename model.api model.dir file.name model.name
@@ -69,12 +72,13 @@ update msg model = case msg of
     ( { model
       | clipboardFiles = []
       , showContextMenu = False
+      , load = True
       }
       , case model.caller of
           Just file -> if file.isDir
             then move model.api model.clipboardDir model.clipboardFiles <| model.dir ++ file.name ++ "/"
             else Cmd.none
-          Nothing -> Cmd.none
+          Nothing -> move model.api model.clipboardDir model.clipboardFiles model.dir
     )
-  Delete -> ({ model | showContextMenu = False }, delete model.api model.dir model.selected)
+  Delete -> ({ model | showContextMenu = False, load = True }, delete model.api model.dir model.selected)
   None -> (model, Cmd.none)

@@ -9,14 +9,25 @@ import List exposing (head, indexedMap, isEmpty, length, map, member, range, rep
 import Main.Model exposing (..)
 import Maybe exposing (andThen, withDefault)
 import String exposing (join, split)
+import Svg exposing (svg, circle)
+import Svg.Attributes exposing (width, height, cx, cy, r)
 import Util exposing (icon, icon2, isJust)
 import Vec exposing (..)
 
 view : Model -> Html Msg
-view model = div []
-  [ div [ id "route" ]
+view model = div
+  [ id "file-manager"
+  , style [("display", if model.open then "grid" else "none")]
+  , onMouseMove (\_ -> None)
+  ]
+  [ div [ id "bar" ]
       [ icon "arrow_back" "Regresar" <| EnvMsg <| GetLs <| back model.dir
       , div [ class "text" ] [ text model.dir ]
+      , if model.load
+          then svg [ width "25", height "25" ]
+            [ circle [ cx "50%", cy "50%", r "40%"] []
+            ]
+          else div [] []
       ]
   , div
       [ id "files"
@@ -26,11 +37,15 @@ view model = div []
       , onMouseUp <| EnvMsg <|  MouseUp Nothing
       , onContextMenu <| EnvMsg <| ContextMenu Nothing
       ]
-      [ div [] <| reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1)) ++ indexedMap (renderFile model) model.files
-      , div [] [ text <| toString model ]
-      ]
-  , renderHelper model
-  , renderCount model
+      <| div [ id "drop"] []
+      :: reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
+      ++ indexedMap (renderFile model) model.files
+  , div [ id "control" ]
+    [ button [ class "alert right", onClick <| EnvMsg Close ] [ text "Cancelar" ]
+    , button [ onClick <| EnvMsg Accept ] [ text "Aceptar" ]
+    ]
+  , if model.showBound then renderHelper model.bound else div [] []
+  , if model.drag then renderCount model.pos2 model.selected else div [] []
   , if model.showContextMenu
       then contextMenu model.pos1 model.caller (not <| isEmpty model.clipboardFiles) (length model.selected > 1) model.filesAmount
       else div [] []
@@ -41,9 +56,9 @@ back : String -> String
 back route = "/" ++ (join "/" <| withDefault [] <| andThen tail <| tail <| reverse <| split "/" route)
 
 renderUploading : Int -> Int -> Html Msg
-renderUploading progress i = div [ class "file" ]
-  [ div [ class "thumb uploading" ]
-    [ if i == 0 then div [ class "bar", style [("width", toPx progress)] ] [] else div [] []
+renderUploading progress i = div [ class "file upload" ]
+  [ div [ class "thumb" ]
+    [ if i == 0 then div [ id "progress", style [("width", toPx progress)] ] [] else div [] []
     ]
   , div [ class "name" ] []
   ]
@@ -59,15 +74,13 @@ renderFile { api, dir, selected, clipboardDir, clipboardFiles } i file = div
   , onContextMenu <| EnvMsg <| ContextMenu <| Just file
   , onDoubleClick <| if file.isDir then EnvMsg <| GetLs <| dir ++ file.name ++ "/" else Download
   ]
-  [ div [ class "thumb" ]
-    [ renderThumb api dir file
-    ]
+  [ renderThumb api dir file
   , div [ class "name" ] [ text file.name ]
   ]
 
 renderThumb : String -> String -> File -> Html Msg
 renderThumb api dir { name, isDir } = if isDir
-  then div [ class "icon-thumb icon-folder" ]
+  then div [ class "thumb icon-folder" ]
     [ img [ src "folder.png" ] []
     ]
   else renderFileThumb api dir name
@@ -75,36 +88,29 @@ renderThumb api dir { name, isDir } = if isDir
 renderFileThumb : String -> String -> String -> Html Msg
 renderFileThumb api dir file = if member (getExt file) ["jpg", "jpeg", "png", "PNG"]
   then div
-    [ class "full bg"
+    [ class "thumb bg"
     , style [ ("backgroundImage", "url(\"" ++ api ++ "?req=thumb&dir=" ++ dir ++ "&image=" ++ encodeUri file ++ "\")") ]
     ] []
-  else div [ class "icon-thumb icon-file" ]
+  else div [ class "thumb icon-file" ]
     [ img [ src "file.png" ] []
     ]
 
 getExt : String -> String
 getExt name = withDefault "" <| head <| reverse <| split "." name
 
-renderHelper : Model -> Html Msg
-renderHelper model = if model.showBound
- then div
+renderHelper : Bound -> Html Msg
+renderHelper b = div
   [ id "helper"
-  , let b = model.bound in style [ ("left", toPx b.x), ("top", toPx b.y), ("width", toPx b.w), ("height", toPx b.h) ]
+  , style [ ("left", toPx b.x), ("top", toPx b.y), ("width", toPx b.w), ("height", toPx b.h) ]
   ] []
- else div [] []
 
 toPx : Int -> String
 toPx n = toString n ++ "px"
 
-renderCount : Model -> Html Msg
-renderCount model = if model.drag
- then div
-  [ id "count"
-  , let (Vec2 x y) = model.pos2 in style [ ("left", toPx <| x + 5), ("top", toPx <| y - 25) ]
+renderCount : Vec2 -> List File -> Html Msg
+renderCount (Vec2 x y) selected = div [ id "count", style [ ("left", toPx <| x + 5), ("top", toPx <| y - 25) ] ]
+  [ text <| toString <| length <| selected
   ]
-  [ text <| toString <| length <| model.selected
-  ]
- else div [] []
 
 contextMenu : Vec2 -> Maybe File -> Bool -> Bool -> Int ->Html Msg
 contextMenu (Vec2 x y) maybe paste many filesAmount = if filesAmount > 0
@@ -114,18 +120,19 @@ contextMenu (Vec2 x y) maybe paste many filesAmount = if filesAmount > 0
   else div [ id "context-menu", style [("left", toPx x), ("top", toPx y)] ] <| case maybe of
     Just file ->
       [ button [ class "div white", onClick Download ] [ icon2 "file_download", text "Descargar" ]
-      , button [ class <| "div white" ++ if many then " disabled" else "", onClick <| if many then None else OpenNameDialog ] [ icon2 "mode_edit", text "Cambiar nombre" ]
+      , button (if many then [ class "div white disabled" ] else [ class "div white", onClick OpenNameDialog ]) [ icon2 "mode_edit", text "Cambiar nombre" ]
       , button [ class "div white", onClick Cut ] [ icon2 "content_cut", text "Cortar" ]
-      , button [ class <| "div white" ++ if paste && file.isDir then "" else " disabled", onClick <| if paste && file.isDir then Paste else None ] [ icon2 "content_paste", text "Pegar" ]
+      , button (if paste && file.isDir then [ class "div white", onClick Paste ] else [ class "div white disabled" ]) [ icon2 "content_paste", text "Pegar" ]
       , button [ class "div white", onClick Delete ] [ icon2 "delete", text "Eliminar" ]
       ]
     Nothing ->
-      [ label [ class "button white", onChange Upload ] 
-          [ input [ id "file-input", type_ "file", multiple True ] []
-          , icon2 "file_upload", text "Subir"
+      [ label [] 
+          [ input [ id "file-input", type_ "file", multiple True, onChange Upload ] []
+          , icon2 "file_upload"
+          , text "Subir"
           ]
       , button [ class "div white", onClick <| OpenNameDialog ] [ icon2 "create_new_folder", text "Nueva carpeta" ]
-      , button [ class <| "div white" ++ if paste then "" else " disabled", onClick <| if paste then Paste else None ] [ icon2 "content_paste", text "Pegar" ]
+      , button (if paste then [ class "div white", onClick Paste ] else [ class "div white disabled" ]) [ icon2 "content_paste", text "Pegar" ]
       ]
 
 nameDialog : String -> Bool -> Html Msg
