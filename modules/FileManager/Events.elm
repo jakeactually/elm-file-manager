@@ -1,9 +1,9 @@
-module Events exposing (..)
+module FileManager.Events exposing (..)
 
 import Json.Decode as Decode
 import Html exposing (Attribute)
 import Html.Events exposing (on, onWithOptions)
-import Vec exposing (..)
+import FileManager.Vec exposing (..)
 
 onMouseDown : (Vec2 -> Bool -> msg) -> Attribute msg
 onMouseDown function  =

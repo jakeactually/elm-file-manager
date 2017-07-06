@@ -1,9 +1,9 @@
-module Action exposing (..)
+module FileManager.Action exposing (..)
 
 import Json.Decode as Decode
 import Http exposing (Body, encodeUri, stringBody)
 import List exposing (head, map)
-import Main.Model exposing (..)
+import FileManager.Model exposing (..)
 import String exposing (join)
 
 getLs : String -> String -> Cmd Msg

@@ -1,4 +1,4 @@
-module Vec exposing (..)
+module FileManager.Vec exposing (..)
 
 type Vec2 = Vec2 Int Int
 

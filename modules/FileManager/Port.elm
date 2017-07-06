@@ -1,6 +1,6 @@
-port module Port exposing (..)
+port module FileManager.Port exposing (..)
 
-import Vec exposing (Bound)
+import FileManager.Vec exposing (Bound)
 
 port getBounds : () -> Cmd msg
 port boundsGotten : (List Bound -> msg) -> Sub msg

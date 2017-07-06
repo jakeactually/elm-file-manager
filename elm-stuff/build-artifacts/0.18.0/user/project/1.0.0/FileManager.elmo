@@ -1,0 +1,46 @@
+var _user$project$FileManager$subscriptions = function (_p0) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _user$project$FileManager_Port$open(
+				function (_p1) {
+					return _user$project$FileManager_Model$EnvMsg(
+						_user$project$FileManager_Model$Open(_p1));
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$FileManager_Port$boundsGotten(
+					function (_p2) {
+						return _user$project$FileManager_Model$EnvMsg(
+							_user$project$FileManager_Model$BoundsGotten(_p2));
+					}),
+				_1: {
+					ctor: '::',
+					_0: _user$project$FileManager_Port$filesAmount(_user$project$FileManager_Model$FilesAmount),
+					_1: {
+						ctor: '::',
+						_0: _user$project$FileManager_Port$progress(_user$project$FileManager_Model$Progress),
+						_1: {
+							ctor: '::',
+							_0: _user$project$FileManager_Port$uploaded(_user$project$FileManager_Model$Uploaded),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		});
+};
+var _user$project$FileManager$main = _elm_lang$html$Html$programWithFlags(
+	{init: _user$project$FileManager_Update$init, view: _user$project$FileManager_View$view, update: _user$project$FileManager_Update$update, subscriptions: _user$project$FileManager$subscriptions})(
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (api_) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (dir_) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{api_: api_, dir_: dir_});
+				},
+				A2(_elm_lang$core$Json_Decode$field, 'dir_', _elm_lang$core$Json_Decode$string));
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'api_', _elm_lang$core$Json_Decode$string)));

@@ -1,7 +1,7 @@
-module Main.Model exposing (..)
+module FileManager.Model exposing (..)
 
 import Http exposing (Error)
-import Vec exposing (..)
+import FileManager.Vec exposing (..)
 
 type alias Flags =
   { api_ : String

@@ -1,8 +1,10 @@
+module FileManager exposing (..)
+
 import Html
-import Main.Model exposing (..)
-import Main.Update exposing (..)
-import Main.View exposing (..)
-import Port exposing (..)
+import FileManager.Model exposing (..)
+import FileManager.Update exposing (..)
+import FileManager.View exposing (..)
+import FileManager.Port exposing (..)
 
 main : Program Flags Model Msg
 main = Html.programWithFlags

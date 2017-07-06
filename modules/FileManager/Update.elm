@@ -1,12 +1,12 @@
-module Main.Update exposing (..)
+module FileManager.Update exposing (..)
 
-import Action exposing (..)
-import Env exposing (handleEnvMsg)
+import FileManager.Action exposing (..)
+import FileManager.Env exposing (handleEnvMsg)
 import List exposing (head, indexedMap, map, map2, filter, isEmpty, member)
-import Main.Model exposing (..)
+import FileManager.Model exposing (..)
 import Maybe exposing (withDefault, andThen)
-import Port exposing (..)
-import Vec exposing (..)
+import FileManager.Port exposing (..)
+import FileManager.Vec exposing (..)
 
 init : Flags -> (Model, Cmd Msg)
 init { api_, dir_ } = (,)
@@ -64,7 +64,7 @@ update msg model = case msg of
       , load = True
       },
       case model.caller of
-        Just file -> Action.rename model.api model.dir file.name model.name
+        Just file -> FileManager.Action.rename model.api model.dir file.name model.name
         Nothing -> Cmd.none
     )
   Cut -> ({ model | clipboardDir = model.dir, clipboardFiles = model.selected, showContextMenu = False }, Cmd.none)

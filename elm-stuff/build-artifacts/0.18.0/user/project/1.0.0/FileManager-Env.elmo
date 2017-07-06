@@ -1,0 +1,235 @@
+var _user$project$FileManager_Env$handleEnvMsg = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'Open':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{open: true}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Close':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							open: false,
+							selected: {ctor: '[]'}
+						}),
+					_1: _user$project$FileManager_Port$close(
+						{ctor: '[]'})
+				};
+			case 'Accept':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							open: false,
+							selected: {ctor: '[]'}
+						}),
+					_1: _user$project$FileManager_Port$close(
+						A2(
+							_elm_lang$core$List$map,
+							function (_p1) {
+								return A2(
+									F2(
+										function (x, y) {
+											return A2(_elm_lang$core$Basics_ops['++'], x, y);
+										}),
+									model.dir,
+									function (_) {
+										return _.name;
+									}(_p1));
+							},
+							model.selected))
+				};
+			case 'MouseDown':
+				var _p5 = _p0._0;
+				var _p4 = _p0._2;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							mouseDown: true,
+							ctrl: _p4,
+							caller: _p5,
+							pos1: _p0._1,
+							selected: function () {
+								var _p2 = _p5;
+								if (_p2.ctor === 'Just') {
+									var _p3 = _p2._0;
+									return A2(_elm_lang$core$List$member, _p3, model.selected) ? (_p4 ? A2(
+										_elm_lang$core$List$filter,
+										F2(
+											function (x, y) {
+												return !_elm_lang$core$Native_Utils.eq(x, y);
+											})(_p3),
+										model.selected) : model.selected) : (_p4 ? {ctor: '::', _0: _p3, _1: model.selected} : {
+										ctor: '::',
+										_0: _p3,
+										_1: {ctor: '[]'}
+									});
+								} else {
+									return {ctor: '[]'};
+								}
+							}(),
+							showContextMenu: false
+						}),
+					_1: _user$project$FileManager_Port$getBounds(
+						{ctor: '_Tuple0'})
+				};
+			case 'BoundsGotten':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{bounds: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'MouseMove':
+				var _p7 = _p0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							pos2: _p7,
+							showBound: model.mouseDown && function (_p6) {
+								return !_user$project$FileManager_Util$isJust(_p6);
+							}(model.caller),
+							bound: A2(_user$project$FileManager_Vec$toBound, model.pos1, _p7),
+							drag: model.mouseDown && (_user$project$FileManager_Util$isJust(model.caller) && (A2(_user$project$FileManager_Vec$isFar, model.pos1, _p7) && (_elm_lang$core$Native_Utils.cmp(model.filesAmount, 0) < 1)))
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'MouseUp':
+				var _p13 = _p0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							mouseDown: false,
+							selected: function () {
+								if (model.showBound) {
+									return A2(
+										_elm_lang$core$List$map,
+										_elm_lang$core$Tuple$second,
+										A2(
+											_elm_lang$core$List$filter,
+											function (_p8) {
+												return A2(
+													_user$project$FileManager_Vec$touchesBound,
+													model.bound,
+													_elm_lang$core$Tuple$first(_p8));
+											},
+											A2(_user$project$FileManager_Util$zip, model.bounds, model.files)));
+								} else {
+									var _p9 = _p13;
+									if (_p9.ctor === 'Just') {
+										return (model.drag || model.ctrl) ? model.selected : {
+											ctor: '::',
+											_0: _p9._0,
+											_1: {ctor: '[]'}
+										};
+									} else {
+										return {ctor: '[]'};
+									}
+								}
+							}(),
+							selectedBin: model.selected
+						}),
+					_1: function () {
+						var _p10 = _p13;
+						if (_p10.ctor === 'Just') {
+							var _p12 = _p10._0;
+							return (model.drag && (_p12.isDir && function (_p11) {
+								return !A2(_elm_lang$core$List$member, _p12, _p11);
+							}(model.selected))) ? A4(
+								_user$project$FileManager_Action$move,
+								model.api,
+								model.dir,
+								model.selected,
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'/',
+									A2(_elm_lang$core$Basics_ops['++'], _p12.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
+						} else {
+							return _elm_lang$core$Platform_Cmd$none;
+						}
+					}()
+				};
+			case 'ContextMenu':
+				var _p16 = _p0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							showContextMenu: function () {
+								var _p14 = _p16;
+								if (_p14.ctor === 'Just') {
+									return !(_elm_lang$core$Native_Utils.eq(model.dir, model.clipboardDir) && A2(_elm_lang$core$List$member, _p14._0, model.clipboardFiles));
+								} else {
+									return true;
+								}
+							}(),
+							selected: function () {
+								var _p15 = _p16;
+								if (_p15.ctor === 'Just') {
+									return model.selectedBin;
+								} else {
+									return {ctor: '[]'};
+								}
+							}()
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'GetLs':
+				var _p17 = _p0._0;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							dir: _p17,
+							files: {ctor: '[]'},
+							load: true
+						}),
+					_1: A2(_user$project$FileManager_Action$getLs, model.api, _p17)
+				};
+			case 'LsGotten':
+				var _p18 = _p0._0;
+				if (_p18.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								files: _p18._0,
+								selected: {ctor: '[]'},
+								load: false
+							}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+			default:
+				var _p19 = _p0._0;
+				if (_p19.ctor === 'Ok') {
+					return {
+						ctor: '_Tuple2',
+						_0: model,
+						_1: A2(_user$project$FileManager_Action$getLs, model.api, model.dir)
+					};
+				} else {
+					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				}
+		}
+	});

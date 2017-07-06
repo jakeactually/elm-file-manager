@@ -1,9 +1,9 @@
-module Util exposing (..)
+module FileManager.Util exposing (..)
 
 import Html exposing (Html, button, i, text)
 import Html.Attributes exposing (class, title, type_)
 import Html.Events exposing (onClick)
-import Main.Model exposing (Msg)
+import FileManager.Model exposing (Msg)
 import Array exposing (Array, fromList, get, toList)
 import List exposing (drop, indexedMap, filter, map, map2, member, take)
 

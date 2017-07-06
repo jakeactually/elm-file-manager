@@ -9,31 +9,31 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link rel="stylesheet" href="frontend.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" href="file-manager.css">
+    <script src="file-manager.js"></script>
 </head>
 <body>
 
-    <button onclick="app.ports.open.send(null);" style="margin: 25px;">Elegir archivo</button>
+    <button onclick="fm.ports.open.send(null);" style="margin: 25px;">Elegir archivo</button>
     <div id="text" style="margin-left: 25px;"></div>
-    <div id="fm"></div>
+    <div id="file-manager-container"></div>
 
     <script>
         // Main
 
-        const fm = document.querySelector("#fm");
+        const fmc = document.querySelector("#file-manager-container");
         const api_ = "http://localhost/api.php";
         const dir_ = "/"
-        const app = Elm.Main.embed(fm, { api_, dir_ });
+        const fm = Elm.FileManager.embed(fmc, { api_, dir_ });
 
-        app.ports.open.send(null);
-        app.ports.close.subscribe(files => {
+        fm.ports.open.send(null);
+        fm.ports.close.subscribe(files => {
             document.querySelector('#text').innerText = files.join(", ");
         });
 
-        // Dependencies
+        // Ports
 
-        app.ports.getBounds.subscribe(() => {
+        fm.ports.getBounds.subscribe(() => {
             const els = Array.from(document.querySelectorAll('.file:not(.upload)'));
             const bounds = els.map(el => {
                 const bound = el.getBoundingClientRect();
@@ -44,7 +44,7 @@
                     h: Math.floor(bound.height)
                 };
             });
-            app.ports.boundsGotten.send(bounds);
+            fm.ports.boundsGotten.send(bounds);
         });
 
         let observer = new MutationObserver(() => {
@@ -59,7 +59,7 @@
                     drop.style.display = "none";
                     const dir = document.querySelector('#bar .text').innerText;
                     const files_ = Array.from(ev.dataTransfer.files);
-                    app.ports.filesAmount.send(files_.length);
+                    fm.ports.filesAmount.send(files_.length);
                     upload(dir, files_);
                 };
                 observer = null;
@@ -67,10 +67,10 @@
         });
         observer.observe(document.body, { childList: true, subtree: true });
 
-        app.ports.upload.subscribe(dir => {
+        fm.ports.upload.subscribe(dir => {
             const input = document.querySelector('#file-input');
             const files = Array.from(input.files);
-            app.ports.filesAmount.send(files.length);
+            fm.ports.filesAmount.send(files.length);
             upload(dir, files);
         });
 
@@ -86,11 +86,11 @@
                 const xhr = new XMLHttpRequest();
                 xhr.upload.onprogress = ev => {
                     if (ev.lengthComputable) {
-                        app.ports.progress.send(Math.floor(ev.loaded * 100 / ev.total));
+                        fm.ports.progress.send(Math.floor(ev.loaded * 100 / ev.total));
                     }
                 };
                 xhr.upload.onload = ev => {
-                    app.ports.uploaded.send(null);
+                    fm.ports.uploaded.send(null);
                     upload(dir, files);
                 };
                 xhr.open('POST', api_);
@@ -98,11 +98,11 @@
             }
         }
 
-        app.ports.cancel.subscribe(() => {
+        fm.ports.cancel.subscribe(() => {
             location.reload();
         });
 
-        app.ports.download.subscribe(files => {
+        fm.ports.download.subscribe(files => {
             files.forEach(file => window.open(`/static${file}`));
         });
     </script>

@@ -1,12 +1,12 @@
-module Env exposing (..)
+module FileManager.Env exposing (..)
 
-import Action exposing (..)
+import FileManager.Action exposing (..)
 import List exposing (filter, map, member)
-import Main.Model exposing (..)
-import Port exposing (close, getBounds)
+import FileManager.Model exposing (..)
+import FileManager.Port exposing (close, getBounds)
 import Tuple exposing (first, second)
-import Util exposing (..)
-import Vec exposing (..)
+import FileManager.Util exposing (..)
+import FileManager.Vec exposing (..)
 
 handleEnvMsg : EnvMsg -> Model -> (Model, Cmd Msg)
 handleEnvMsg msg model = case msg of

@@ -1,18 +1,18 @@
-module Main.View exposing (..)
+module FileManager.View exposing (..)
 
-import Events exposing (..)
+import FileManager.Events exposing (..)
 import Html exposing (Attribute, Html, a, button, div, form, h1, i, input, img, label, text, textarea)
 import Html.Attributes exposing (action, class, id, href, method, multiple, src, style, target, title, type_, value)
 import Html.Events exposing (onClick, onDoubleClick, onInput)
 import Http exposing (encodeUri)
 import List exposing (head, indexedMap, isEmpty, length, map, member, range, repeat, reverse, tail)
-import Main.Model exposing (..)
+import FileManager.Model exposing (..)
 import Maybe exposing (andThen, withDefault)
 import String exposing (join, split)
 import Svg exposing (svg, circle)
 import Svg.Attributes exposing (width, height, cx, cy, r)
-import Util exposing (icon, icon2, isJust)
-import Vec exposing (..)
+import FileManager.Util exposing (icon, icon2, isJust)
+import FileManager.Vec exposing (..)
 
 view : Model -> Html Msg
 view model = div

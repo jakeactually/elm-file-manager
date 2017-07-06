@@ -37,8 +37,8 @@
 
   // Constants
 
-  $root = "static";
-  $static =  "/static";
+  $root = "C:\\Users\\Kevin\\Documents\\Web\\GitHub\\elm-file-manager\\static";
+  $static =  "http://localhost/static";
 
   // Match requests
 
