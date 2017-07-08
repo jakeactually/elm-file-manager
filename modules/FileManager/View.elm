@@ -37,9 +37,11 @@ view model = div
       , onMouseUp <| EnvMsg <|  MouseUp Nothing
       , onContextMenu <| EnvMsg <| ContextMenu Nothing
       ]
-      <| div [ id "drop"] []
-      :: reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
-      ++ indexedMap (renderFile model) model.files
+      [ div []
+        <| div [ id "drop" ] []
+        :: reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
+        ++ indexedMap (renderFile model) model.files
+      ]
   , div [ id "control" ]
     [ button [ type_ "button", class "alert right", onClick <| EnvMsg Close ] [ text "Cancelar" ]
     , button [ type_ "button", onClick <| EnvMsg Accept ] [ text "Aceptar" ]
@@ -81,7 +83,7 @@ renderFile { fileApi, thumbService, dir, selected, clipboardDir, clipboardFiles 
 renderThumb : String -> String -> String -> File -> Html Msg
 renderThumb thumbService fileApi dir { name, isDir } = if isDir
   then div [ class "thumb icon-folder" ]
-    [ img [ src "/assets/images/folder.png" ] []
+    [ img [ src "assets/images/folder.png" ] []
     ]
   else renderFileThumb fileApi thumbService <| dir ++ name
 
@@ -92,7 +94,7 @@ renderFileThumb fileApi thumbService fullName = if member (getExt fullName) ["jp
     , style [ ("backgroundImage", "url(\"" ++ thumbService ++ encodeUri fullName ++ "\")") ]
     ] []
   else div [ class "thumb icon-file" ]
-    [ img [ src "/assets/images/file.png" ] []
+    [ img [ src "assets/images/file.png" ] []
     ]
 
 getExt : String -> String

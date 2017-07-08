@@ -4,9 +4,9 @@ import Http exposing (Error)
 import FileManager.Vec exposing (..)
 
 type alias Flags =
-  { fileApi_ : String
-  , thumbService_ : String
-  , dir_ : String
+  { fileApi : String
+  , thumbService : String
+  , dir : String
   }
 
 type alias Model =

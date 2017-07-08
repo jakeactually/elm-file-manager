@@ -19,20 +19,20 @@
     <div id="file-manager-container"></div>
 
     <script>
-        // Main
+        // File Manager
 
         const fmc = document.querySelector("#file-manager-container");
-        const fileApi_ = "http://app.com/file";
-        const thumbService_ = "http://app.com/thumb?image=";
-        const dir_ = "/"
-        const fm = Elm.FileManager.embed(fmc, { fileApi_, thumbService_, dir_ });
+        const fileApi = "http://app.com/file";
+        const thumbService = "http://app.com/thumb?image=";
+        const dir = "/"
+        const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, dir });
 
         fm.ports.open.send(null);
         fm.ports.close.subscribe(files => {
             document.querySelector('#text').innerText = files.join(", ");
         });
 
-        // Ports
+        // File Manager Ports
 
         fm.ports.getBounds.subscribe(() => {
             const els = Array.from(document.querySelectorAll('.file:not(.upload)'));
@@ -90,7 +90,7 @@
                         fm.ports.progress.send(Math.floor(ev.loaded * 100 / ev.total));
                     }
                 };
-                xhr.upload.onload = ev => {
+                xhr.upload.onload = () => {
                     fm.ports.uploaded.send(null);
                     upload(dir, files);
                 };
@@ -104,7 +104,7 @@
         });
 
         fm.ports.download.subscribe(files => {
-            files.forEach(file => window.open(`/static${file}`));
+            files.forEach(file => window.open(`http://app.com/file/static${file}`));
         });
     </script>
 

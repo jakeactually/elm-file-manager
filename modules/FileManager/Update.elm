@@ -9,10 +9,10 @@ import FileManager.Port exposing (..)
 import FileManager.Vec exposing (..)
 
 init : Flags -> (Model, Cmd Msg)
-init { fileApi_, thumbService_, dir_ } = (,)
-  { fileApi = fileApi_
-  , thumbService = thumbService_
-  , dir = dir_
+init { fileApi, thumbService, dir } = (,)
+  { fileApi = fileApi
+  , thumbService = thumbService
+  , dir = dir
   , open = False
   , load = False
   , pos1 = Vec2 0 0
@@ -35,7 +35,7 @@ init { fileApi_, thumbService_, dir_ } = (,)
   , clipboardDir = ""
   , clipboardFiles = []
   }
-  <| getLs fileApi_ dir_
+  <| getLs fileApi dir
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = case msg of

@@ -180,8 +180,8 @@ var _user$project$FileManager_Update$update = F2(
 	});
 var _user$project$FileManager_Update$init = function (_p7) {
 	var _p8 = _p7;
-	var _p10 = _p8.fileApi_;
-	var _p9 = _p8.dir_;
+	var _p10 = _p8.fileApi;
+	var _p9 = _p8.dir;
 	return A2(
 		F2(
 			function (v0, v1) {
@@ -189,7 +189,7 @@ var _user$project$FileManager_Update$init = function (_p7) {
 			}),
 		{
 			fileApi: _p10,
-			thumbService: _p8.thumbService_,
+			thumbService: _p8.thumbService,
 			dir: _p9,
 			open: false,
 			load: false,

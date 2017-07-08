@@ -1,5 +1,4 @@
 #file-manager {
-  display: grid;
   grid-template-rows: 50px 1fr 50px;
   position: fixed;
   top: 0;
@@ -50,14 +49,16 @@
 }
 
 #files {
+  padding: 20px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+#files > div {
   display: flex;
   flex-wrap: wrap;
-  align-content: flex-start;
-  align-items: flex-start;
-  position: relative;
-  padding: 20px;
+  height: 100%;
   overflow: auto;
-  background-color: #FFFFFF;
 }
 
 #drop {

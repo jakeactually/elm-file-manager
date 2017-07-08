@@ -9424,7 +9424,7 @@ var _user$project$FileManager_Vec$Vec2 = F2(
 
 var _user$project$FileManager_Model$Flags = F3(
 	function (a, b, c) {
-		return {fileApi_: a, thumbService_: b, dir_: c};
+		return {fileApi: a, thumbService: b, dir: c};
 	});
 var _user$project$FileManager_Model$Model = function (a) {
 	return function (b) {
@@ -10294,8 +10294,8 @@ var _user$project$FileManager_Update$update = F2(
 	});
 var _user$project$FileManager_Update$init = function (_p7) {
 	var _p8 = _p7;
-	var _p10 = _p8.fileApi_;
-	var _p9 = _p8.dir_;
+	var _p10 = _p8.fileApi;
+	var _p9 = _p8.dir;
 	return A2(
 		F2(
 			function (v0, v1) {
@@ -10303,7 +10303,7 @@ var _user$project$FileManager_Update$init = function (_p7) {
 			}),
 		{
 			fileApi: _p10,
-			thumbService: _p8.thumbService_,
+			thumbService: _p8.thumbService,
 			dir: _p9,
 			open: false,
 			load: false,
@@ -10964,7 +10964,7 @@ var _user$project$FileManager_View$renderFileThumb = F3(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('/assets/images/file.png'),
+						_0: _elm_lang$html$Html_Attributes$src('assets/images/file.png'),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
@@ -10987,7 +10987,7 @@ var _user$project$FileManager_View$renderThumb = F4(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('/assets/images/folder.png'),
+						_0: _elm_lang$html$Html_Attributes$src('assets/images/folder.png'),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
@@ -11302,23 +11302,30 @@ var _user$project$FileManager_View$view = function (model) {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
+							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$id('drop'),
-								_1: {ctor: '[]'}
-							},
-							{ctor: '[]'}),
-						_1: A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$List$reverse(
-								A2(
-									_elm_lang$core$List$map,
-									_user$project$FileManager_View$renderUploading(model.progress),
-									A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
-							A2(
-								_elm_lang$core$List$indexedMap,
-								_user$project$FileManager_View$renderFile(model),
-								model.files))
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('drop'),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$core$List$reverse(
+										A2(
+											_elm_lang$core$List$map,
+											_user$project$FileManager_View$renderUploading(model.progress),
+											A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
+									A2(
+										_elm_lang$core$List$indexedMap,
+										_user$project$FileManager_View$renderFile(model),
+										model.files))
+							}),
+						_1: {ctor: '[]'}
 					}),
 				_1: {
 					ctor: '::',
@@ -11455,21 +11462,21 @@ var _user$project$FileManager$main = _elm_lang$html$Html$programWithFlags(
 	{init: _user$project$FileManager_Update$init, view: _user$project$FileManager_View$view, update: _user$project$FileManager_Update$update, subscriptions: _user$project$FileManager$subscriptions})(
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		function (dir_) {
+		function (dir) {
 			return A2(
 				_elm_lang$core$Json_Decode$andThen,
-				function (fileApi_) {
+				function (fileApi) {
 					return A2(
 						_elm_lang$core$Json_Decode$andThen,
-						function (thumbService_) {
+						function (thumbService) {
 							return _elm_lang$core$Json_Decode$succeed(
-								{dir_: dir_, fileApi_: fileApi_, thumbService_: thumbService_});
+								{dir: dir, fileApi: fileApi, thumbService: thumbService});
 						},
-						A2(_elm_lang$core$Json_Decode$field, 'thumbService_', _elm_lang$core$Json_Decode$string));
+						A2(_elm_lang$core$Json_Decode$field, 'thumbService', _elm_lang$core$Json_Decode$string));
 				},
-				A2(_elm_lang$core$Json_Decode$field, 'fileApi_', _elm_lang$core$Json_Decode$string));
+				A2(_elm_lang$core$Json_Decode$field, 'fileApi', _elm_lang$core$Json_Decode$string));
 		},
-		A2(_elm_lang$core$Json_Decode$field, 'dir_', _elm_lang$core$Json_Decode$string)));
+		A2(_elm_lang$core$Json_Decode$field, 'dir', _elm_lang$core$Json_Decode$string)));
 
 var Elm = {};
 Elm['FileManager'] = Elm['FileManager'] || {};

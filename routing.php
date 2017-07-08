@@ -25,7 +25,7 @@
   function upload($dir, $file) {
     $dst = getNextAvailable(FILES_ROOT . $dir . $file['name']);
     move_uploaded_file($file['tmp_name'], $dst);
-    echo basename($dst);
+    echo "null";
   }
 
   function newDir($dir, $newDir) {

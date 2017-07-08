@@ -1,6 +1,6 @@
 var _user$project$FileManager_Model$Flags = F3(
 	function (a, b, c) {
-		return {fileApi_: a, thumbService_: b, dir_: c};
+		return {fileApi: a, thumbService: b, dir: c};
 	});
 var _user$project$FileManager_Model$Model = function (a) {
 	return function (b) {

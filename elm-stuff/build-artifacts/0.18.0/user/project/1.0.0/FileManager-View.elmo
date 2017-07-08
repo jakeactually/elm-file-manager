@@ -574,7 +574,7 @@ var _user$project$FileManager_View$renderFileThumb = F3(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('/assets/images/file.png'),
+						_0: _elm_lang$html$Html_Attributes$src('assets/images/file.png'),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
@@ -597,7 +597,7 @@ var _user$project$FileManager_View$renderThumb = F4(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('/assets/images/folder.png'),
+						_0: _elm_lang$html$Html_Attributes$src('assets/images/folder.png'),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
@@ -912,23 +912,30 @@ var _user$project$FileManager_View$view = function (model) {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
+							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$id('drop'),
-								_1: {ctor: '[]'}
-							},
-							{ctor: '[]'}),
-						_1: A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$List$reverse(
-								A2(
-									_elm_lang$core$List$map,
-									_user$project$FileManager_View$renderUploading(model.progress),
-									A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
-							A2(
-								_elm_lang$core$List$indexedMap,
-								_user$project$FileManager_View$renderFile(model),
-								model.files))
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('drop'),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$core$List$reverse(
+										A2(
+											_elm_lang$core$List$map,
+											_user$project$FileManager_View$renderUploading(model.progress),
+											A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
+									A2(
+										_elm_lang$core$List$indexedMap,
+										_user$project$FileManager_View$renderFile(model),
+										model.files))
+							}),
+						_1: {ctor: '[]'}
 					}),
 				_1: {
 					ctor: '::',
