@@ -9,8 +9,9 @@ import FileManager.Port exposing (..)
 import FileManager.Vec exposing (..)
 
 init : Flags -> (Model, Cmd Msg)
-init { api_, dir_ } = (,)
-  { api = api_
+init { fileApi_, thumbService_, dir_ } = (,)
+  { fileApi = fileApi_
+  , thumbService = thumbService_
   , dir = dir_
   , open = False
   , load = False
@@ -34,7 +35,7 @@ init { api_, dir_ } = (,)
   , clipboardDir = ""
   , clipboardFiles = []
   }
-  <| getLs api_ dir_
+  <| getLs fileApi_ dir_
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = case msg of
@@ -43,7 +44,7 @@ update msg model = case msg of
   FilesAmount amount -> ({ model | filesAmount = amount }, Cmd.none)
   Progress progress -> ({ model | progress = progress }, Cmd.none)
   Cancel -> (model, cancel ())
-  Uploaded () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.api model.dir)
+  Uploaded () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.fileApi model.dir)
   OpenNameDialog ->
     ( { model
       | showNameDialog = True
@@ -56,7 +57,7 @@ update msg model = case msg of
     )
   CloseNameDialog -> ({ model | showNameDialog = False }, Cmd.none)
   Name name -> ({ model | name = name }, Cmd.none)
-  NewDir -> ({ model | showNameDialog = False, load = True }, newDir model.api model.dir model.name)
+  NewDir -> ({ model | showNameDialog = False, load = True }, newDir model.fileApi model.dir model.name)
   Download -> ({ model | showContextMenu = False }, download <| map ((++) model.dir << .name) <| filter (not << .isDir) model.selected)
   Rename ->
     ( { model
@@ -64,7 +65,7 @@ update msg model = case msg of
       , load = True
       },
       case model.caller of
-        Just file -> FileManager.Action.rename model.api model.dir file.name model.name
+        Just file -> FileManager.Action.rename model.fileApi model.dir file.name model.name
         Nothing -> Cmd.none
     )
   Cut -> ({ model | clipboardDir = model.dir, clipboardFiles = model.selected, showContextMenu = False }, Cmd.none)
@@ -76,9 +77,9 @@ update msg model = case msg of
       }
       , case model.caller of
           Just file -> if file.isDir
-            then move model.api model.clipboardDir model.clipboardFiles <| model.dir ++ file.name ++ "/"
+            then move model.fileApi model.clipboardDir model.clipboardFiles <| model.dir ++ file.name ++ "/"
             else Cmd.none
-          Nothing -> move model.api model.clipboardDir model.clipboardFiles model.dir
+          Nothing -> move model.fileApi model.clipboardDir model.clipboardFiles model.dir
     )
-  Delete -> ({ model | showContextMenu = False, load = True }, delete model.api model.dir model.selected)
+  Delete -> ({ model | showContextMenu = False, load = True }, delete model.fileApi model.dir model.selected)
   None -> (model, Cmd.none)

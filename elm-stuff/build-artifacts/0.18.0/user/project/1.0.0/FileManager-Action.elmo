@@ -16,7 +16,7 @@ var _user$project$FileManager_Action$url = function (string) {
 	return A2(_elm_lang$http$Http$stringBody, 'application/x-www-form-urlencoded', string);
 };
 var _user$project$FileManager_Action$delete = F3(
-	function (api, dir, files) {
+	function (fileApi, dir, files) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p1) {
@@ -25,11 +25,11 @@ var _user$project$FileManager_Action$delete = F3(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/delete'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=delete&dir=',
+						'dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -41,7 +41,7 @@ var _user$project$FileManager_Action$delete = F3(
 					{ctor: '_Tuple0'})));
 	});
 var _user$project$FileManager_Action$newDir = F3(
-	function (api, dir, newDir) {
+	function (fileApi, dir, newDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p2) {
@@ -50,11 +50,11 @@ var _user$project$FileManager_Action$newDir = F3(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/newDir'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=newDir&dir=',
+						'dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -66,7 +66,7 @@ var _user$project$FileManager_Action$newDir = F3(
 					{ctor: '_Tuple0'})));
 	});
 var _user$project$FileManager_Action$rename = F4(
-	function (api, dir, oldName, newName) {
+	function (fileApi, dir, oldName, newName) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p3) {
@@ -75,11 +75,11 @@ var _user$project$FileManager_Action$rename = F4(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/rename'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=rename&dir=',
+						'dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -97,7 +97,7 @@ var _user$project$FileManager_Action$rename = F4(
 					{ctor: '_Tuple0'})));
 	});
 var _user$project$FileManager_Action$move = F4(
-	function (api, srcDir, files, dstDir) {
+	function (fileApi, srcDir, files, dstDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p4) {
@@ -106,11 +106,11 @@ var _user$project$FileManager_Action$move = F4(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/move'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=move&srcDir=',
+						'srcDir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(srcDir),
@@ -136,7 +136,7 @@ var _user$project$FileManager_Action$fileDecoder = A3(
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'isDir', _elm_lang$core$Json_Decode$bool));
 var _user$project$FileManager_Action$getLs = F2(
-	function (api, dir) {
+	function (fileApi, dir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p5) {
@@ -147,7 +147,7 @@ var _user$project$FileManager_Action$getLs = F2(
 				_elm_lang$http$Http$get,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					api,
-					A2(_elm_lang$core$Basics_ops['++'], '?req=ls&dir=', dir)),
+					fileApi,
+					A2(_elm_lang$core$Basics_ops['++'], '/ls?dir=', dir)),
 				_elm_lang$core$Json_Decode$list(_user$project$FileManager_Action$fileDecoder)));
 	});

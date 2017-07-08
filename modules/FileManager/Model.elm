@@ -4,12 +4,14 @@ import Http exposing (Error)
 import FileManager.Vec exposing (..)
 
 type alias Flags =
-  { api_ : String
+  { fileApi_ : String
+  , thumbService_ : String
   , dir_ : String
   }
 
 type alias Model =
-  { api : String
+  { fileApi : String
+  , thumbService : String
   , dir : String
   , open : Bool
   , load : Bool

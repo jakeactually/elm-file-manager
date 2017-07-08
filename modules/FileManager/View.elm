@@ -41,8 +41,8 @@ view model = div
       :: reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
       ++ indexedMap (renderFile model) model.files
   , div [ id "control" ]
-    [ button [ class "alert right", onClick <| EnvMsg Close ] [ text "Cancelar" ]
-    , button [ onClick <| EnvMsg Accept ] [ text "Aceptar" ]
+    [ button [ type_ "button", class "alert right", onClick <| EnvMsg Close ] [ text "Cancelar" ]
+    , button [ type_ "button", onClick <| EnvMsg Accept ] [ text "Aceptar" ]
     ]
   , if model.showBound then renderHelper model.bound else div [] []
   , if model.drag then renderCount model.pos2 model.selected else div [] []
@@ -64,7 +64,7 @@ renderUploading progress i = div [ class "file upload" ]
   ]
 
 renderFile : Model -> Int -> File -> Html Msg
-renderFile { api, dir, selected, clipboardDir, clipboardFiles } i file = div
+renderFile { fileApi, thumbService, dir, selected, clipboardDir, clipboardFiles } i file = div
   [ class <| "file"
       ++ (if member file selected then " selected" else "")
       ++ (if dir == clipboardDir && member file clipboardFiles then " cut" else "")
@@ -74,25 +74,25 @@ renderFile { api, dir, selected, clipboardDir, clipboardFiles } i file = div
   , onContextMenu <| EnvMsg <| ContextMenu <| Just file
   , onDoubleClick <| if file.isDir then EnvMsg <| GetLs <| dir ++ file.name ++ "/" else Download
   ]
-  [ renderThumb api dir file
+  [ renderThumb thumbService fileApi dir file
   , div [ class "name" ] [ text file.name ]
   ]
 
-renderThumb : String -> String -> File -> Html Msg
-renderThumb api dir { name, isDir } = if isDir
+renderThumb : String -> String -> String -> File -> Html Msg
+renderThumb thumbService fileApi dir { name, isDir } = if isDir
   then div [ class "thumb icon-folder" ]
-    [ img [ src "folder.png" ] []
+    [ img [ src "/assets/images/folder.png" ] []
     ]
-  else renderFileThumb api dir name
+  else renderFileThumb fileApi thumbService <| dir ++ name
 
 renderFileThumb : String -> String -> String -> Html Msg
-renderFileThumb api dir file = if member (getExt file) ["jpg", "jpeg", "png", "PNG"]
+renderFileThumb fileApi thumbService fullName = if member (getExt fullName) ["jpg", "jpeg", "png", "PNG"]
   then div
     [ class "thumb bg"
-    , style [ ("backgroundImage", "url(\"" ++ api ++ "?req=thumb&dir=" ++ dir ++ "&image=" ++ encodeUri file ++ "\")") ]
+    , style [ ("backgroundImage", "url(\"" ++ thumbService ++ encodeUri fullName ++ "\")") ]
     ] []
   else div [ class "thumb icon-file" ]
-    [ img [ src "file.png" ] []
+    [ img [ src "/assets/images/file.png" ] []
     ]
 
 getExt : String -> String

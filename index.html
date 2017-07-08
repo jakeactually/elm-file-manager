@@ -22,9 +22,10 @@
         // Main
 
         const fmc = document.querySelector("#file-manager-container");
-        const api_ = "http://localhost/api.php";
+        const fileApi_ = "http://app.com/file";
+        const thumbService_ = "http://app.com/thumb?image=";
         const dir_ = "/"
-        const fm = Elm.FileManager.embed(fmc, { api_, dir_ });
+        const fm = Elm.FileManager.embed(fmc, { fileApi_, thumbService_, dir_ });
 
         fm.ports.open.send(null);
         fm.ports.close.subscribe(files => {
@@ -93,7 +94,7 @@
                     fm.ports.uploaded.send(null);
                     upload(dir, files);
                 };
-                xhr.open('POST', api_);
+                xhr.open('POST', fileApi_ + "/upload");
                 xhr.send(formData);
             }
         }

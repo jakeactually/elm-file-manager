@@ -9422,9 +9422,9 @@ var _user$project$FileManager_Vec$Vec2 = F2(
 		return {ctor: 'Vec2', _0: a, _1: b};
 	});
 
-var _user$project$FileManager_Model$Flags = F2(
-	function (a, b) {
-		return {api_: a, dir_: b};
+var _user$project$FileManager_Model$Flags = F3(
+	function (a, b, c) {
+		return {fileApi_: a, thumbService_: b, dir_: c};
 	});
 var _user$project$FileManager_Model$Model = function (a) {
 	return function (b) {
@@ -9449,7 +9449,9 @@ var _user$project$FileManager_Model$Model = function (a) {
 																				return function (u) {
 																					return function (v) {
 																						return function (w) {
-																							return {api: a, dir: b, open: c, load: d, pos1: e, pos2: f, mouseDown: g, ctrl: h, caller: i, files: j, showBound: k, bound: l, bounds: m, selected: n, drag: o, showContextMenu: p, selectedBin: q, filesAmount: r, progress: s, showNameDialog: t, name: u, clipboardDir: v, clipboardFiles: w};
+																							return function (x) {
+																								return {fileApi: a, thumbService: b, dir: c, open: d, load: e, pos1: f, pos2: g, mouseDown: h, ctrl: i, caller: j, files: k, showBound: l, bound: m, bounds: n, selected: o, drag: p, showContextMenu: q, selectedBin: r, filesAmount: s, progress: t, showNameDialog: u, name: v, clipboardDir: w, clipboardFiles: x};
+																							};
 																						};
 																					};
 																				};
@@ -9552,7 +9554,7 @@ var _user$project$FileManager_Action$url = function (string) {
 	return A2(_elm_lang$http$Http$stringBody, 'application/x-www-form-urlencoded', string);
 };
 var _user$project$FileManager_Action$delete = F3(
-	function (api, dir, files) {
+	function (fileApi, dir, files) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p1) {
@@ -9561,11 +9563,11 @@ var _user$project$FileManager_Action$delete = F3(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/delete'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=delete&dir=',
+						'dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -9577,7 +9579,7 @@ var _user$project$FileManager_Action$delete = F3(
 					{ctor: '_Tuple0'})));
 	});
 var _user$project$FileManager_Action$newDir = F3(
-	function (api, dir, newDir) {
+	function (fileApi, dir, newDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p2) {
@@ -9586,11 +9588,11 @@ var _user$project$FileManager_Action$newDir = F3(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/newDir'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=newDir&dir=',
+						'dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -9602,7 +9604,7 @@ var _user$project$FileManager_Action$newDir = F3(
 					{ctor: '_Tuple0'})));
 	});
 var _user$project$FileManager_Action$rename = F4(
-	function (api, dir, oldName, newName) {
+	function (fileApi, dir, oldName, newName) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p3) {
@@ -9611,11 +9613,11 @@ var _user$project$FileManager_Action$rename = F4(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/rename'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=rename&dir=',
+						'dir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(dir),
@@ -9633,7 +9635,7 @@ var _user$project$FileManager_Action$rename = F4(
 					{ctor: '_Tuple0'})));
 	});
 var _user$project$FileManager_Action$move = F4(
-	function (api, srcDir, files, dstDir) {
+	function (fileApi, srcDir, files, dstDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p4) {
@@ -9642,11 +9644,11 @@ var _user$project$FileManager_Action$move = F4(
 			},
 			A3(
 				_elm_lang$http$Http$post,
-				api,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/move'),
 				_user$project$FileManager_Action$url(
 					A2(
 						_elm_lang$core$Basics_ops['++'],
-						'req=move&srcDir=',
+						'srcDir=',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_elm_lang$http$Http$encodeUri(srcDir),
@@ -9672,7 +9674,7 @@ var _user$project$FileManager_Action$fileDecoder = A3(
 	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'isDir', _elm_lang$core$Json_Decode$bool));
 var _user$project$FileManager_Action$getLs = F2(
-	function (api, dir) {
+	function (fileApi, dir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p5) {
@@ -9683,8 +9685,8 @@ var _user$project$FileManager_Action$getLs = F2(
 				_elm_lang$http$Http$get,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
-					api,
-					A2(_elm_lang$core$Basics_ops['++'], '?req=ls&dir=', dir)),
+					fileApi,
+					A2(_elm_lang$core$Basics_ops['++'], '/ls?dir=', dir)),
 				_elm_lang$core$Json_Decode$list(_user$project$FileManager_Action$fileDecoder)));
 	});
 
@@ -10028,7 +10030,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 								return !A2(_elm_lang$core$List$member, _p12, _p11);
 							}(model.selected))) ? A4(
 								_user$project$FileManager_Action$move,
-								model.api,
+								model.fileApi,
 								model.dir,
 								model.selected,
 								A2(
@@ -10077,7 +10079,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 							files: {ctor: '[]'},
 							load: true
 						}),
-					_1: A2(_user$project$FileManager_Action$getLs, model.api, _p17)
+					_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, _p17)
 				};
 			case 'LsGotten':
 				var _p18 = _p0._0;
@@ -10102,7 +10104,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 					return {
 						ctor: '_Tuple2',
 						_0: model,
-						_1: A2(_user$project$FileManager_Action$getLs, model.api, model.dir)
+						_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, model.dir)
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -10153,7 +10155,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{filesAmount: model.filesAmount - 1}),
-					_1: A2(_user$project$FileManager_Action$getLs, model.api, model.dir)
+					_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, model.dir)
 				};
 			case 'OpenNameDialog':
 				return {
@@ -10196,7 +10198,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{showNameDialog: false, load: true}),
-					_1: A3(_user$project$FileManager_Action$newDir, model.api, model.dir, model.name)
+					_1: A3(_user$project$FileManager_Action$newDir, model.fileApi, model.dir, model.name)
 				};
 			case 'Download':
 				return {
@@ -10236,7 +10238,7 @@ var _user$project$FileManager_Update$update = F2(
 					_1: function () {
 						var _p4 = model.caller;
 						if (_p4.ctor === 'Just') {
-							return A4(_user$project$FileManager_Action$rename, model.api, model.dir, _p4._0.name, model.name);
+							return A4(_user$project$FileManager_Action$rename, model.fileApi, model.dir, _p4._0.name, model.name);
 						} else {
 							return _elm_lang$core$Platform_Cmd$none;
 						}
@@ -10266,7 +10268,7 @@ var _user$project$FileManager_Update$update = F2(
 							var _p6 = _p5._0;
 							return _p6.isDir ? A4(
 								_user$project$FileManager_Action$move,
-								model.api,
+								model.fileApi,
 								model.clipboardDir,
 								model.clipboardFiles,
 								A2(
@@ -10274,7 +10276,7 @@ var _user$project$FileManager_Update$update = F2(
 									model.dir,
 									A2(_elm_lang$core$Basics_ops['++'], _p6.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
 						} else {
-							return A4(_user$project$FileManager_Action$move, model.api, model.clipboardDir, model.clipboardFiles, model.dir);
+							return A4(_user$project$FileManager_Action$move, model.fileApi, model.clipboardDir, model.clipboardFiles, model.dir);
 						}
 					}()
 				};
@@ -10284,7 +10286,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{showContextMenu: false, load: true}),
-					_1: A3(_user$project$FileManager_Action$delete, model.api, model.dir, model.selected)
+					_1: A3(_user$project$FileManager_Action$delete, model.fileApi, model.dir, model.selected)
 				};
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -10292,16 +10294,17 @@ var _user$project$FileManager_Update$update = F2(
 	});
 var _user$project$FileManager_Update$init = function (_p7) {
 	var _p8 = _p7;
-	var _p10 = _p8.dir_;
-	var _p9 = _p8.api_;
+	var _p10 = _p8.fileApi_;
+	var _p9 = _p8.dir_;
 	return A2(
 		F2(
 			function (v0, v1) {
 				return {ctor: '_Tuple2', _0: v0, _1: v1};
 			}),
 		{
-			api: _p9,
-			dir: _p10,
+			fileApi: _p10,
+			thumbService: _p8.thumbService_,
+			dir: _p9,
 			open: false,
 			load: false,
 			pos1: A2(_user$project$FileManager_Vec$Vec2, 0, 0),
@@ -10324,7 +10327,7 @@ var _user$project$FileManager_Update$init = function (_p7) {
 			clipboardDir: '',
 			clipboardFiles: {ctor: '[]'}
 		},
-		A2(_user$project$FileManager_Action$getLs, _p9, _p10));
+		A2(_user$project$FileManager_Action$getLs, _p10, _p9));
 };
 
 var _user$project$FileManager_Events$op = F2(
@@ -10899,10 +10902,10 @@ var _user$project$FileManager_View$getExt = function (name) {
 				A2(_elm_lang$core$String$split, '.', name))));
 };
 var _user$project$FileManager_View$renderFileThumb = F3(
-	function (api, dir, file) {
+	function (fileApi, thumbService, fullName) {
 		return A2(
 			_elm_lang$core$List$member,
-			_user$project$FileManager_View$getExt(file),
+			_user$project$FileManager_View$getExt(fullName),
 			{
 				ctor: '::',
 				_0: 'jpg',
@@ -10937,20 +10940,11 @@ var _user$project$FileManager_View$renderFileThumb = F3(
 									'url(\"',
 									A2(
 										_elm_lang$core$Basics_ops['++'],
-										api,
+										thumbService,
 										A2(
 											_elm_lang$core$Basics_ops['++'],
-											'?req=thumb&dir=',
-											A2(
-												_elm_lang$core$Basics_ops['++'],
-												dir,
-												A2(
-													_elm_lang$core$Basics_ops['++'],
-													'&image=',
-													A2(
-														_elm_lang$core$Basics_ops['++'],
-														_elm_lang$http$Http$encodeUri(file),
-														'\")'))))))
+											_elm_lang$http$Http$encodeUri(fullName),
+											'\")')))
 							},
 							_1: {ctor: '[]'}
 						}),
@@ -10970,15 +10964,15 @@ var _user$project$FileManager_View$renderFileThumb = F3(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('file.png'),
+						_0: _elm_lang$html$Html_Attributes$src('/assets/images/file.png'),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
 				_1: {ctor: '[]'}
 			});
 	});
-var _user$project$FileManager_View$renderThumb = F3(
-	function (api, dir, _p7) {
+var _user$project$FileManager_View$renderThumb = F4(
+	function (thumbService, fileApi, dir, _p7) {
 		var _p8 = _p7;
 		return _p8.isDir ? A2(
 			_elm_lang$html$Html$div,
@@ -10993,12 +10987,16 @@ var _user$project$FileManager_View$renderThumb = F3(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('folder.png'),
+						_0: _elm_lang$html$Html_Attributes$src('/assets/images/folder.png'),
 						_1: {ctor: '[]'}
 					},
 					{ctor: '[]'}),
 				_1: {ctor: '[]'}
-			}) : A3(_user$project$FileManager_View$renderFileThumb, api, dir, _p8.name);
+			}) : A3(
+			_user$project$FileManager_View$renderFileThumb,
+			fileApi,
+			thumbService,
+			A2(_elm_lang$core$Basics_ops['++'], dir, _p8.name));
 	});
 var _user$project$FileManager_View$renderFile = F3(
 	function (_p9, i, file) {
@@ -11061,7 +11059,7 @@ var _user$project$FileManager_View$renderFile = F3(
 			},
 			{
 				ctor: '::',
-				_0: A3(_user$project$FileManager_View$renderThumb, _p10.api, _p11, file),
+				_0: A4(_user$project$FileManager_View$renderThumb, _p10.thumbService, _p10.fileApi, _p11, file),
 				_1: {
 					ctor: '::',
 					_0: A2(
@@ -11337,12 +11335,16 @@ var _user$project$FileManager_View$view = function (model) {
 								_elm_lang$html$Html$button,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('alert right'),
+									_0: _elm_lang$html$Html_Attributes$type_('button'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(
-											_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Close)),
-										_1: {ctor: '[]'}
+										_0: _elm_lang$html$Html_Attributes$class('alert right'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(
+												_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Close)),
+											_1: {ctor: '[]'}
+										}
 									}
 								},
 								{
@@ -11356,9 +11358,13 @@ var _user$project$FileManager_View$view = function (model) {
 									_elm_lang$html$Html$button,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onClick(
-											_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Accept)),
-										_1: {ctor: '[]'}
+										_0: _elm_lang$html$Html_Attributes$type_('button'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(
+												_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Accept)),
+											_1: {ctor: '[]'}
+										}
 									},
 									{
 										ctor: '::',
@@ -11449,16 +11455,21 @@ var _user$project$FileManager$main = _elm_lang$html$Html$programWithFlags(
 	{init: _user$project$FileManager_Update$init, view: _user$project$FileManager_View$view, update: _user$project$FileManager_Update$update, subscriptions: _user$project$FileManager$subscriptions})(
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		function (api_) {
+		function (dir_) {
 			return A2(
 				_elm_lang$core$Json_Decode$andThen,
-				function (dir_) {
-					return _elm_lang$core$Json_Decode$succeed(
-						{api_: api_, dir_: dir_});
+				function (fileApi_) {
+					return A2(
+						_elm_lang$core$Json_Decode$andThen,
+						function (thumbService_) {
+							return _elm_lang$core$Json_Decode$succeed(
+								{dir_: dir_, fileApi_: fileApi_, thumbService_: thumbService_});
+						},
+						A2(_elm_lang$core$Json_Decode$field, 'thumbService_', _elm_lang$core$Json_Decode$string));
 				},
-				A2(_elm_lang$core$Json_Decode$field, 'dir_', _elm_lang$core$Json_Decode$string));
+				A2(_elm_lang$core$Json_Decode$field, 'fileApi_', _elm_lang$core$Json_Decode$string));
 		},
-		A2(_elm_lang$core$Json_Decode$field, 'api_', _elm_lang$core$Json_Decode$string)));
+		A2(_elm_lang$core$Json_Decode$field, 'dir_', _elm_lang$core$Json_Decode$string)));
 
 var Elm = {};
 Elm['FileManager'] = Elm['FileManager'] || {};
