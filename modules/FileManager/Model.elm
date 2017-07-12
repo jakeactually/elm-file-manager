@@ -6,12 +6,14 @@ import FileManager.Vec exposing (..)
 type alias Flags =
   { fileApi : String
   , thumbService : String
+  , csrf : String
   , dir : String
   }
 
 type alias Model =
   { fileApi : String
   , thumbService : String
+  , csrf : String
   , dir : String
   , open : Bool
   , load : Bool

@@ -83,7 +83,7 @@ renderFile { fileApi, thumbService, dir, selected, clipboardDir, clipboardFiles 
 renderThumb : String -> String -> String -> File -> Html Msg
 renderThumb thumbService fileApi dir { name, isDir } = if isDir
   then div [ class "thumb icon-folder" ]
-    [ img [ src "assets/images/folder.png" ] []
+    [ img [ src "/assets/images/folder.png" ] []
     ]
   else renderFileThumb fileApi thumbService <| dir ++ name
 
@@ -94,7 +94,7 @@ renderFileThumb fileApi thumbService fullName = if member (getExt fullName) ["jp
     , style [ ("backgroundImage", "url(\"" ++ thumbService ++ encodeUri fullName ++ "\")") ]
     ] []
   else div [ class "thumb icon-file" ]
-    [ img [ src "assets/images/file.png" ] []
+    [ img [ src "/assets/images/file.png" ] []
     ]
 
 getExt : String -> String

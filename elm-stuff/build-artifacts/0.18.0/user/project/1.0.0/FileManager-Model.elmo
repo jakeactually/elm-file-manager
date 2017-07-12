@@ -1,6 +1,6 @@
-var _user$project$FileManager_Model$Flags = F3(
-	function (a, b, c) {
-		return {fileApi: a, thumbService: b, dir: c};
+var _user$project$FileManager_Model$Flags = F4(
+	function (a, b, c, d) {
+		return {fileApi: a, thumbService: b, csrf: c, dir: d};
 	});
 var _user$project$FileManager_Model$Model = function (a) {
 	return function (b) {
@@ -26,7 +26,9 @@ var _user$project$FileManager_Model$Model = function (a) {
 																					return function (v) {
 																						return function (w) {
 																							return function (x) {
-																								return {fileApi: a, thumbService: b, dir: c, open: d, load: e, pos1: f, pos2: g, mouseDown: h, ctrl: i, caller: j, files: k, showBound: l, bound: m, bounds: n, selected: o, drag: p, showContextMenu: q, selectedBin: r, filesAmount: s, progress: t, showNameDialog: u, name: v, clipboardDir: w, clipboardFiles: x};
+																								return function (y) {
+																									return {fileApi: a, thumbService: b, csrf: c, dir: d, open: e, load: f, pos1: g, pos2: h, mouseDown: i, ctrl: j, caller: k, files: l, showBound: m, bound: n, bounds: o, selected: p, drag: q, showContextMenu: r, selectedBin: s, filesAmount: t, progress: u, showNameDialog: v, name: w, clipboardDir: x, clipboardFiles: y};
+																								};
 																							};
 																						};
 																					};

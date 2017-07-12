@@ -24,8 +24,9 @@
         const fmc = document.querySelector("#file-manager-container");
         const fileApi = "http://app.com/file";
         const thumbService = "http://app.com/thumb?image=";
-        const dir = "/"
-        const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, dir });
+        const csrf = "";
+        const dir = "/";
+        const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, csrf, dir });
 
         fm.ports.open.send(null);
         fm.ports.close.subscribe(files => {
@@ -81,8 +82,9 @@
 
                 const formData = new FormData();
                 formData.append('req', 'upload');
-                formData.append('dir', dir);
+                formData.append('dir', encodeURI(dir));
                 formData.append('file', file);
+                formData.append('csrfToken', encodeURI(csrf));
 
                 const xhr = new XMLHttpRequest();
                 xhr.upload.onprogress = ev => {
@@ -90,11 +92,11 @@
                         fm.ports.progress.send(Math.floor(ev.loaded * 100 / ev.total));
                     }
                 };
-                xhr.upload.onload = () => {
+                xhr.onload = () => {
                     fm.ports.uploaded.send(null);
                     upload(dir, files);
                 };
-                xhr.open('POST', fileApi_ + "/upload");
+                xhr.open('POST', fileApi + "/upload");
                 xhr.send(formData);
             }
         }

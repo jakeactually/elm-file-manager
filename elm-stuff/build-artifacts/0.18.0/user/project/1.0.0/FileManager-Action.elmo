@@ -15,8 +15,8 @@ var _user$project$FileManager_Action$encodeFiles = function (files) {
 var _user$project$FileManager_Action$url = function (string) {
 	return A2(_elm_lang$http$Http$stringBody, 'application/x-www-form-urlencoded', string);
 };
-var _user$project$FileManager_Action$delete = F3(
-	function (fileApi, dir, files) {
+var _user$project$FileManager_Action$delete = F4(
+	function (fileApi, csrf, dir, files) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p1) {
@@ -36,12 +36,15 @@ var _user$project$FileManager_Action$delete = F3(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'&files=',
-								_user$project$FileManager_Action$encodeFiles(files))))),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_user$project$FileManager_Action$encodeFiles(files),
+									A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))),
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$FileManager_Action$newDir = F3(
-	function (fileApi, dir, newDir) {
+var _user$project$FileManager_Action$newDir = F4(
+	function (fileApi, csrf, dir, newDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p2) {
@@ -61,12 +64,15 @@ var _user$project$FileManager_Action$newDir = F3(
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								'&newDir=',
-								_elm_lang$http$Http$encodeUri(newDir))))),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$http$Http$encodeUri(newDir),
+									A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))),
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$FileManager_Action$rename = F4(
-	function (fileApi, dir, oldName, newName) {
+var _user$project$FileManager_Action$rename = F5(
+	function (fileApi, csrf, dir, oldName, newName) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p3) {
@@ -92,12 +98,15 @@ var _user$project$FileManager_Action$rename = F4(
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										'&newName=',
-										_elm_lang$http$Http$encodeUri(newName))))))),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$http$Http$encodeUri(newName),
+											A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))))),
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$FileManager_Action$move = F4(
-	function (fileApi, srcDir, files, dstDir) {
+var _user$project$FileManager_Action$move = F5(
+	function (fileApi, csrf, srcDir, files, dstDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p4) {
@@ -123,7 +132,10 @@ var _user$project$FileManager_Action$move = F4(
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										'&dstDir=',
-										_elm_lang$http$Http$encodeUri(dstDir))))))),
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$http$Http$encodeUri(dstDir),
+											A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))))),
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});

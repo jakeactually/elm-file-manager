@@ -17,10 +17,10 @@ fileDecoder = Decode.map2 (\x y -> { name = x, isDir = y })
   (Decode.field "name" Decode.string)
   (Decode.field "isDir" Decode.bool)
 
-move : String -> String -> List File -> String -> Cmd Msg
-move fileApi srcDir files dstDir
+move : String -> String -> String -> List File -> String -> Cmd Msg
+move fileApi csrf srcDir files dstDir
    = Http.send (EnvMsg << Refresh)
-  <| Http.post (fileApi ++ "/move") (url <| "srcDir=" ++ encodeUri srcDir ++ "&files=" ++ encodeFiles files ++ "&dstDir=" ++ encodeUri dstDir)
+  <| Http.post (fileApi ++ "/move") (url <| "srcDir=" ++ encodeUri srcDir ++ "&files=" ++ encodeFiles files ++ "&dstDir=" ++ encodeUri dstDir ++ "&csrfToken=" ++ csrf)
   <| Decode.succeed ()
 
 url : String -> Body
@@ -29,20 +29,20 @@ url string = stringBody "application/x-www-form-urlencoded" string
 encodeFiles : List File -> String
 encodeFiles files = join "," <| map (encodeUri << .name) files
 
-delete : String -> String -> List File -> Cmd Msg
-delete fileApi dir files
+delete : String -> String -> String -> List File -> Cmd Msg
+delete fileApi csrf dir files
    =  Http.send (EnvMsg << Refresh)
-  <|  Http.post  (fileApi ++ "/delete") (url <| "dir=" ++ encodeUri dir ++ "&files=" ++ encodeFiles files)
+  <|  Http.post  (fileApi ++ "/delete") (url <| "dir=" ++ encodeUri dir ++ "&files=" ++ encodeFiles files ++ "&csrfToken=" ++ csrf)
   <|  Decode.succeed ()
 
-newDir : String -> String -> String -> Cmd Msg
-newDir fileApi dir newDir
+newDir : String -> String -> String -> String -> Cmd Msg
+newDir fileApi csrf dir newDir
    =  Http.send (EnvMsg << Refresh)
-  <|  Http.post (fileApi ++ "/newDir") (url <| "dir=" ++ encodeUri dir ++ "&newDir=" ++ encodeUri newDir)
+  <|  Http.post (fileApi ++ "/newDir") (url <| "dir=" ++ encodeUri dir ++ "&newDir=" ++ encodeUri newDir ++ "&csrfToken=" ++ csrf)
   <|  Decode.succeed ()
 
-rename : String -> String -> String -> String -> Cmd Msg
-rename fileApi dir oldName newName
+rename : String -> String -> String -> String -> String -> Cmd Msg
+rename fileApi csrf dir oldName newName
    =  Http.send (EnvMsg << Refresh)
-  <|  Http.post (fileApi ++ "/rename") (url <| "dir=" ++ encodeUri dir ++ "&oldName=" ++ encodeUri oldName ++ "&newName=" ++ encodeUri newName)
+  <|  Http.post (fileApi ++ "/rename") (url <| "dir=" ++ encodeUri dir ++ "&oldName=" ++ encodeUri oldName ++ "&newName=" ++ encodeUri newName ++ "&csrfToken=" ++ csrf)
   <|  Decode.succeed ()

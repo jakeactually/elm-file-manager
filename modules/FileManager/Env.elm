@@ -1,7 +1,7 @@
 module FileManager.Env exposing (..)
 
 import FileManager.Action exposing (..)
-import List exposing (filter, map, member)
+import List exposing (filter, map, member, reverse)
 import FileManager.Model exposing (..)
 import FileManager.Port exposing (close, getBounds)
 import Tuple exposing (first, second)
@@ -12,7 +12,7 @@ handleEnvMsg : EnvMsg -> Model -> (Model, Cmd Msg)
 handleEnvMsg msg model = case msg of
   Open () -> ({ model | open = True }, Cmd.none)
   Close -> ({ model | open = False, selected = [] }, close [])
-  Accept -> ({ model | open = False, selected = [] }, close <| map ((++) model.dir << .name) model.selected)
+  Accept -> ({ model | open = False, selected = [] }, close <| reverse <| map ((++) model.dir << .name) model.selected)
   MouseDown maybe pos1 ctrl ->
     ( { model
       | mouseDown = True
@@ -47,10 +47,15 @@ handleEnvMsg msg model = case msg of
             Just file -> if model.drag || model.ctrl then model.selected else [file]
             Nothing -> []
       , selectedBin = model.selected
+      , load = case maybe of
+          Just file -> if model.drag && file.isDir && (not << member file) model.selected
+            then True
+            else False
+          Nothing -> False
       }
       , case maybe of
           Just file -> if model.drag && file.isDir && (not << member file) model.selected
-            then move model.fileApi model.dir model.selected <| "/" ++ file.name ++ "/"
+            then move model.fileApi model.csrf model.dir model.selected <| "/" ++ file.name ++ "/"
             else Cmd.none
           Nothing -> Cmd.none
     )
