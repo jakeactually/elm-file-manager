@@ -60,14 +60,18 @@ var _user$project$FileManager_View$nameDialog = F2(
 							ctor: '::',
 							_0: A2(
 								_elm_lang$html$Html$div,
-								{ctor: '[]'},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('buttons'),
+									_1: {ctor: '[]'}
+								},
 								{
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$button,
+										_user$project$FileManager_Util$button,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('min alert right'),
+											_0: _elm_lang$html$Html_Attributes$class('alert'),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Events$onClick(_user$project$FileManager_Model$CloseNameDialog),
@@ -82,16 +86,12 @@ var _user$project$FileManager_View$nameDialog = F2(
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$button,
+											_user$project$FileManager_Util$button,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class('min'),
-												_1: {
-													ctor: '::',
-													_0: _elm_lang$html$Html_Events$onClick(
-														$new ? _user$project$FileManager_Model$NewDir : _user$project$FileManager_Model$Rename),
-													_1: {ctor: '[]'}
-												}
+												_0: _elm_lang$html$Html_Events$onClick(
+													$new ? _user$project$FileManager_Model$NewDir : _user$project$FileManager_Model$Rename),
+												_1: {ctor: '[]'}
 											},
 											{
 												ctor: '::',
@@ -188,7 +188,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 			{
 				ctor: '::',
 				_0: A2(
-					_elm_lang$html$Html$button,
+					_user$project$FileManager_Util$button,
 					{
 						ctor: '::',
 						_0: _elm_lang$html$Html_Attributes$class('div white cancel'),
@@ -242,7 +242,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 					return {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$button,
+							_user$project$FileManager_Util$button,
 							{
 								ctor: '::',
 								_0: _elm_lang$html$Html_Attributes$class('div white'),
@@ -264,7 +264,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$button,
+								_user$project$FileManager_Util$button,
 								many ? {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$class('div white disabled'),
@@ -290,7 +290,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_user$project$FileManager_Util$button,
 									{
 										ctor: '::',
 										_0: _elm_lang$html$Html_Attributes$class('div white'),
@@ -312,7 +312,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$button,
+										_user$project$FileManager_Util$button,
 										(paste && _p4._0.isDir) ? {
 											ctor: '::',
 											_0: _elm_lang$html$Html_Attributes$class('div white'),
@@ -338,7 +338,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_elm_lang$html$Html$button,
+											_user$project$FileManager_Util$button,
 											{
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$class('div white'),
@@ -404,7 +404,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$button,
+								_user$project$FileManager_Util$button,
 								{
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$class('div white'),
@@ -426,7 +426,7 @@ var _user$project$FileManager_View$contextMenu = F5(
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_user$project$FileManager_Util$button,
 									paste ? {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Attributes$class('div white'),
@@ -536,36 +536,7 @@ var _user$project$FileManager_View$renderFileThumb = F3(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('thumb bg'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$style(
-						{
-							ctor: '::',
-							_0: {
-								ctor: '_Tuple2',
-								_0: 'backgroundImage',
-								_1: A2(
-									_elm_lang$core$Basics_ops['++'],
-									'url(\"',
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										thumbService,
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$http$Http$encodeUri(fullName),
-											'\")')))
-							},
-							_1: {ctor: '[]'}
-						}),
-					_1: {ctor: '[]'}
-				}
-			},
-			{ctor: '[]'}) : A2(
-			_elm_lang$html$Html$div,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('thumb icon-file'),
+				_0: _elm_lang$html$Html_Attributes$class('thumb'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -574,10 +545,26 @@ var _user$project$FileManager_View$renderFileThumb = F3(
 					_elm_lang$html$Html$img,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('/assets/images/file.png'),
-						_1: {ctor: '[]'}
+						_0: _elm_lang$html$Html_Attributes$src(
+							A2(_elm_lang$core$Basics_ops['++'], thumbService, fullName)),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$draggable('false'),
+							_1: {ctor: '[]'}
+						}
 					},
 					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			}) : A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('thumb icon-file'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _user$project$FileManager_Util$icon2('insert_drive_file'),
 				_1: {ctor: '[]'}
 			});
 	});
@@ -593,14 +580,7 @@ var _user$project$FileManager_View$renderThumb = F4(
 			},
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$img,
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$src('/assets/images/folder.png'),
-						_1: {ctor: '[]'}
-					},
-					{ctor: '[]'}),
+				_0: _user$project$FileManager_Util$icon2('folder'),
 				_1: {ctor: '[]'}
 			}) : A3(
 			_user$project$FileManager_View$renderFileThumb,
@@ -912,30 +892,45 @@ var _user$project$FileManager_View$view = function (model) {
 						ctor: '::',
 						_0: A2(
 							_elm_lang$html$Html$div,
-							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$div,
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$id('drop'),
-										_1: {ctor: '[]'}
-									},
-									{ctor: '[]'}),
-								_1: A2(
-									_elm_lang$core$Basics_ops['++'],
-									_elm_lang$core$List$reverse(
+								_0: _elm_lang$html$Html_Attributes$id('drop'),
+								_1: {ctor: '[]'}
+							},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$id('wrap'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$id('fluid'),
+											_1: {ctor: '[]'}
+										},
 										A2(
-											_elm_lang$core$List$map,
-											_user$project$FileManager_View$renderUploading(model.progress),
-											A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))),
-									A2(
-										_elm_lang$core$List$indexedMap,
-										_user$project$FileManager_View$renderFile(model),
-										model.files))
-							}),
-						_1: {ctor: '[]'}
+											_elm_lang$core$Basics_ops['++'],
+											A2(
+												_elm_lang$core$List$indexedMap,
+												_user$project$FileManager_View$renderFile(model),
+												model.files),
+											_elm_lang$core$List$reverse(
+												A2(
+													_elm_lang$core$List$map,
+													_user$project$FileManager_View$renderUploading(model.progress),
+													A2(_elm_lang$core$List$range, 0, model.filesAmount - 1))))),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}),
 				_1: {
 					ctor: '::',
@@ -949,19 +944,15 @@ var _user$project$FileManager_View$view = function (model) {
 						{
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$button,
+								_user$project$FileManager_Util$button,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$type_('button'),
+									_0: _elm_lang$html$Html_Attributes$class('alert'),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('alert right'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(
-												_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Close)),
-											_1: {ctor: '[]'}
-										}
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Close)),
+										_1: {ctor: '[]'}
 									}
 								},
 								{
@@ -972,16 +963,12 @@ var _user$project$FileManager_View$view = function (model) {
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_user$project$FileManager_Util$button,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$type_('button'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(
-												_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Accept)),
-											_1: {ctor: '[]'}
-										}
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$FileManager_Model$EnvMsg(_user$project$FileManager_Model$Accept)),
+										_1: {ctor: '[]'}
 									},
 									{
 										ctor: '::',

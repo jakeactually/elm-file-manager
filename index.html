@@ -21,9 +21,9 @@
     <script>
         // File Manager
 
-        const fmc = document.querySelector("#file-manager-container");
-        const fileApi = "http://app.com/file";
-        const thumbService = "http://app.com/thumb?image=";
+        const fmc = document.querySelector('#file-manager-container');
+        const fileApi = "/file";
+        const thumbService = "/thumb?image=";
         const csrf = "";
         const dir = "/";
         const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, csrf, dir });
@@ -36,7 +36,7 @@
         // File Manager Ports
 
         fm.ports.getBounds.subscribe(() => {
-            const els = Array.from(document.querySelectorAll('.file:not(.upload)'));
+            const els = Array.from(document.querySelectorAll('.file'));
             const bounds = els.map(el => {
                 const bound = el.getBoundingClientRect();
                 return {
@@ -50,12 +50,12 @@
         });
 
         let observer = new MutationObserver(() => {
-            const files = document.body.querySelector('#files');
+            const files = document.querySelector('#files');
             if (files) {
                 const drop = files.querySelector('#drop');
                 files.ondragenter = ev => drop.style.display = "block";
                 drop.ondragleave = () => drop.style.display = "none";
-                drop.ondragover= ev => ev.preventDefault();
+                drop.ondragover = ev => ev.preventDefault();
                 drop.ondrop = ev => {
                     ev.preventDefault();
                     drop.style.display = "none";
@@ -67,7 +67,7 @@
                 observer = null;
             }
         });
-        observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(document, { childList: true, subtree: true });
 
         fm.ports.upload.subscribe(dir => {
             const input = document.querySelector('#file-input');
@@ -81,11 +81,10 @@
                 const file = files.shift();
 
                 const formData = new FormData();
-                formData.append('req', 'upload');
-                formData.append('dir', encodeURI(dir));
+                formData.append('csrfToken', csrf);
+                formData.append('dir', dir);
                 formData.append('file', file);
-                formData.append('csrfToken', encodeURI(csrf));
-
+                
                 const xhr = new XMLHttpRequest();
                 xhr.upload.onprogress = ev => {
                     if (ev.lengthComputable) {
@@ -106,7 +105,7 @@
         });
 
         fm.ports.download.subscribe(files => {
-            files.forEach(file => window.open(`http://app.com/static${file}`));
+            files.forEach(file => window.open(`/static${file}`));
         });
     </script>
 

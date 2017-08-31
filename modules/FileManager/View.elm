@@ -1,17 +1,16 @@
 module FileManager.View exposing (..)
 
 import FileManager.Events exposing (..)
-import Html exposing (Attribute, Html, a, button, div, form, h1, i, input, img, label, text, textarea)
-import Html.Attributes exposing (action, class, id, href, method, multiple, src, style, target, title, type_, value)
+import Html exposing (Attribute, Html, a, div, form, h1, i, input, img, label, text, textarea)
+import Html.Attributes exposing (action, class, draggable, id, href, method, multiple, src, style, target, title, type_, value)
 import Html.Events exposing (onClick, onDoubleClick, onInput)
-import Http exposing (encodeUri)
 import List exposing (head, indexedMap, isEmpty, length, map, member, range, repeat, reverse, tail)
 import FileManager.Model exposing (..)
 import Maybe exposing (andThen, withDefault)
 import String exposing (join, split)
 import Svg exposing (svg, circle)
 import Svg.Attributes exposing (width, height, cx, cy, r)
-import FileManager.Util exposing (icon, icon2, isJust)
+import FileManager.Util exposing (button, icon, icon2, isJust)
 import FileManager.Vec exposing (..)
 
 view : Model -> Html Msg
@@ -25,7 +24,7 @@ view model = div
       , div [ class "text" ] [ text model.dir ]
       , if model.load
           then svg [ width "25", height "25" ]
-            [ circle [ cx "50%", cy "50%", r "40%"] []
+            [ circle [ cx "50%", cy "50%", r "40%" ] []
             ]
           else div [] []
       ]
@@ -37,14 +36,16 @@ view model = div
       , onMouseUp <| EnvMsg <|  MouseUp Nothing
       , onContextMenu <| EnvMsg <| ContextMenu Nothing
       ]
-      [ div []
-        <| div [ id "drop" ] []
-        :: reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
-        ++ indexedMap (renderFile model) model.files
+      [ div [ id "drop" ] []
+      , div [ id "wrap" ]
+        [ div [ id "fluid" ]
+          <| indexedMap (renderFile model) model.files
+          ++ reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
+        ]
       ]
   , div [ id "control" ]
-    [ button [ type_ "button", class "alert right", onClick <| EnvMsg Close ] [ text "Cancelar" ]
-    , button [ type_ "button", onClick <| EnvMsg Accept ] [ text "Aceptar" ]
+    [ button [ class "alert", onClick <| EnvMsg Close ] [ text "Cancelar" ]
+    , button [ onClick <| EnvMsg Accept ] [ text "Aceptar" ]
     ]
   , if model.showBound then renderHelper model.bound else div [] []
   , if model.drag then renderCount model.pos2 model.selected else div [] []
@@ -83,18 +84,17 @@ renderFile { fileApi, thumbService, dir, selected, clipboardDir, clipboardFiles 
 renderThumb : String -> String -> String -> File -> Html Msg
 renderThumb thumbService fileApi dir { name, isDir } = if isDir
   then div [ class "thumb icon-folder" ]
-    [ img [ src "/assets/images/folder.png" ] []
+    [ icon2 "folder"
     ]
   else renderFileThumb fileApi thumbService <| dir ++ name
 
 renderFileThumb : String -> String -> String -> Html Msg
 renderFileThumb fileApi thumbService fullName = if member (getExt fullName) ["jpg", "jpeg", "png", "PNG"]
-  then div
-    [ class "thumb bg"
-    , style [ ("backgroundImage", "url(\"" ++ thumbService ++ encodeUri fullName ++ "\")") ]
-    ] []
+  then div [ class "thumb" ]
+    [ img [ src <| thumbService ++ fullName, draggable "false" ] []
+    ]
   else div [ class "thumb icon-file" ]
-    [ img [ src "/assets/images/file.png" ] []
+    [ icon2 "insert_drive_file"
     ]
 
 getExt : String -> String
@@ -144,9 +144,9 @@ nameDialog name new = div [ class "screen" ]
           [ div [ class "name" ] [ text "Nombre" ]
           , input [ type_ "text", value name, onInput Name ] []
           ]
-      , div []
-          [ button [ class "min alert right", onClick CloseNameDialog ] [ text "Cancelar" ]
-          , button [ class "min", onClick <| if new then NewDir else Rename ] [ text "Aceptar" ]
+      , div [ class "buttons" ]
+          [ button [ class "alert", onClick CloseNameDialog ] [ text "Cancelar" ]
+          , button [ onClick <| if new then NewDir else Rename ] [ text "Aceptar" ]
           ]
       ]
   ]

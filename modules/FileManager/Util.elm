@@ -1,6 +1,6 @@
 module FileManager.Util exposing (..)
 
-import Html exposing (Html, button, i, text)
+import Html exposing (Attribute, Html, button, i, text)
 import Html.Attributes exposing (class, title, type_)
 import Html.Events exposing (onClick)
 import FileManager.Model exposing (Msg)
@@ -52,3 +52,6 @@ icon text_ title_ msg = button [ type_ "button", class "icon", title title_, onC
 
 icon2 : String -> Html Msg
 icon2 text_ =  i [ class "material-icons" ] [ text text_ ]
+
+button : List (Attribute msg) -> List (Html msg) -> Html msg
+button atts childs = Html.button (type_ "button" :: atts) childs

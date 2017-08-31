@@ -15,63 +15,59 @@
   padding: 0 25px;
 }
 
-#bar button {
-  display: flex;
-  align-items: center;
-}
-
 #bar .text {
   flex-grow: 1;
   margin-left: 10px;
 }
 
-@keyframes dash {
-  0% { stroke-dasharray: 0% 0% 40% 210%; }
-  50% { stroke-dasharray: 0% 0% 210% 40%; }
-  100% { stroke-dasharray: 0% 210% 40% 0%; stroke-dashoffset: -38%; }
-}
-
-@keyframes rotation {
-  0% { }
-  50% { transform: rotate(180deg); }
-  100% { transform: rotate(360deg); }
-}
-
 #bar circle {
   fill: none;
   stroke: #1565C0;
-  stroke-width: 2px;
+  stroke-width: 3px;
   animation: dash 1.5s infinite;
+}
+
+@keyframes dash {
+  0% { stroke-dasharray: 0% 0% 40% 210%; }
+  50% { stroke-dasharray: 0% 0% 210% 40%; }
+  100% { stroke-dasharray: 0% 210% 40% 0%; stroke-dashoffset: -40%; }
 }
 
 #bar svg {
   animation: rotation 3s linear infinite;
 }
 
+@keyframes rotation { 
+  100% { transform: rotate(360deg); }
+}
+
 #files {
+  position: relative;
   padding: 20px;
   background-color: #FFFFFF;
   overflow: hidden;
 }
 
-#files > div {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  align-content: flex-start;
+#wrap {
   height: 100%;
   overflow: auto;
 }
 
+#fluid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 #drop {
   display: none;
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #2196F3;
-  opacity: 0.5;
+  border: 15px solid #2196F3;
+  background-color: rgba(33, 150, 243, 0.5);
 }
 
 .file {
@@ -93,32 +89,39 @@
 }
 
 .file .thumb {
-  width: 120px;
-  height: 120px;
-}
-
-.file .icon-folder, .file .icon-file {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 120px;
+  height: 120px;
+  outline: 1px solid #ECEFF1;
 }
 
-.file img {
-  pointer-events: none;
-}
-
-.file .icon-folder {
-  background-color: #FFC107;
-}
-
-.file .icon-file {
-  background-color: #2196F3;
+.file:hover .thumb, .file.selected .thumb {
+  outline: none;
 }
 
 .file.upload .thumb {
-  display: flex;
-  align-items: center;
+  justify-content: flex-start;
   background-color: #ECEFF1;
+}
+
+.file .thumb i {
+  font-size: 3em;
+}
+
+.file .icon-folder i {
+  color: #FFC107;
+}
+
+.file .icon-file i {
+  color: #2196F3;
+}
+
+.file .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 #progress {
@@ -131,6 +134,7 @@
   width: 100px;
   height: 36px;
   margin-top: 10px;
+  overflow: hidden;
   font-size: 0.8em;
 }
 
@@ -140,6 +144,10 @@
   align-items: center;
   padding: 0 25px;
   background-color: #ECEFF1;
+}
+
+#control button {
+    margin-left: 5px;
 }
 
 #helper {
@@ -189,6 +197,7 @@
   height: 40px;
   padding: 0 10px;
   margin-bottom: 0;
+  font-weight: 400;
   cursor: pointer;
 }
 
