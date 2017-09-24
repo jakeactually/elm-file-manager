@@ -14,7 +14,7 @@
 
   // FileController
 
-  define('FILES_ROOT', "C:\\Users\\Kevin\\Documents\\Web\\GitHub\\elm-file-manager\\static");
+  define('FILES_ROOT', "static");
 
   function ls($dir) {
     $files = cleanScandir(FILES_ROOT . $dir);
@@ -59,7 +59,7 @@
 
   // This should be a cached thumb service
   function thumb($image) {
-    $thumb = "http://app.com/static" . $image;
+    $thumb = "/static" . $image;
     header("Location: $thumb");
   }
 

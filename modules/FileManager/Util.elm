@@ -45,6 +45,9 @@ isJust maybe = case maybe of
 
 -- Component
 
+button : List (Attribute msg) -> List (Html msg) -> Html msg
+button atts childs = Html.button (type_ "button" :: atts) childs
+
 icon : String -> String -> Msg -> Html Msg
 icon text_ title_ msg = button [ type_ "button", class "icon", title title_, onClick msg ]
   [ i [ class "material-icons" ] [ text text_ ]
@@ -52,6 +55,3 @@ icon text_ title_ msg = button [ type_ "button", class "icon", title title_, onC
 
 icon2 : String -> Html Msg
 icon2 text_ =  i [ class "material-icons" ] [ text text_ ]
-
-button : List (Attribute msg) -> List (Html msg) -> Html msg
-button atts childs = Html.button (type_ "button" :: atts) childs
