@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   background-color: #ECEFF1;
-  padding: 0 25px;
+  padding: 0 10px;
 }
 
 #bar .text {
@@ -43,7 +43,7 @@
 
 #files {
   position: relative;
-  padding: 20px;
+  padding: 10px;
   background-color: #FFFFFF;
   overflow: hidden;
 }
@@ -71,8 +71,7 @@
 }
 
 .file {
-  padding: 10px;
-  margin: 0 10px 10px 0;
+  padding: 5px;
   cursor: default;
 }
 
@@ -142,7 +141,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 25px;
+  padding: 0 10px;
   background-color: #ECEFF1;
 }
 

@@ -9771,17 +9771,6 @@ var _user$project$FileManager_Port$close = _elm_lang$core$Native_Platform.outgoi
 			});
 	});
 
-var _user$project$FileManager_Util$button = F2(
-	function (atts, childs) {
-		return A2(
-			_elm_lang$html$Html$button,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$type_('button'),
-				_1: atts
-			},
-			childs);
-	});
 var _user$project$FileManager_Util$icon2 = function (text_) {
 	return A2(
 		_elm_lang$html$Html$i,
@@ -9796,6 +9785,17 @@ var _user$project$FileManager_Util$icon2 = function (text_) {
 			_1: {ctor: '[]'}
 		});
 };
+var _user$project$FileManager_Util$button = F2(
+	function (atts, childs) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$type_('button'),
+				_1: atts
+			},
+			childs);
+	});
 var _user$project$FileManager_Util$icon = F3(
 	function (text_, title_, msg) {
 		return A2(

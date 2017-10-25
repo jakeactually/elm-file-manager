@@ -6,7 +6,7 @@ import Html.Events exposing (on, onWithOptions)
 import FileManager.Vec exposing (..)
 
 onMouseDown : (Vec2 -> Bool -> msg) -> Attribute msg
-onMouseDown function  =
+onMouseDown function =
   onWithOptions "mousedown" (op True False) <| Decode.map3 (\a b c -> function (Vec2 a b) c)
     (Decode.field "clientX" Decode.int)
     (Decode.field "clientY" Decode.int)
@@ -19,11 +19,11 @@ onMouseMove function =
     (Decode.field "clientY" Decode.int)
 
 onMouseUp : msg -> Attribute msg
-onMouseUp function  =
+onMouseUp function =
   onWithOptions "mouseup" (op True False)  <| Decode.succeed function
 
 onContextMenu : msg -> Attribute msg
-onContextMenu function  =
+onContextMenu function =
   onWithOptions "contextmenu" (op True True)  <| Decode.succeed function
 
 onChange : msg -> Attribute msg

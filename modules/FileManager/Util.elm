@@ -33,8 +33,8 @@ arraySwap index1 index2 array =
     maybe1 = get index1 array
     maybe2 = get index2 array
   in case (maybe1, maybe2) of
-    (Just item1, Just item2)  -> Array.set index1 item2 <| Array.set index2 item1 array
-    _                         -> array
+    (Just item1, Just item2) -> Array.set index1 item2 <| Array.set index2 item1 array
+    _ -> array
 
 -- Maybe
 

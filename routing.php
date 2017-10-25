@@ -14,43 +14,43 @@
 
   // FileController
 
-  define('FILES_ROOT', "static");
+  define('filesRoot', "static");
 
   function ls($dir) {
-    $files = cleanScandir(FILES_ROOT . $dir);
-    $files = array_map(function($x) use($dir) { return ['name' => $x, 'isDir' => is_dir(FILES_ROOT . $dir . $x)]; }, $files);
+    $files = cleanScandir(filesRoot . $dir);
+    $files = array_map(function($x) use($dir) { return ['name' => $x, 'isDir' => is_dir(filesRoot . $dir . $x)]; }, $files);
     echo json_encode($files);
   }
 
   function upload($dir, $file) {
-    $dst = getNextAvailable(FILES_ROOT . $dir . $file['name']);
+    $dst = getNextAvailable(filesRoot . $dir . $file['name']);
     move_uploaded_file($file['tmp_name'], $dst);
     echo "null";
   }
 
   function newDir($dir, $newDir) {
-    $dir = getNextAvailable(FILES_ROOT . $dir . $newDir);
+    $dir = getNextAvailable(filesRoot . $dir . $newDir);
     mkdir($dir);
     echo "null";
   }
 
   function rename_($dir, $oldName, $newName) {
-    $oldName = FILES_ROOT . $dir . $oldName;
-    $newName = getNextAvailable(FILES_ROOT . $dir . $newName);
+    $oldName = filesRoot . $dir . $oldName;
+    $newName = getNextAvailable(filesRoot . $dir . $newName);
     rename($oldName, $newName);
     echo "null";
   }
 
   function move($srcDir, $files, $dstDir) {
     foreach ($files as $file) {
-      rename(FILES_ROOT . $srcDir . $file, getNextAvailable(FILES_ROOT . $dstDir . $file));
+      rename(filesRoot . $srcDir . $file, getNextAvailable(filesRoot . $dstDir . $file));
     }
     echo "null";
   }
 
   function delete_($dir, $files) {
     foreach ($files as $file) {
-      recursiveDelete(FILES_ROOT . $dir . $file);
+      deleteRec(filesRoot . $dir . $file);
     }
     echo "null";
   }
@@ -87,11 +87,11 @@
     }
   }
 
-  function recursiveDelete($file) {
+  function deleteRec($file) {
     if (file_exists($file)) {
       if (is_dir($file)) {
         foreach (cleanScandir($file) as $file_) {
-          recursiveDelete($file . "/" . $file_);
+          deleteRec($file . "/" . $file_);
         }
         rmdir($file);
       } else {
