@@ -22,8 +22,8 @@
         // File Manager
 
         const fmc = document.querySelector('#file-manager-container');
-        const fileApi = "/file";
-        const thumbService = "/thumb?image=";
+        const fileApi = "http://jakeactually.com:9000/file";
+        const thumbService = "http://jakeactually.com:9000/thumb?image=";
         const csrf = "";
         const dir = "/";
         const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, csrf, dir });
@@ -105,7 +105,7 @@
         });
 
         fm.ports.download.subscribe(files => {
-            files.forEach(file => window.open(`/static${file}`));
+            files.forEach(file => window.open(`http://jakeactually.com:9000/static${file}`));
         });
     </script>
 
