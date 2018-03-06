@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Elm file manager</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
@@ -22,9 +22,9 @@
         // File Manager
 
         const fmc = document.querySelector('#file-manager-container');
-        const fileApi = "http://jakeactually.com:9000/file";
-        const thumbService = "http://jakeactually.com:9000/thumb?image=";
-        const csrf = "";
+        const fileApi = "https://jakeactually.com/file";
+        const thumbService = "https://jakeactually.com/thumb?image=";
+        const csrf = "123";
         const dir = "/";
         const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, csrf, dir });
 
@@ -105,7 +105,7 @@
         });
 
         fm.ports.download.subscribe(files => {
-            files.forEach(file => window.open(`http://jakeactually.com:9000/static${file}`));
+            files.forEach(file => window.open(`https://jakeactually.com/static${file}`));
         });
     </script>
 
