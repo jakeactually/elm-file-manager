@@ -55,7 +55,7 @@ handleEnvMsg msg model = case msg of
       }
       , case maybe of
           Just file -> if model.drag && file.isDir && (not << member file) model.selected
-            then move model.fileApi model.csrf model.dir model.selected <| "/" ++ file.name ++ "/"
+            then move model.fileApi model.jwt model.dir model.selected <| "/" ++ file.name ++ "/"
             else Cmd.none
           Nothing -> Cmd.none
     )
@@ -70,10 +70,10 @@ handleEnvMsg msg model = case msg of
       }
       , Cmd.none
     )
-  GetLs dir -> ({ model | dir = dir, files = [], load = True }, getLs model.fileApi dir)
+  GetLs dir -> ({ model | dir = dir, files = [], load = True }, getLs model.fileApi model.jwt dir)
   LsGotten result -> case result of
     Ok files -> ({ model | files = files, selected = [], load = False }, Cmd.none)
     Err _ -> (model, Cmd.none)
   Refresh result -> case result of
-    Ok () -> (model, getLs model.fileApi model.dir)
+    Ok () -> (model, getLs model.fileApi model.jwt model.dir)
     Err _ -> (model, Cmd.none)

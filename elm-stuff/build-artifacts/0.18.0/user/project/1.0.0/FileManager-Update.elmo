@@ -41,7 +41,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{filesAmount: model.filesAmount - 1}),
-					_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, model.dir)
+					_1: A3(_user$project$FileManager_Action$getLs, model.fileApi, model.jwt, model.dir)
 				};
 			case 'OpenNameDialog':
 				return {
@@ -84,7 +84,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{showNameDialog: false, load: true}),
-					_1: A4(_user$project$FileManager_Action$newDir, model.fileApi, model.csrf, model.dir, model.name)
+					_1: A4(_user$project$FileManager_Action$newDir, model.fileApi, model.jwt, model.dir, model.name)
 				};
 			case 'Download':
 				return {
@@ -124,7 +124,7 @@ var _user$project$FileManager_Update$update = F2(
 					_1: function () {
 						var _p4 = model.caller;
 						if (_p4.ctor === 'Just') {
-							return A5(_user$project$FileManager_Action$rename, model.fileApi, model.csrf, model.dir, _p4._0.name, model.name);
+							return A5(_user$project$FileManager_Action$rename, model.fileApi, model.jwt, model.dir, _p4._0.name, model.name);
 						} else {
 							return _elm_lang$core$Platform_Cmd$none;
 						}
@@ -155,7 +155,7 @@ var _user$project$FileManager_Update$update = F2(
 							return _p6.isDir ? A5(
 								_user$project$FileManager_Action$move,
 								model.fileApi,
-								model.csrf,
+								model.jwt,
 								model.clipboardDir,
 								model.clipboardFiles,
 								A2(
@@ -163,7 +163,7 @@ var _user$project$FileManager_Update$update = F2(
 									model.dir,
 									A2(_elm_lang$core$Basics_ops['++'], _p6.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
 						} else {
-							return A5(_user$project$FileManager_Action$move, model.fileApi, model.csrf, model.clipboardDir, model.clipboardFiles, model.dir);
+							return A5(_user$project$FileManager_Action$move, model.fileApi, model.jwt, model.clipboardDir, model.clipboardFiles, model.dir);
 						}
 					}()
 				};
@@ -173,7 +173,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{showContextMenu: false, load: true}),
-					_1: A4(_user$project$FileManager_Action$delete, model.fileApi, model.csrf, model.dir, model.selected)
+					_1: A4(_user$project$FileManager_Action$delete, model.fileApi, model.jwt, model.dir, model.selected)
 				};
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -181,6 +181,7 @@ var _user$project$FileManager_Update$update = F2(
 	});
 var _user$project$FileManager_Update$init = function (_p7) {
 	var _p8 = _p7;
+	var _p11 = _p8.jwt;
 	var _p10 = _p8.fileApi;
 	var _p9 = _p8.dir;
 	return A2(
@@ -191,7 +192,7 @@ var _user$project$FileManager_Update$init = function (_p7) {
 		{
 			fileApi: _p10,
 			thumbService: _p8.thumbService,
-			csrf: _p8.csrf,
+			jwt: _p11,
 			dir: _p9,
 			open: false,
 			load: false,
@@ -215,5 +216,5 @@ var _user$project$FileManager_Update$init = function (_p7) {
 			clipboardDir: '',
 			clipboardFiles: {ctor: '[]'}
 		},
-		A2(_user$project$FileManager_Action$getLs, _p10, _p9));
+		A3(_user$project$FileManager_Action$getLs, _p10, _p11, _p9));
 };

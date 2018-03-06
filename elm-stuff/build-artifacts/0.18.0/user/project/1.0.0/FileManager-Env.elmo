@@ -165,7 +165,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 							}(model.selected))) ? A5(
 								_user$project$FileManager_Action$move,
 								model.fileApi,
-								model.csrf,
+								model.jwt,
 								model.dir,
 								model.selected,
 								A2(
@@ -214,7 +214,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 							files: {ctor: '[]'},
 							load: true
 						}),
-					_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, _p20)
+					_1: A3(_user$project$FileManager_Action$getLs, model.fileApi, model.jwt, _p20)
 				};
 			case 'LsGotten':
 				var _p21 = _p0._0;
@@ -239,7 +239,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 					return {
 						ctor: '_Tuple2',
 						_0: model,
-						_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, model.dir)
+						_1: A3(_user$project$FileManager_Action$getLs, model.fileApi, model.jwt, model.dir)
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};

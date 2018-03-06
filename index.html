@@ -24,9 +24,9 @@
         const fmc = document.querySelector('#file-manager-container');
         const fileApi = "https://jakeactually.com/file";
         const thumbService = "https://jakeactually.com/thumb?image=";
-        const csrf = "123";
+        const jwt = "123";
         const dir = "/";
-        const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, csrf, dir });
+        const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, jwt, dir });
 
         fm.ports.open.send(null);
         fm.ports.close.subscribe(files => {

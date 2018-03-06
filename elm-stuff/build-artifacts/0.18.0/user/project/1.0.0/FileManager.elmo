@@ -34,23 +34,23 @@ var _user$project$FileManager$main = _elm_lang$html$Html$programWithFlags(
 	{init: _user$project$FileManager_Update$init, view: _user$project$FileManager_View$view, update: _user$project$FileManager_Update$update, subscriptions: _user$project$FileManager$subscriptions})(
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		function (csrf) {
+		function (dir) {
 			return A2(
 				_elm_lang$core$Json_Decode$andThen,
-				function (dir) {
+				function (fileApi) {
 					return A2(
 						_elm_lang$core$Json_Decode$andThen,
-						function (fileApi) {
+						function (jwt) {
 							return A2(
 								_elm_lang$core$Json_Decode$andThen,
 								function (thumbService) {
 									return _elm_lang$core$Json_Decode$succeed(
-										{csrf: csrf, dir: dir, fileApi: fileApi, thumbService: thumbService});
+										{dir: dir, fileApi: fileApi, jwt: jwt, thumbService: thumbService});
 								},
 								A2(_elm_lang$core$Json_Decode$field, 'thumbService', _elm_lang$core$Json_Decode$string));
 						},
-						A2(_elm_lang$core$Json_Decode$field, 'fileApi', _elm_lang$core$Json_Decode$string));
+						A2(_elm_lang$core$Json_Decode$field, 'jwt', _elm_lang$core$Json_Decode$string));
 				},
-				A2(_elm_lang$core$Json_Decode$field, 'dir', _elm_lang$core$Json_Decode$string));
+				A2(_elm_lang$core$Json_Decode$field, 'fileApi', _elm_lang$core$Json_Decode$string));
 		},
-		A2(_elm_lang$core$Json_Decode$field, 'csrf', _elm_lang$core$Json_Decode$string)));
+		A2(_elm_lang$core$Json_Decode$field, 'dir', _elm_lang$core$Json_Decode$string)));

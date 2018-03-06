@@ -9424,7 +9424,7 @@ var _user$project$FileManager_Vec$Vec2 = F2(
 
 var _user$project$FileManager_Model$Flags = F4(
 	function (a, b, c, d) {
-		return {fileApi: a, thumbService: b, csrf: c, dir: d};
+		return {fileApi: a, thumbService: b, jwt: c, dir: d};
 	});
 var _user$project$FileManager_Model$Model = function (a) {
 	return function (b) {
@@ -9451,7 +9451,7 @@ var _user$project$FileManager_Model$Model = function (a) {
 																						return function (w) {
 																							return function (x) {
 																								return function (y) {
-																									return {fileApi: a, thumbService: b, csrf: c, dir: d, open: e, load: f, pos1: g, pos2: h, mouseDown: i, ctrl: j, caller: k, files: l, showBound: m, bound: n, bounds: o, selected: p, drag: q, showContextMenu: r, selectedBin: s, filesAmount: t, progress: u, showNameDialog: v, name: w, clipboardDir: x, clipboardFiles: y};
+																									return {fileApi: a, thumbService: b, jwt: c, dir: d, open: e, load: f, pos1: g, pos2: h, mouseDown: i, ctrl: j, caller: k, files: l, showBound: m, bound: n, bounds: o, selected: p, drag: q, showContextMenu: r, selectedBin: s, filesAmount: t, progress: u, showNameDialog: v, name: w, clipboardDir: x, clipboardFiles: y};
 																								};
 																							};
 																						};
@@ -9555,106 +9555,45 @@ var _user$project$FileManager_Action$encodeFiles = function (files) {
 var _user$project$FileManager_Action$url = function (string) {
 	return A2(_elm_lang$http$Http$stringBody, 'application/x-www-form-urlencoded', string);
 };
-var _user$project$FileManager_Action$delete = F4(
-	function (fileApi, csrf, dir, files) {
+var _user$project$FileManager_Action$fileDecoder = A3(
+	_elm_lang$core$Json_Decode$map2,
+	F2(
+		function (x, y) {
+			return {name: x, isDir: y};
+		}),
+	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'isDir', _elm_lang$core$Json_Decode$bool));
+var _user$project$FileManager_Action$post = F4(
+	function (jwt, url, body, decoder) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'GET',
+				headers: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$http$Http$header,
+						'Authorization',
+						A2(_elm_lang$core$Basics_ops['++'], 'Bearer ', jwt)),
+					_1: {ctor: '[]'}
+				},
+				url: url,
+				body: _elm_lang$http$Http$emptyBody,
+				expect: _elm_lang$http$Http$expectJson(decoder),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
+var _user$project$FileManager_Action$move = F5(
+	function (fileApi, jwt, srcDir, files, dstDir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p1) {
 				return _user$project$FileManager_Model$EnvMsg(
 					_user$project$FileManager_Model$Refresh(_p1));
 			},
-			A3(
-				_elm_lang$http$Http$post,
-				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/delete'),
-				_user$project$FileManager_Action$url(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&files=',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									_user$project$FileManager_Action$encodeFiles(files),
-									A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
-var _user$project$FileManager_Action$newDir = F4(
-	function (fileApi, csrf, dir, newDir) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p2) {
-				return _user$project$FileManager_Model$EnvMsg(
-					_user$project$FileManager_Model$Refresh(_p2));
-			},
-			A3(
-				_elm_lang$http$Http$post,
-				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/newDir'),
-				_user$project$FileManager_Action$url(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&newDir=',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									_elm_lang$http$Http$encodeUri(newDir),
-									A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
-var _user$project$FileManager_Action$rename = F5(
-	function (fileApi, csrf, dir, oldName, newName) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p3) {
-				return _user$project$FileManager_Model$EnvMsg(
-					_user$project$FileManager_Model$Refresh(_p3));
-			},
-			A3(
-				_elm_lang$http$Http$post,
-				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/rename'),
-				_user$project$FileManager_Action$url(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						'dir=',
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$http$Http$encodeUri(dir),
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								'&oldName=',
-								A2(
-									_elm_lang$core$Basics_ops['++'],
-									_elm_lang$http$Http$encodeUri(oldName),
-									A2(
-										_elm_lang$core$Basics_ops['++'],
-										'&newName=',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$http$Http$encodeUri(newName),
-											A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))))),
-				_elm_lang$core$Json_Decode$succeed(
-					{ctor: '_Tuple0'})));
-	});
-var _user$project$FileManager_Action$move = F5(
-	function (fileApi, csrf, srcDir, files, dstDir) {
-		return A2(
-			_elm_lang$http$Http$send,
-			function (_p4) {
-				return _user$project$FileManager_Model$EnvMsg(
-					_user$project$FileManager_Model$Refresh(_p4));
-			},
-			A3(
-				_elm_lang$http$Http$post,
+			A4(
+				_user$project$FileManager_Action$post,
+				jwt,
 				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/move'),
 				_user$project$FileManager_Action$url(
 					A2(
@@ -9672,31 +9611,125 @@ var _user$project$FileManager_Action$move = F5(
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										'&dstDir=',
-										A2(
-											_elm_lang$core$Basics_ops['++'],
-											_elm_lang$http$Http$encodeUri(dstDir),
-											A2(_elm_lang$core$Basics_ops['++'], '&csrfToken=', csrf)))))))),
+										_elm_lang$http$Http$encodeUri(dstDir))))))),
 				_elm_lang$core$Json_Decode$succeed(
 					{ctor: '_Tuple0'})));
 	});
-var _user$project$FileManager_Action$fileDecoder = A3(
-	_elm_lang$core$Json_Decode$map2,
-	F2(
-		function (x, y) {
-			return {name: x, isDir: y};
-		}),
-	A2(_elm_lang$core$Json_Decode$field, 'name', _elm_lang$core$Json_Decode$string),
-	A2(_elm_lang$core$Json_Decode$field, 'isDir', _elm_lang$core$Json_Decode$bool));
-var _user$project$FileManager_Action$getLs = F2(
-	function (fileApi, dir) {
+var _user$project$FileManager_Action$delete = F4(
+	function (fileApi, jwt, dir, files) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p2) {
+				return _user$project$FileManager_Model$EnvMsg(
+					_user$project$FileManager_Model$Refresh(_p2));
+			},
+			A4(
+				_user$project$FileManager_Action$post,
+				jwt,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/delete'),
+				_user$project$FileManager_Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&files=',
+								_user$project$FileManager_Action$encodeFiles(files))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
+var _user$project$FileManager_Action$newDir = F4(
+	function (fileApi, jwt, dir, newDir) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p3) {
+				return _user$project$FileManager_Model$EnvMsg(
+					_user$project$FileManager_Model$Refresh(_p3));
+			},
+			A4(
+				_user$project$FileManager_Action$post,
+				jwt,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/newDir'),
+				_user$project$FileManager_Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&newDir=',
+								_elm_lang$http$Http$encodeUri(newDir))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
+var _user$project$FileManager_Action$rename = F5(
+	function (fileApi, jwt, dir, oldName, newName) {
+		return A2(
+			_elm_lang$http$Http$send,
+			function (_p4) {
+				return _user$project$FileManager_Model$EnvMsg(
+					_user$project$FileManager_Model$Refresh(_p4));
+			},
+			A4(
+				_user$project$FileManager_Action$post,
+				jwt,
+				A2(_elm_lang$core$Basics_ops['++'], fileApi, '/rename'),
+				_user$project$FileManager_Action$url(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'dir=',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$http$Http$encodeUri(dir),
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								'&oldName=',
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$http$Http$encodeUri(oldName),
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'&newName=',
+										_elm_lang$http$Http$encodeUri(newName))))))),
+				_elm_lang$core$Json_Decode$succeed(
+					{ctor: '_Tuple0'})));
+	});
+var _user$project$FileManager_Action$get = F3(
+	function (jwt, url, decoder) {
+		return _elm_lang$http$Http$request(
+			{
+				method: 'GET',
+				headers: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$http$Http$header,
+						'Authorization',
+						A2(_elm_lang$core$Basics_ops['++'], 'Bearer ', jwt)),
+					_1: {ctor: '[]'}
+				},
+				url: url,
+				body: _elm_lang$http$Http$emptyBody,
+				expect: _elm_lang$http$Http$expectJson(decoder),
+				timeout: _elm_lang$core$Maybe$Nothing,
+				withCredentials: false
+			});
+	});
+var _user$project$FileManager_Action$getLs = F3(
+	function (fileApi, jwt, dir) {
 		return A2(
 			_elm_lang$http$Http$send,
 			function (_p5) {
 				return _user$project$FileManager_Model$EnvMsg(
 					_user$project$FileManager_Model$LsGotten(_p5));
 			},
-			A2(
-				_elm_lang$http$Http$get,
+			A3(
+				_user$project$FileManager_Action$get,
+				jwt,
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					fileApi,
@@ -10068,7 +10101,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 							}(model.selected))) ? A5(
 								_user$project$FileManager_Action$move,
 								model.fileApi,
-								model.csrf,
+								model.jwt,
 								model.dir,
 								model.selected,
 								A2(
@@ -10117,7 +10150,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 							files: {ctor: '[]'},
 							load: true
 						}),
-					_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, _p20)
+					_1: A3(_user$project$FileManager_Action$getLs, model.fileApi, model.jwt, _p20)
 				};
 			case 'LsGotten':
 				var _p21 = _p0._0;
@@ -10142,7 +10175,7 @@ var _user$project$FileManager_Env$handleEnvMsg = F2(
 					return {
 						ctor: '_Tuple2',
 						_0: model,
-						_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, model.dir)
+						_1: A3(_user$project$FileManager_Action$getLs, model.fileApi, model.jwt, model.dir)
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -10193,7 +10226,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{filesAmount: model.filesAmount - 1}),
-					_1: A2(_user$project$FileManager_Action$getLs, model.fileApi, model.dir)
+					_1: A3(_user$project$FileManager_Action$getLs, model.fileApi, model.jwt, model.dir)
 				};
 			case 'OpenNameDialog':
 				return {
@@ -10236,7 +10269,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{showNameDialog: false, load: true}),
-					_1: A4(_user$project$FileManager_Action$newDir, model.fileApi, model.csrf, model.dir, model.name)
+					_1: A4(_user$project$FileManager_Action$newDir, model.fileApi, model.jwt, model.dir, model.name)
 				};
 			case 'Download':
 				return {
@@ -10276,7 +10309,7 @@ var _user$project$FileManager_Update$update = F2(
 					_1: function () {
 						var _p4 = model.caller;
 						if (_p4.ctor === 'Just') {
-							return A5(_user$project$FileManager_Action$rename, model.fileApi, model.csrf, model.dir, _p4._0.name, model.name);
+							return A5(_user$project$FileManager_Action$rename, model.fileApi, model.jwt, model.dir, _p4._0.name, model.name);
 						} else {
 							return _elm_lang$core$Platform_Cmd$none;
 						}
@@ -10307,7 +10340,7 @@ var _user$project$FileManager_Update$update = F2(
 							return _p6.isDir ? A5(
 								_user$project$FileManager_Action$move,
 								model.fileApi,
-								model.csrf,
+								model.jwt,
 								model.clipboardDir,
 								model.clipboardFiles,
 								A2(
@@ -10315,7 +10348,7 @@ var _user$project$FileManager_Update$update = F2(
 									model.dir,
 									A2(_elm_lang$core$Basics_ops['++'], _p6.name, '/'))) : _elm_lang$core$Platform_Cmd$none;
 						} else {
-							return A5(_user$project$FileManager_Action$move, model.fileApi, model.csrf, model.clipboardDir, model.clipboardFiles, model.dir);
+							return A5(_user$project$FileManager_Action$move, model.fileApi, model.jwt, model.clipboardDir, model.clipboardFiles, model.dir);
 						}
 					}()
 				};
@@ -10325,7 +10358,7 @@ var _user$project$FileManager_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{showContextMenu: false, load: true}),
-					_1: A4(_user$project$FileManager_Action$delete, model.fileApi, model.csrf, model.dir, model.selected)
+					_1: A4(_user$project$FileManager_Action$delete, model.fileApi, model.jwt, model.dir, model.selected)
 				};
 			default:
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -10333,6 +10366,7 @@ var _user$project$FileManager_Update$update = F2(
 	});
 var _user$project$FileManager_Update$init = function (_p7) {
 	var _p8 = _p7;
+	var _p11 = _p8.jwt;
 	var _p10 = _p8.fileApi;
 	var _p9 = _p8.dir;
 	return A2(
@@ -10343,7 +10377,7 @@ var _user$project$FileManager_Update$init = function (_p7) {
 		{
 			fileApi: _p10,
 			thumbService: _p8.thumbService,
-			csrf: _p8.csrf,
+			jwt: _p11,
 			dir: _p9,
 			open: false,
 			load: false,
@@ -10367,7 +10401,7 @@ var _user$project$FileManager_Update$init = function (_p7) {
 			clipboardDir: '',
 			clipboardFiles: {ctor: '[]'}
 		},
-		A2(_user$project$FileManager_Action$getLs, _p10, _p9));
+		A3(_user$project$FileManager_Action$getLs, _p10, _p11, _p9));
 };
 
 var _user$project$FileManager_Events$op = F2(
@@ -11489,26 +11523,26 @@ var _user$project$FileManager$main = _elm_lang$html$Html$programWithFlags(
 	{init: _user$project$FileManager_Update$init, view: _user$project$FileManager_View$view, update: _user$project$FileManager_Update$update, subscriptions: _user$project$FileManager$subscriptions})(
 	A2(
 		_elm_lang$core$Json_Decode$andThen,
-		function (csrf) {
+		function (dir) {
 			return A2(
 				_elm_lang$core$Json_Decode$andThen,
-				function (dir) {
+				function (fileApi) {
 					return A2(
 						_elm_lang$core$Json_Decode$andThen,
-						function (fileApi) {
+						function (jwt) {
 							return A2(
 								_elm_lang$core$Json_Decode$andThen,
 								function (thumbService) {
 									return _elm_lang$core$Json_Decode$succeed(
-										{csrf: csrf, dir: dir, fileApi: fileApi, thumbService: thumbService});
+										{dir: dir, fileApi: fileApi, jwt: jwt, thumbService: thumbService});
 								},
 								A2(_elm_lang$core$Json_Decode$field, 'thumbService', _elm_lang$core$Json_Decode$string));
 						},
-						A2(_elm_lang$core$Json_Decode$field, 'fileApi', _elm_lang$core$Json_Decode$string));
+						A2(_elm_lang$core$Json_Decode$field, 'jwt', _elm_lang$core$Json_Decode$string));
 				},
-				A2(_elm_lang$core$Json_Decode$field, 'dir', _elm_lang$core$Json_Decode$string));
+				A2(_elm_lang$core$Json_Decode$field, 'fileApi', _elm_lang$core$Json_Decode$string));
 		},
-		A2(_elm_lang$core$Json_Decode$field, 'csrf', _elm_lang$core$Json_Decode$string)));
+		A2(_elm_lang$core$Json_Decode$field, 'dir', _elm_lang$core$Json_Decode$string)));
 
 var Elm = {};
 Elm['FileManager'] = Elm['FileManager'] || {};
