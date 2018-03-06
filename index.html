@@ -19,23 +19,38 @@
     <div id="file-manager-container"></div>
 
     <script>
-        // File Manager
-
-        const fmc = document.querySelector('#file-manager-container');
-        const fileApi = "https://jakeactually.com/file";
-        const thumbService = "https://jakeactually.com/thumb?image=";
-        const jwt = "123";
-        const dir = "/";
-        const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, jwt, dir });
-
-        fm.ports.open.send(null);
-        fm.ports.close.subscribe(files => {
-            document.querySelector('#text').innerText = files.join(", ");
+        addEventListener('DOMContentLoaded', () => {
+            fetch("https://jakeactually.com/jwt").then(res => res.text()).then(init);
         });
+        
+        const init = jwt => {
+            // File Manager
+            const fmc = document.querySelector('#file-manager-container');
+            const fileApi = "https://jakeactually.com/file";
+            const thumbService = "https://jakeactually.com/thumb?image=";
+            const dir = "/";
+            const fm = Elm.FileManager.embed(fmc, { fileApi, thumbService, jwt, dir });
 
-        // File Manager Ports
+            fm.ports.open.send(null);
+            fm.ports.close.subscribe(files => {
+                document.querySelector('#text').innerText = files.join(", ");
+            });
 
-        fm.ports.getBounds.subscribe(() => {
+            // File Manager Ports
+            fm.ports.getBounds.subscribe(getBounds(fm));
+
+            let observer = new MutationObserver(mutationObserver(fm));
+            observer.observe(document, { childList: true, subtree: true });
+
+            fm.ports.upload.subscribe(uploadSub(fm));
+            fm.ports.cancel.subscribe(() => { location.reload(); });
+
+            fm.ports.download.subscribe(files => {
+                files.forEach(file => window.open(`https://jakeactually.com/static${file}`));
+            });
+        };
+        
+        const getBounds = fm => () => {
             const els = Array.from(document.querySelectorAll('.file'));
             const bounds = els.map(el => {
                 const bound = el.getBoundingClientRect();
@@ -47,9 +62,9 @@
                 };
             });
             fm.ports.boundsGotten.send(bounds);
-        });
+        };
 
-        let observer = new MutationObserver(() => {
+        const mutationObserver = fm => () => {
             const files = document.querySelector('#files');
             if (files) {
                 const drop = files.querySelector('#drop');
@@ -66,17 +81,16 @@
                 };
                 observer = null;
             }
-        });
-        observer.observe(document, { childList: true, subtree: true });
+        };
 
-        fm.ports.upload.subscribe(dir => {
+        const uploadSub = fm => dir => {
             const input = document.querySelector('#file-input');
             const files = Array.from(input.files);
             fm.ports.filesAmount.send(files.length);
             upload(dir, files);
-        });
+        };
 
-        function upload(dir, files) {
+        const upload = (dir, files) => {
             if (files.length > 0) {
                 const file = files.shift();
 
@@ -98,15 +112,7 @@
                 xhr.open('POST', fileApi + "/upload");
                 xhr.send(formData);
             }
-        }
-
-        fm.ports.cancel.subscribe(() => {
-            location.reload();
-        });
-
-        fm.ports.download.subscribe(files => {
-            files.forEach(file => window.open(`https://jakeactually.com/static${file}`));
-        });
+        };
     </script>
 
 </body>
