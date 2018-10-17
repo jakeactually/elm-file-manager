@@ -1,18 +1,22 @@
-module FileManager.Update exposing (..)
+module Update exposing (..)
 
-import FileManager.Action exposing (..)
-import FileManager.Env exposing (handleEnvMsg)
+import Action exposing (..)
+import Browser.Navigation exposing (reload)
+import Env exposing (handleEnvMsg)
 import List exposing (head, indexedMap, map, map2, filter, isEmpty, member)
-import FileManager.Model exposing (..)
+import Model exposing (..)
 import Maybe exposing (withDefault, andThen)
-import FileManager.Port exposing (..)
-import FileManager.Vec exposing (..)
+import Port exposing (..)
+import Vec exposing (..)
 
 init : Flags -> (Model, Cmd Msg)
-init { fileApi, thumbService, jwt, dir } = (,)
-  { fileApi = fileApi
-  , thumbService = thumbService
-  , jwt = jwt
+init flags = (initModel flags, let { api, jwtToken, dir } = flags in getLs api jwtToken dir)
+
+initModel : Flags -> Model
+initModel { api, thumbsEndpoint, jwtToken, dir } =
+  { api = api
+  , thumbsEndpoint = thumbsEndpoint
+  , jwtToken = jwtToken
   , dir = dir
   , open = False
   , load = False
@@ -29,6 +33,7 @@ init { fileApi, thumbService, jwt, dir } = (,)
   , drag = False
   , showContextMenu = False
   , selectedBin = []
+  , showDrop = False
   , filesAmount = 0
   , progress = 0
   , showNameDialog = False
@@ -36,16 +41,17 @@ init { fileApi, thumbService, jwt, dir } = (,)
   , clipboardDir = ""
   , clipboardFiles = []
   }
-  <| getLs fileApi jwt dir
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = case msg of
-  EnvMsg msg -> handleEnvMsg msg model
+  EnvMsg message -> handleEnvMsg message model
+  ShowDrop -> ({ model | showDrop = True }, Cmd.none)
+  HideDrop -> ({ model | showDrop = False }, Cmd.none)
   Upload -> ({ model | showContextMenu = False }, upload model.dir)
   FilesAmount amount -> ({ model | filesAmount = amount }, Cmd.none)
   Progress progress -> ({ model | progress = progress }, Cmd.none)
-  Cancel -> (model, cancel ())
-  Uploaded () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.fileApi model.jwt model.dir)
+  Cancel -> (model, reload)
+  Uploaded () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.api model.jwtToken model.dir)
   OpenNameDialog ->
     ( { model
       | showNameDialog = True
@@ -58,7 +64,7 @@ update msg model = case msg of
     )
   CloseNameDialog -> ({ model | showNameDialog = False }, Cmd.none)
   Name name -> ({ model | name = name }, Cmd.none)
-  NewDir -> ({ model | showNameDialog = False, load = True }, newDir model.fileApi model.jwt model.dir model.name)
+  NewDir -> ({ model | showNameDialog = False, load = True }, newDir model.api model.jwtToken model.dir model.name)
   Download -> ({ model | showContextMenu = False }, download <| map ((++) model.dir << .name) <| filter (not << .isDir) model.selected)
   Rename ->
     ( { model
@@ -66,21 +72,23 @@ update msg model = case msg of
       , load = True
       },
       case model.caller of
-        Just file -> FileManager.Action.rename model.fileApi model.jwt model.dir file.name model.name
+        Just file -> Action.rename model.api model.jwtToken model.dir file.name model.name
         Nothing -> Cmd.none
     )
   Cut -> ({ model | clipboardDir = model.dir, clipboardFiles = model.selected, showContextMenu = False }, Cmd.none)
-  Paste ->
-    ( { model
+  Paste -> if model.dir == model.clipboardDir
+    then ({ model | clipboardFiles = [], showContextMenu = False }, Cmd.none)
+    else
+      ( { model
       | clipboardFiles = []
       , showContextMenu = False
       , load = True
       }
       , case model.caller of
           Just file -> if file.isDir
-            then move model.fileApi model.jwt model.clipboardDir model.clipboardFiles <| model.dir ++ file.name ++ "/"
+            then move model.api model.jwtToken model.clipboardDir model.clipboardFiles <| model.dir ++ file.name ++ "/"
             else Cmd.none
-          Nothing -> move model.fileApi model.jwt model.clipboardDir model.clipboardFiles model.dir
-    )
-  Delete -> ({ model | showContextMenu = False, load = True }, delete model.fileApi model.jwt model.dir model.selected)
+          Nothing -> move model.api model.jwtToken model.clipboardDir model.clipboardFiles model.dir
+      )
+  Delete -> ({ model | showContextMenu = False, load = True }, delete model.api model.jwtToken model.dir model.selected)
   None -> (model, Cmd.none)

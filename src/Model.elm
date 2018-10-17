@@ -1,19 +1,20 @@
-module FileManager.Model exposing (..)
+module Model exposing (..)
 
+import Browser.Dom exposing (Element)
 import Http exposing (Error)
-import FileManager.Vec exposing (..)
+import Vec exposing (..)
 
 type alias Flags =
-  { fileApi: String
-  , thumbService: String
-  , jwt: String
+  { api: String
+  , thumbsEndpoint: String
+  , jwtToken: String
   , dir: String
   }
 
 type alias Model =
-  { fileApi: String
-  , thumbService: String
-  , jwt: String
+  { api: String
+  , thumbsEndpoint: String
+  , jwtToken: String
   , dir: String
   , open: Bool
   , load: Bool
@@ -30,6 +31,7 @@ type alias Model =
   , drag: Bool
   , showContextMenu: Bool
   , selectedBin: List File
+  , showDrop: Bool
   , filesAmount: Int
   , progress: Int
   , showNameDialog: Bool
@@ -45,6 +47,8 @@ type alias File =
 
 type Msg
   = EnvMsg EnvMsg
+  | ShowDrop
+  | HideDrop
   | Upload
   | FilesAmount Int
   | Progress Int
@@ -66,7 +70,7 @@ type EnvMsg
   | Close
   | Accept
   | MouseDown (Maybe File) Vec2 Bool
-  | BoundsGotten (List Bound)
+  | GetBounds (Result Browser.Dom.Error (List Element))
   | MouseMove Vec2
   | MouseUp (Maybe File)
   | ContextMenu (Maybe File)

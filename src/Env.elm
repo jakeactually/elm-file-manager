@@ -1,12 +1,16 @@
-module FileManager.Env exposing (..)
+module Env exposing (..)
 
-import FileManager.Action exposing (..)
-import List exposing (filter, map, member, reverse)
-import FileManager.Model exposing (..)
-import FileManager.Port exposing (close, getBounds)
+import Action exposing (..)
+import Browser.Dom exposing (getElement)
+import Debug exposing (toString)
+import List exposing (filter, indexedMap, map, member, reverse)
+import Model exposing (..)
+import Platform.Cmd exposing (batch)
+import Port exposing (close)
+import Task exposing (sequence)
 import Tuple exposing (first, second)
-import FileManager.Util exposing (..)
-import FileManager.Vec exposing (..)
+import Util exposing (..)
+import Vec exposing (..)
 
 handleEnvMsg : EnvMsg -> Model -> (Model, Cmd Msg)
 handleEnvMsg msg model = case msg of
@@ -26,9 +30,11 @@ handleEnvMsg msg model = case msg of
           Nothing -> []
       , showContextMenu = False
       }
-      , getBounds ()
+      , getBounds model.files
     )
-  BoundsGotten bounds -> ({ model | bounds = bounds }, Cmd.none)
+  GetBounds result -> case result of
+    Ok(elements) -> ({ model | bounds = map .element elements }, Cmd.none)
+    Err e -> (model, Cmd.none)
   MouseMove pos2 ->
     ( { model
       | pos2 = pos2
@@ -55,7 +61,7 @@ handleEnvMsg msg model = case msg of
       }
       , case maybe of
           Just file -> if model.drag && file.isDir && (not << member file) model.selected
-            then move model.fileApi model.jwt model.dir model.selected <| "/" ++ file.name ++ "/"
+            then move model.api model.jwtToken model.dir model.selected <| "/" ++ file.name ++ "/"
             else Cmd.none
           Nothing -> Cmd.none
     )
@@ -70,10 +76,15 @@ handleEnvMsg msg model = case msg of
       }
       , Cmd.none
     )
-  GetLs dir -> ({ model | dir = dir, files = [], load = True }, getLs model.fileApi model.jwt dir)
+  GetLs dir -> ({ model | dir = dir, files = [], load = True }, getLs model.api model.jwtToken dir)
   LsGotten result -> case result of
     Ok files -> ({ model | files = files, selected = [], load = False }, Cmd.none)
     Err _ -> (model, Cmd.none)
   Refresh result -> case result of
-    Ok () -> (model, getLs model.fileApi model.jwt model.dir)
+    Ok () -> (model, getLs model.api model.jwtToken model.dir)
     Err _ -> (model, Cmd.none)
+
+getBounds : List File -> Cmd Msg
+getBounds files = Task.attempt (EnvMsg << GetBounds)
+  <| sequence
+  <| indexedMap (\i _ -> getElement <| "fm-file-" ++ toString i) files

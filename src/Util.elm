@@ -1,16 +1,16 @@
-module FileManager.Util exposing (..)
+module Util exposing (..)
 
 import Html exposing (Attribute, Html, button, i, text)
 import Html.Attributes exposing (class, title, type_)
 import Html.Events exposing (onClick)
-import FileManager.Model exposing (Msg)
+import Model exposing (Msg)
 import Array exposing (Array, fromList, get, toList)
 import List exposing (drop, indexedMap, filter, map, map2, member, take)
 
 -- List
 
-(!!) : List a -> Int -> Maybe a
-(!!) list index = get index <| fromList list
+at : List a -> Int -> Maybe a
+at list index = get index <| fromList list
 
 set : Int -> a -> List a -> List a
 set index item list = toList <| Array.set index item <| fromList list
@@ -19,10 +19,10 @@ remove : Int -> List a -> List a
 remove index list = take index list ++ drop (index + 1) list
 
 zip : List a -> List b -> List (a, b)
-zip = map2 (,)
+zip = map2 <| \x y -> (x, y)
 
 indexedZip : List a -> List (Int, a)
-indexedZip = indexedMap (,)
+indexedZip = indexedMap <| \x y -> (x, y)
 
 swap : Int -> Int -> List a -> List a
 swap index1 index2 list = toList <| arraySwap index1 index2 <| fromList list
@@ -47,11 +47,3 @@ isJust maybe = case maybe of
 
 button : List (Attribute msg) -> List (Html msg) -> Html msg
 button atts childs = Html.button (type_ "button" :: atts) childs
-
-icon : String -> String -> Msg -> Html Msg
-icon text_ title_ msg = button [ type_ "button", class "icon", title title_, onClick msg ]
-  [ i [ class "material-icons" ] [ text text_ ]
-  ]
-
-icon2 : String -> Html Msg
-icon2 text_ =  i [ class "material-icons" ] [ text text_ ]
