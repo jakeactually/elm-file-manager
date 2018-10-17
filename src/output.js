@@ -5812,7 +5812,7 @@ var author$project$Vec$Vec2 = F2(
 var author$project$Vec$newBound = {height: 0, width: 0, x: 0, y: 0};
 var author$project$Update$initModel = function (_n0) {
 	var api = _n0.api;
-	var thumbsEndpoint = _n0.thumbsEndpoint;
+	var thumbnailsUrl = _n0.thumbnailsUrl;
 	var jwtToken = _n0.jwtToken;
 	var dir = _n0.dir;
 	return {
@@ -5841,7 +5841,7 @@ var author$project$Update$initModel = function (_n0) {
 		showContextMenu: false,
 		showDrop: false,
 		showNameDialog: false,
-		thumbsEndpoint: thumbsEndpoint
+		thumbnailsUrl: thumbnailsUrl
 	};
 };
 var author$project$Update$init = function (flags) {
@@ -7304,7 +7304,7 @@ var elm$html$Html$Events$onDoubleClick = function (msg) {
 var author$project$View$renderFile = F3(
 	function (_n0, i, file) {
 		var api = _n0.api;
-		var thumbsEndpoint = _n0.thumbsEndpoint;
+		var thumbnailsUrl = _n0.thumbnailsUrl;
 		var dir = _n0.dir;
 		var selected = _n0.selected;
 		var clipboardDir = _n0.clipboardDir;
@@ -7342,7 +7342,7 @@ var author$project$View$renderFile = F3(
 				]),
 			_List_fromArray(
 				[
-					A4(author$project$View$renderThumb, thumbsEndpoint, api, dir, file),
+					A4(author$project$View$renderThumb, thumbnailsUrl, api, dir, file),
 					A2(
 					elm$html$Html$div,
 					_List_fromArray(
@@ -7705,7 +7705,7 @@ var author$project$FileManager$main = elm$browser$Browser$element(
 _Platform_export({'FileManager':{'init':author$project$FileManager$main(
 	A2(
 		elm$json$Json$Decode$andThen,
-		function (thumbsEndpoint) {
+		function (thumbnailsUrl) {
 			return A2(
 				elm$json$Json$Decode$andThen,
 				function (jwtToken) {
@@ -7716,7 +7716,7 @@ _Platform_export({'FileManager':{'init':author$project$FileManager$main(
 								elm$json$Json$Decode$andThen,
 								function (api) {
 									return elm$json$Json$Decode$succeed(
-										{api: api, dir: dir, jwtToken: jwtToken, thumbsEndpoint: thumbsEndpoint});
+										{api: api, dir: dir, jwtToken: jwtToken, thumbnailsUrl: thumbnailsUrl});
 								},
 								A2(elm$json$Json$Decode$field, 'api', elm$json$Json$Decode$string));
 						},
@@ -7724,4 +7724,4 @@ _Platform_export({'FileManager':{'init':author$project$FileManager$main(
 				},
 				A2(elm$json$Json$Decode$field, 'jwtToken', elm$json$Json$Decode$string));
 		},
-		A2(elm$json$Json$Decode$field, 'thumbsEndpoint', elm$json$Json$Decode$string)))(0)}});}(this));
+		A2(elm$json$Json$Decode$field, 'thumbnailsUrl', elm$json$Json$Decode$string)))(0)}});}(this));

@@ -97,7 +97,7 @@ renderUploading progress i = div [ class "fm-file fm-upload" ]
   ]
 
 renderFile : Model -> Int -> File -> Html Msg
-renderFile { api, thumbsEndpoint, dir, selected, clipboardDir, clipboardFiles } i file = div
+renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i file = div
   [ id <| "fm-file-" ++ toString i, class <| "fm-file"
       ++ (if member file selected then " fm-selected" else "")
       ++ (if dir == clipboardDir && member file clipboardFiles then " fm-cut" else "")
@@ -107,7 +107,7 @@ renderFile { api, thumbsEndpoint, dir, selected, clipboardDir, clipboardFiles } 
   , onContextMenu <| EnvMsg <| ContextMenu <| Just file
   , onDoubleClick <| if file.isDir then EnvMsg <| GetLs <| dir ++ file.name ++ "/" else Download
   ]
-  [ renderThumb thumbsEndpoint api dir file
+  [ renderThumb thumbnailsUrl api dir file
   , div [ class "fm-name" ] [ text file.name ]
   ]
 

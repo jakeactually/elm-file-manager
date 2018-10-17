@@ -6,14 +6,14 @@ import Vec exposing (..)
 
 type alias Flags =
   { api: String
-  , thumbsEndpoint: String
+  , thumbnailsUrl: String
   , jwtToken: String
   , dir: String
   }
 
 type alias Model =
   { api: String
-  , thumbsEndpoint: String
+  , thumbnailsUrl: String
   , jwtToken: String
   , dir: String
   , open: Bool

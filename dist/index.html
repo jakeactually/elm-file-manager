@@ -21,13 +21,10 @@
     const site = "http://localhost:9000";
 
     const fileManager = FileManager({
-        container,
         api: site,
-        thumbsEndpoint: site + "/static/files",
-        uploadEndpoint: site + "/upload",
-        downloadEndpoint: site + "/static/files",
-        jwtToken: "",
-        dir: "/"
+        thumbnailsUrl: site + "/static/files",
+        uploadsUrl: site + "/upload",
+        downloadsUrl: site + "/static/files",
     });
 
     fileManager.open();

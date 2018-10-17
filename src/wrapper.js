@@ -1,5 +1,5 @@
 let FileManager = (() => {
-    addEventListener('DOMContentLoaded', () => {
+    const renderDrop = () => {
         const observer = new MutationObserver(() => {
             const files = document.querySelector('.fm-files');
             if (files) {
@@ -13,7 +13,7 @@ let FileManager = (() => {
             }
         });
         observer.observe(document.body, { childList: true, subtree: true });
-    });
+    };
 
     const upload = dir => {
         const input = document.querySelector('.fm-file-input');
@@ -56,6 +56,8 @@ let FileManager = (() => {
     let fm;
 
     return options => {
+        renderDrop();
+
         uploadEndpoint = options.uploadEndpoint;
         downloadEndpoint = options.downloadEndpoint;
 
@@ -69,7 +71,12 @@ let FileManager = (() => {
 
         fm = Elm.FileManager.init({
             node: container,
-            flags: options
+            flags: {
+                api: options.api,
+                thumbnailsUrl: options.thumbnailsUrl,             
+                jwtToken: options.jwtToken || "",
+                dir: options.dir || "/"
+            }
         });
 
         fm.ports.upload.subscribe(upload);

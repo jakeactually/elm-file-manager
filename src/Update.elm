@@ -13,9 +13,9 @@ init : Flags -> (Model, Cmd Msg)
 init flags = (initModel flags, let { api, jwtToken, dir } = flags in getLs api jwtToken dir)
 
 initModel : Flags -> Model
-initModel { api, thumbsEndpoint, jwtToken, dir } =
+initModel { api, thumbnailsUrl, jwtToken, dir } =
   { api = api
-  , thumbsEndpoint = thumbsEndpoint
+  , thumbnailsUrl = thumbnailsUrl
   , jwtToken = jwtToken
   , dir = dir
   , open = False
