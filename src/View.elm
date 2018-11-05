@@ -1,6 +1,5 @@
 module View exposing (..)
 
-import Debug exposing (toString)
 import Events exposing (..)
 import Html exposing (Attribute, Html, a, br, div, form, h1, i, input, img, label, strong, text, textarea)
 import Html.Attributes exposing (attribute, action, class, draggable, id, hidden, href, method, multiple, src, style, target, title, type_, value)
@@ -8,7 +7,7 @@ import Html.Events exposing (onClick, onDoubleClick, onInput)
 import List exposing (head, indexedMap, isEmpty, length, map, member, range, repeat, reverse, tail)
 import Model exposing (..)
 import Maybe exposing (andThen, withDefault)
-import String exposing (join, split)
+import String exposing (fromInt, fromFloat, join, split)
 import Svg exposing (svg, path, circle)
 import Svg.Attributes exposing (cx, cy, d, width, height, fill, r, viewBox)
 import Util exposing (button, isJust)
@@ -98,7 +97,7 @@ renderUploading progress i = div [ class "fm-file fm-upload" ]
 
 renderFile : Model -> Int -> File -> Html Msg
 renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i file = div
-  [ id <| "fm-file-" ++ toString i, class <| "fm-file"
+  [ id <| "fm-file-" ++ fromInt i, class <| "fm-file"
       ++ (if member file selected then " fm-selected" else "")
       ++ (if dir == clipboardDir && member file clipboardFiles then " fm-cut" else "")
   , title file.name
@@ -152,7 +151,7 @@ renderHelper b = div
   ] []
 
 toPx : Float -> String
-toPx n = toString n ++ "px"
+toPx n = fromFloat n ++ "px"
 
 renderCount : Vec2 -> List File -> Html Msg
 renderCount (Vec2 x y) selected = div
@@ -160,7 +159,7 @@ renderCount (Vec2 x y) selected = div
   , style "left" (toPx <| x + 5)
   , style "top" (toPx <| y - 25)
   ]
-  [ text <| toString <| length <| selected
+  [ text <| fromInt <| length <| selected
   ]
 
 contextMenu : Vec2 -> Maybe File -> Bool -> Bool -> Int -> Html Msg

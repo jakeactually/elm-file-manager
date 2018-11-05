@@ -1,4 +1,4 @@
-let FileManager = (() => {
+const FileManager = (() => {
     const renderDrop = () => {
         const observer = new MutationObserver(() => {
             const files = document.querySelector('.fm-files');

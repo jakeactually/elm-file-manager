@@ -2,11 +2,11 @@ module Env exposing (..)
 
 import Action exposing (..)
 import Browser.Dom exposing (getElement)
-import Debug exposing (toString)
 import List exposing (filter, indexedMap, map, member, reverse)
 import Model exposing (..)
 import Platform.Cmd exposing (batch)
 import Port exposing (close)
+import String exposing (fromInt)
 import Task exposing (sequence)
 import Tuple exposing (first, second)
 import Util exposing (..)
@@ -87,4 +87,4 @@ handleEnvMsg msg model = case msg of
 getBounds : List File -> Cmd Msg
 getBounds files = Task.attempt (EnvMsg << GetBounds)
   <| sequence
-  <| indexedMap (\i _ -> getElement <| "fm-file-" ++ toString i) files
+  <| indexedMap (\i _ -> getElement <| "fm-file-" ++ fromInt i) files
