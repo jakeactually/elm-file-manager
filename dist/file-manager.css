@@ -137,7 +137,7 @@
 
 .fm-upload .fm-thumb {
   justify-content: flex-start;
-  background-color: #EAEAEA;
+  background-color: #D0D0D0;
 }
 
 .fm-thumb img {
@@ -203,7 +203,7 @@
   position: fixed;
   width: 150px;
   padding: 5px 0;
-  border: 1px solid #EAEAEA;
+  border: 1px solid #D0D0D0;
   background-color: #FFFFFF;
 }
 
@@ -218,7 +218,15 @@
 }
 
 .fm-context-menu button:hover {
-  background-color: #EAEAEA;
+  background-color: #D0D0D0;
+}
+
+.fm-context-menu .disabled {
+  color: #A6A6A6;
+}
+
+.fm-context-menu .disabled:hover {
+  background-color: #FFFFFF;
 }
 
 .fm-context-menu label {
@@ -231,7 +239,7 @@
 }
 
 .fm-context-menu label:hover {
-  background-color: #EAEAEA;
+  background-color: #D0D0D0;
 }
 
 .fm-context-menu input[type="file"] {
