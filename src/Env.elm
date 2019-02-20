@@ -47,6 +47,7 @@ handleEnvMsg msg model = case msg of
   MouseUp maybe ->
     ( { model
       | mouseDown = False
+      , drag = False
       , selected = if model.showBound
           then map second <| filter (touchesBound model.bound << first) <| zip model.bounds model.files
           else case maybe of
