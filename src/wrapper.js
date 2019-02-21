@@ -43,23 +43,23 @@ const FileManager = (() => {
             fm.ports.onUploaded.send(null);
             uploadFiles(dir, files);
         };
-        xhr.open('POST', uploadEndpoint);
+        xhr.open('POST', uploadsUrl);
         xhr.send(formData);
     };
 
     const download = files => {
-        files.forEach(file => window.open(downloadEndpoint + file));
+        files.forEach(file => window.open(downloadsUrl + file));
     };
 
-    let uploadEndpoint;
-    let downloadEndpoint;
+    let uploadsUrl;
+    let downloadsUrl;
     let fm;
 
     return options => {
         renderDrop();
 
-        uploadEndpoint = options.uploadEndpoint;
-        downloadEndpoint = options.downloadEndpoint;
+        uploadsUrl = options.uploadsUrl;
+        downloadsUrl = options.downloadsUrl;
 
         let container;
         if (!options.container) {
