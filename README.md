@@ -31,7 +31,7 @@ This **must** come after the opening body tag.
 # File Manager Api
 Every endpoint gets appended to the api url. GET requests params are url encoded in the url and POST ones in the body. **Important**: Endpoints newDir, rename and move may overwrite files so the api should check for this, usually asigning an available name.
 
-[Here](https://github.com/jakeactually/elm-file-manager-demo/blob/master/app/controllers/HomeController.scala) is an example implementation.
+[Here](https://github.com/jakeactually/elm-file-manager-demo/blob/master/app/Main.hs) is an example implementation.
 
 ## GET /ls
 It should respond a json array of file data of the files at _dir_.
