@@ -1,11 +1,11 @@
 # elm-file-manager
-A backend agnostic file manager. Written in Elm. [Demo](http://jakeactually.com:9000/static/index.html)
+A backend agnostic file manager. Written in Elm. [Demo](http://jakeactually.com:3000/static/index.html)
 
 # How to
 Include [file-manager.css](https://github.com/jakeactually/elm-file-manager/blob/master/dist/file-manager.css) and [file-manager.js](https://github.com/jakeactually/elm-file-manager/blob/master/dist/file-manager.js) in your html. Then you can inject it like this:
 
 ```javascript
-const site = "http://localhost:9000";
+const site = "http://localhost:3000";
 
 const fileManager = FileManager({
     api: site,
