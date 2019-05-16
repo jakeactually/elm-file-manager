@@ -1,6 +1,12 @@
 # elm-file-manager
 A backend agnostic file manager. Written in Elm. [Demo](http://jakeactually.com:3000/static/index.html)
 
+# Features
+Made for content management, so targets desktop. Thus, desktop like gestures:
+- Area selection
+- Ctrl + click selection
+- Drag and drop file movement
+
 # How to
 Include [file-manager.css](https://github.com/jakeactually/elm-file-manager/blob/master/dist/file-manager.css) and [file-manager.js](https://github.com/jakeactually/elm-file-manager/blob/master/dist/file-manager.js) in your html. Then you can inject it like this:
 
@@ -15,7 +21,7 @@ const fileManager = FileManager({
 });
 ```
 
-This **must** come after the opening body tag.
+This works with the dom so it **must** come after the opening body tag.
 
 ## Required
 - **api** is the url of the file manager api.
@@ -56,3 +62,11 @@ It should delete the _files_ at _dir_ and respond 200 OK.
 
 ## POST /move
 It should move the _files_ at _srcDir_ to _dstDir_ and respond 200 OK.
+
+# Build
+You have to install [elm](https://elm-lang.org/).
+Then you may run
+
+```
+elm make src/FileManager.elm --output output.js
+```
