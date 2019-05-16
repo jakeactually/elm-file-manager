@@ -5,7 +5,7 @@ A backend agnostic file manager. Written in Elm. [Demo](http://jakeactually.com:
 Made for content management, so targets desktop. Thus, desktop like gestures:
 - Area selection
 - Ctrl + click selection
-- Drag and drop file movement
+- Drag and drop file moving
 
 # How to
 Include [file-manager.css](https://github.com/jakeactually/elm-file-manager/blob/master/dist/file-manager.css) and [file-manager.js](https://github.com/jakeactually/elm-file-manager/blob/master/dist/file-manager.js) in your html. Then you can inject it like this:
