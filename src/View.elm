@@ -16,7 +16,7 @@ import Vec exposing (..)
 view : Model -> Html Msg
 view model = if model.open
   then div [ class "fm-simple-screen" ]
-    [  div
+    [ div
       [ class "fm-main"
       , onMouseMove (\_ -> None)
       ]
