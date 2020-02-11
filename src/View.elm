@@ -56,9 +56,9 @@ files model = div
   , class <| if model.drag then "fm-drag" else ""
   , onMouseDown (\x y -> EnvMsg <| MouseDown Nothing x y)
   , onMouseMove <| EnvMsg << MouseMove
-  , onMouseUp <| EnvMsg <| MouseUp Nothing
+  , onMouseUp <| EnvMsg << MouseUp Nothing
   , onDragEnter ShowDrop
-  , onContextMenu <| EnvMsg <| ContextMenu Nothing
+  , onContextMenu <| None
   ]
   [ div [ class "fm-wrap" ]
     [ div [ class "fm-fluid" ]
@@ -107,8 +107,8 @@ renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i
       ++ (if dir == clipboardDir && member file clipboardFiles then " fm-cut" else "")
   , title file.name
   , onMouseDown <| (\x y -> EnvMsg <| MouseDown (Just file) x y)
-  , onMouseUp <| EnvMsg <| MouseUp <| Just file
-  , onContextMenu <| EnvMsg <| ContextMenu <| Just file
+  , onMouseUp <| EnvMsg << (MouseUp <| Just file)
+  , onContextMenu <| None
   , onDoubleClick <| if file.isDir then EnvMsg <| GetLs <| dir ++ file.name ++ "/" else Download
   ]
   [ renderThumb thumbnailsUrl api dir file

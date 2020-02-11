@@ -19,9 +19,10 @@ onMouseMove function =
     (Decode.field "clientX" Decode.float)
     (Decode.field "clientY" Decode.float)
 
-onMouseUp : msg -> Attribute msg
+onMouseUp : (Int -> msg) -> Attribute msg
 onMouseUp message =
-  custom "mouseup" <| options True False <| Decode.succeed message
+  custom "mouseup" <| options True False <| Decode.map message
+    (Decode.field "button" Decode.int)
 
 onContextMenu : msg -> Attribute msg
 onContextMenu message =

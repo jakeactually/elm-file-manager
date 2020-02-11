@@ -50,7 +50,6 @@ update msg model = case msg of
   ChooseFiles -> (model, File.Select.files [] GotFiles)
   ShowDrop -> ({ model | showDrop = True }, Cmd.none)
   HideDrop -> ({ model | showDrop = False }, Cmd.none)
-  -- Upload -> ({ model | showContextMenu = False }, upload model.dir)
   GotFiles file files -> ({ model | showContextMenu = False }, Action.upload model.jwtToken model.dir file)
   FilesAmount amount -> ({ model | filesAmount = amount }, Cmd.none)
   Progress progress -> ({ model | progress = progress }, Cmd.none)

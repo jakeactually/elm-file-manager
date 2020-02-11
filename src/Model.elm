@@ -74,8 +74,7 @@ type EnvMsg
   | MouseDown (Maybe Path) Vec2 Bool
   | GetBounds (Result Browser.Dom.Error (List Element))
   | MouseMove Vec2
-  | MouseUp (Maybe Path)
-  | ContextMenu (Maybe Path)
+  | MouseUp (Maybe Path) Int
   | GetLs String
   | LsGotten (Result Error (List Path)) 
   | Refresh (Result Error ())

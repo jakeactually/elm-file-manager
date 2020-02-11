@@ -12,6 +12,8 @@ import Tuple exposing (first, second)
 import Util exposing (..)
 import Vec exposing (..)
 
+import Debug exposing (log)
+
 handleEnvMsg : EnvMsg -> Model -> (Model, Cmd Msg)
 handleEnvMsg msg model = case msg of
   Open () -> ({ model | open = True }, Cmd.none)
@@ -44,39 +46,40 @@ handleEnvMsg msg model = case msg of
       }
       , Cmd.none
     )
-  MouseUp maybe ->
-    ( { model
-      | mouseDown = False
-      , drag = False
-      , selected = if model.showBound
-          then map second <| filter (touchesBound model.bound << first) <| zip model.bounds model.files
-          else case maybe of
-            Just file -> if model.drag || model.ctrl then model.selected else [file]
+  MouseUp maybe buttons -> if (log "but" buttons) == 2
+    then
+      ( { model
+        | showContextMenu = case maybe of
+            Just file -> not <| model.dir == model.clipboardDir && member file model.clipboardFiles
+            Nothing -> True
+        , selected = case maybe of
+            Just _ -> model.selectedBin
             Nothing -> []
-      , selectedBin = model.selected
-      , load = case maybe of
-          Just file -> if model.drag && file.isDir && (not << member file) model.selected
-            then True
-            else False
-          Nothing -> False
-      }
-      , case maybe of
-          Just file -> if model.drag && file.isDir && (not << member file) model.selected
-            then move model.api model.jwtToken model.dir model.selected <| "/" ++ file.name ++ "/"
-            else Cmd.none
-          Nothing -> Cmd.none
-    )
-  ContextMenu maybe ->
-    ( { model
-      | showContextMenu = case maybe of
-          Just file -> not <| model.dir == model.clipboardDir && member file model.clipboardFiles
-          Nothing -> True
-      , selected = case maybe of
-          Just _ -> model.selectedBin
-          Nothing -> []
-      }
-      , Cmd.none
-    )
+        }
+        , Cmd.none
+      )
+    else
+      ( { model
+        | mouseDown = False
+        , drag = False
+        , selected = if model.showBound
+            then map second <| filter (touchesBound model.bound << first) <| zip model.bounds model.files
+            else case maybe of
+              Just file -> if model.drag || model.ctrl then model.selected else [file]
+              Nothing -> []
+        , selectedBin = model.selected
+        , load = case maybe of
+            Just file -> if model.drag && file.isDir && (not << member file) model.selected
+              then True
+              else False
+            Nothing -> False
+        }
+        , case maybe of
+            Just file -> if model.drag && file.isDir && (not << member file) model.selected
+              then move model.api model.jwtToken model.dir model.selected <| "/" ++ file.name ++ "/"
+              else Cmd.none
+            Nothing -> Cmd.none
+      )      
   GetLs dir -> ({ model | dir = dir, files = [], load = True }, getLs model.api model.jwtToken dir)
   LsGotten result -> case result of
     Ok files -> ({ model | files = files, selected = [], load = False }, Cmd.none)

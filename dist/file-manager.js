@@ -6609,6 +6609,7 @@ var $author$project$Util$isJust = function (maybe) {
 		return false;
 	}
 };
+var $elm$core$Debug$log = _Debug_log;
 var $elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -6789,7 +6790,28 @@ var $author$project$Env$handleEnvMsg = F2(
 					$elm$core$Platform$Cmd$none);
 			case 'MouseUp':
 				var maybe = msg.a;
-				return _Utils_Tuple2(
+				var buttons = msg.b;
+				return (A2($elm$core$Debug$log, 'but', buttons) === 2) ? _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							selected: function () {
+								if (maybe.$ === 'Just') {
+									return model.selectedBin;
+								} else {
+									return _List_Nil;
+								}
+							}(),
+							showContextMenu: function () {
+								if (maybe.$ === 'Just') {
+									var file = maybe.a;
+									return !(_Utils_eq(model.dir, model.clipboardDir) && A2($elm$core$List$member, file, model.clipboardFiles));
+								} else {
+									return true;
+								}
+							}()
+						}),
+					$elm$core$Platform$Cmd$none) : _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
@@ -6841,32 +6863,6 @@ var $author$project$Env$handleEnvMsg = F2(
 							return $elm$core$Platform$Cmd$none;
 						}
 					}());
-			case 'ContextMenu':
-				var maybe = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							drag: false,
-							mouseDown: false,
-							selected: function () {
-								if (maybe.$ === 'Just') {
-									var file = maybe.a;
-									return A2($elm$core$List$cons, file, model.selectedBin);
-								} else {
-									return _List_Nil;
-								}
-							}(),
-							showContextMenu: function () {
-								if (maybe.$ === 'Just') {
-									var file = maybe.a;
-									return !(_Utils_eq(model.dir, model.clipboardDir) && A2($elm$core$List$member, file, model.clipboardFiles));
-								} else {
-									return true;
-								}
-							}()
-						}),
-					$elm$core$Platform$Cmd$none);
 			case 'GetLs':
 				var dir = msg.a;
 				return _Utils_Tuple2(
@@ -7512,9 +7508,6 @@ var $author$project$View$contextMenu = F5(
 				}
 			}());
 	});
-var $author$project$Model$ContextMenu = function (a) {
-	return {$: 'ContextMenu', a: a};
-};
 var $author$project$Model$HideDrop = {$: 'HideDrop'};
 var $author$project$Model$MouseDown = F3(
 	function (a, b, c) {
@@ -7523,9 +7516,10 @@ var $author$project$Model$MouseDown = F3(
 var $author$project$Model$MouseMove = function (a) {
 	return {$: 'MouseMove', a: a};
 };
-var $author$project$Model$MouseUp = function (a) {
-	return {$: 'MouseUp', a: a};
-};
+var $author$project$Model$MouseUp = F2(
+	function (a, b) {
+		return {$: 'MouseUp', a: a, b: b};
+	});
 var $author$project$Model$ShowDrop = {$: 'ShowDrop'};
 var $elm$virtual_dom$VirtualDom$Custom = function (a) {
 	return {$: 'Custom', a: a};
@@ -7655,6 +7649,7 @@ var $author$project$Events$onMouseMove = function (_function) {
 				A2($elm$json$Json$Decode$field, 'clientX', $elm$json$Json$Decode$float),
 				A2($elm$json$Json$Decode$field, 'clientY', $elm$json$Json$Decode$float))));
 };
+var $elm$json$Json$Decode$int = _Json_decodeInt;
 var $author$project$Events$onMouseUp = function (message) {
 	return A2(
 		$elm$html$Html$Events$custom,
@@ -7663,7 +7658,10 @@ var $author$project$Events$onMouseUp = function (message) {
 			$author$project$Events$options,
 			true,
 			false,
-			$elm$json$Json$Decode$succeed(message)));
+			A2(
+				$elm$json$Json$Decode$map,
+				message,
+				A2($elm$json$Json$Decode$field, 'button', $elm$json$Json$Decode$int))));
 };
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$html$Html$Events$onDoubleClick = function (msg) {
@@ -7831,13 +7829,12 @@ var $author$project$View$renderFile = F3(
 									y));
 						})),
 					$author$project$Events$onMouseUp(
-					$author$project$Model$EnvMsg(
+					A2(
+						$elm$core$Basics$composeL,
+						$author$project$Model$EnvMsg,
 						$author$project$Model$MouseUp(
 							$elm$core$Maybe$Just(file)))),
-					$author$project$Events$onContextMenu(
-					$author$project$Model$EnvMsg(
-						$author$project$Model$ContextMenu(
-							$elm$core$Maybe$Just(file)))),
+					$author$project$Events$onContextMenu($author$project$Model$None),
 					$elm$html$Html$Events$onDoubleClick(
 					file.isDir ? $author$project$Model$EnvMsg(
 						$author$project$Model$GetLs(dir + (file.name + '/'))) : $author$project$Model$Download)
@@ -7923,12 +7920,12 @@ var $author$project$View$files = function (model) {
 				$author$project$Events$onMouseMove(
 				A2($elm$core$Basics$composeL, $author$project$Model$EnvMsg, $author$project$Model$MouseMove)),
 				$author$project$Events$onMouseUp(
-				$author$project$Model$EnvMsg(
+				A2(
+					$elm$core$Basics$composeL,
+					$author$project$Model$EnvMsg,
 					$author$project$Model$MouseUp($elm$core$Maybe$Nothing))),
 				$author$project$Events$onDragEnter($author$project$Model$ShowDrop),
-				$author$project$Events$onContextMenu(
-				$author$project$Model$EnvMsg(
-					$author$project$Model$ContextMenu($elm$core$Maybe$Nothing)))
+				$author$project$Events$onContextMenu($author$project$Model$None)
 			]),
 		_List_fromArray(
 			[
