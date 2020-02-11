@@ -4,6 +4,7 @@ import Events exposing (..)
 import Html exposing (Attribute, Html, a, br, div, form, h1, i, input, img, label, strong, text, textarea)
 import Html.Attributes exposing (attribute, action, class, draggable, id, hidden, href, method, multiple, src, style, target, title, type_, value)
 import Html.Events exposing (onClick, onDoubleClick, onInput)
+import Http exposing (Progress(..))
 import List exposing (head, indexedMap, isEmpty, length, map, member, range, repeat, reverse, tail)
 import Model exposing (..)
 import Maybe exposing (andThen, withDefault)
@@ -55,7 +56,7 @@ files model = div
   , class <| if model.drag then "fm-drag" else ""
   , onMouseDown (\x y -> EnvMsg <| MouseDown Nothing x y)
   , onMouseMove <| EnvMsg << MouseMove
-  , onMouseUp <| EnvMsg <|  MouseUp Nothing
+  , onMouseUp <| EnvMsg <| MouseUp Nothing
   , onDragEnter ShowDrop
   , onContextMenu <| EnvMsg <| ContextMenu Nothing
   ]
@@ -65,7 +66,7 @@ files model = div
       ++ reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
     ]
   , if model.showDrop
-    then div [ class "fm-drop", onDragLeave HideDrop, onDragOver None, onDrop HideDrop ] []
+    then div [ class "fm-drop", onDragLeave HideDrop, onDragOver None, onDrop GotFiles ] []
     else div [] []
   ]
 
@@ -86,15 +87,20 @@ arrowIcon msg = button [ class "fm-arrow", onClick msg ]
 back : String -> String
 back route = "/" ++ (join "/" <| withDefault [] <| andThen tail <| tail <| reverse <| split "/" route)
 
-renderUploading : Int -> Int -> Html Msg
+renderUploading : Http.Progress -> Int -> Html Msg
 renderUploading progress i = div [ class "fm-file fm-upload" ]
   [ div [ class "fm-thumb" ]
-    [ if i == 0 then div [ class "fm-progress", style "width" (toPx <| toFloat progress) ] [] else div [] []
+    [ if i == 0 then div [ class "fm-progress", style "width" (toPx <| toFloat <| getReceived progress) ] [] else div [] []
     ]
   , div [ class "fm-name" ] []
   ]
 
-renderFile : Model -> Int -> File -> Html Msg
+getReceived : Http.Progress -> Int
+getReceived progress = case progress of
+  Receiving { size, received } -> Maybe.withDefault 0 size // received
+  _ -> 0
+
+renderFile : Model -> Int -> Path -> Html Msg
 renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i file = div
   [ id <| "fm-file-" ++ fromInt i, class <| "fm-file"
       ++ (if member file selected then " fm-selected" else "")
@@ -109,7 +115,7 @@ renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i
   , div [ class "fm-name" ] [ text file.name ]
   ]
 
-renderThumb : String -> String -> String -> File -> Html Msg
+renderThumb : String -> String -> String -> Path -> Html Msg
 renderThumb thumbApi api dir { name, isDir } = if isDir
   then div [ class "fm-thumb" ] [ fileIcon ]
   else renderFileThumb api thumbApi <| dir ++ name
@@ -152,7 +158,7 @@ renderHelper b = div
 toPx : Float -> String
 toPx n = fromFloat n ++ "px"
 
-renderCount : Vec2 -> List File -> Html Msg
+renderCount : Vec2 -> List Path -> Html Msg
 renderCount (Vec2 x y) selected = div
   [ class "fm-count"
   , style "left" (toPx <| x + 5)
@@ -161,7 +167,7 @@ renderCount (Vec2 x y) selected = div
   [ text <| fromInt <| length <| selected
   ]
 
-contextMenu : Vec2 -> Maybe File -> Bool -> Bool -> Int -> Html Msg
+contextMenu : Vec2 -> Maybe Path -> Bool -> Bool -> Int -> Html Msg
 contextMenu (Vec2 x y) maybe paste many filesAmount = if filesAmount > 0
   then div [ class "fm-context-menu", style "left" (toPx x), style "top" (toPx y) ]
       [ button [ class "div white cancel", onClick Cancel ] [ text "Cancel" ]
@@ -175,11 +181,8 @@ contextMenu (Vec2 x y) maybe paste many filesAmount = if filesAmount > 0
       , button [ class "div white", onClick Delete ] [ text "Delete" ]
       ]
     Nothing ->
-      [ label [] 
-          [ input [ class "fm-file-input", type_ "file", multiple True, onChange Upload ] []
-          , text "Upload"
-          ]
-      , button [ class "div white", onClick <| OpenNameDialog ] [ text "New folder" ]
+      [ button [ class "div white", onClick ChooseFiles ] [ text "Upload" ]
+      , button [ class "div white", onClick OpenNameDialog ] [ text "New folder" ]
       , button (if paste then [ class "div white", onClick Paste ] else [ class "div white disabled" ]) [ text "Paste" ]
       ]
 

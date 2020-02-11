@@ -1,5 +1,6 @@
 module Action exposing (..)
 
+import File exposing (File)
 import Json.Decode as Decode
 import Json.Decode exposing (Decoder)
 import Http exposing (Body, emptyBody, expectJson, header, request, stringBody)
@@ -32,6 +33,18 @@ post jwtToken url body decoder handler =
     , tracker = Nothing
     }
 
+upload : String -> String -> File -> Cmd Msg
+upload jwtToken dir file =
+  request
+    { method = "POST"
+    , headers = [header "Authorization" ("Bearer " ++ jwtToken)]
+    , url = "/upload"
+    , body = Http.multipartBody [ Http.stringPart "dir" dir, Http.filePart "file" file ]
+    , expect = Http.expectWhatever Uploaded
+    , timeout = Nothing
+    , tracker = Just "upload"
+    }
+
 getLs : String -> String -> String -> Cmd Msg
 getLs api jwtToken dir = get
   jwtToken
@@ -39,12 +52,12 @@ getLs api jwtToken dir = get
   (Decode.list fileDecoder)
   (EnvMsg << LsGotten)
 
-fileDecoder : Decode.Decoder File
+fileDecoder : Decode.Decoder Path
 fileDecoder = Decode.map2 (\x y -> { name = x, isDir = y })
   (Decode.field "name" Decode.string)
   (Decode.field "isDir" Decode.bool)
 
-move : String -> String -> String -> List File -> String -> Cmd Msg
+move : String -> String -> String -> List Path -> String -> Cmd Msg
 move api jwtToken srcDir files dstDir = post
   jwtToken
   (api ++ "/move")
@@ -55,10 +68,10 @@ move api jwtToken srcDir files dstDir = post
 urlBody : List QueryParameter -> Body
 urlBody = stringBody "application/x-www-form-urlencoded" << dropLeft 1 << toQuery
 
-encodeFiles : List File -> List QueryParameter
+encodeFiles : List Path -> List QueryParameter
 encodeFiles = map (string "files" << .name)
 
-delete : String -> String -> String -> List File -> Cmd Msg
+delete : String -> String -> String -> List Path -> Cmd Msg
 delete api jwtToken dir files = post
   jwtToken
   (api ++ "/delete")

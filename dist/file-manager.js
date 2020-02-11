@@ -4547,7 +4547,185 @@ function _Url_percentDecode(string)
 	{
 		return $elm$core$Maybe$Nothing;
 	}
-}var $elm$core$List$cons = _List_cons;
+}
+
+
+// DECODER
+
+var _File_decoder = _Json_decodePrim(function(value) {
+	// NOTE: checks if `File` exists in case this is run on node
+	return (typeof File !== 'undefined' && value instanceof File)
+		? $elm$core$Result$Ok(value)
+		: _Json_expecting('a FILE', value);
+});
+
+
+// METADATA
+
+function _File_name(file) { return file.name; }
+function _File_mime(file) { return file.type; }
+function _File_size(file) { return file.size; }
+
+function _File_lastModified(file)
+{
+	return $elm$time$Time$millisToPosix(file.lastModified);
+}
+
+
+// DOWNLOAD
+
+var _File_downloadNode;
+
+function _File_getDownloadNode()
+{
+	return _File_downloadNode || (_File_downloadNode = document.createElement('a'));
+}
+
+var _File_download = F3(function(name, mime, content)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var blob = new Blob([content], {type: mime});
+
+		// for IE10+
+		if (navigator.msSaveOrOpenBlob)
+		{
+			navigator.msSaveOrOpenBlob(blob, name);
+			return;
+		}
+
+		// for HTML5
+		var node = _File_getDownloadNode();
+		var objectUrl = URL.createObjectURL(blob);
+		node.href = objectUrl;
+		node.download = name;
+		_File_click(node);
+		URL.revokeObjectURL(objectUrl);
+	});
+});
+
+function _File_downloadUrl(href)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var node = _File_getDownloadNode();
+		node.href = href;
+		node.download = '';
+		node.origin === location.origin || (node.target = '_blank');
+		_File_click(node);
+	});
+}
+
+
+// IE COMPATIBILITY
+
+function _File_makeBytesSafeForInternetExplorer(bytes)
+{
+	// only needed by IE10 and IE11 to fix https://github.com/elm/file/issues/10
+	// all other browsers can just run `new Blob([bytes])` directly with no problem
+	//
+	return new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+}
+
+function _File_click(node)
+{
+	// only needed by IE10 and IE11 to fix https://github.com/elm/file/issues/11
+	// all other browsers have MouseEvent and do not need this conditional stuff
+	//
+	if (typeof MouseEvent === 'function')
+	{
+		node.dispatchEvent(new MouseEvent('click'));
+	}
+	else
+	{
+		var event = document.createEvent('MouseEvents');
+		event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		document.body.appendChild(node);
+		node.dispatchEvent(event);
+		document.body.removeChild(node);
+	}
+}
+
+
+// UPLOAD
+
+var _File_node;
+
+function _File_uploadOne(mimes)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		_File_node = document.createElement('input');
+		_File_node.type = 'file';
+		_File_node.accept = A2($elm$core$String$join, ',', mimes);
+		_File_node.addEventListener('change', function(event)
+		{
+			callback(_Scheduler_succeed(event.target.files[0]));
+		});
+		_File_click(_File_node);
+	});
+}
+
+function _File_uploadOneOrMore(mimes)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		_File_node = document.createElement('input');
+		_File_node.type = 'file';
+		_File_node.multiple = true;
+		_File_node.accept = A2($elm$core$String$join, ',', mimes);
+		_File_node.addEventListener('change', function(event)
+		{
+			var elmFiles = _List_fromArray(event.target.files);
+			callback(_Scheduler_succeed(_Utils_Tuple2(elmFiles.a, elmFiles.b)));
+		});
+		_File_click(_File_node);
+	});
+}
+
+
+// CONTENT
+
+function _File_toString(blob)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var reader = new FileReader();
+		reader.addEventListener('loadend', function() {
+			callback(_Scheduler_succeed(reader.result));
+		});
+		reader.readAsText(blob);
+		return function() { reader.abort(); };
+	});
+}
+
+function _File_toBytes(blob)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var reader = new FileReader();
+		reader.addEventListener('loadend', function() {
+			callback(_Scheduler_succeed(new DataView(reader.result)));
+		});
+		reader.readAsArrayBuffer(blob);
+		return function() { reader.abort(); };
+	});
+}
+
+function _File_toUrl(blob)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var reader = new FileReader();
+		reader.addEventListener('loadend', function() {
+			callback(_Scheduler_succeed(reader.result));
+		});
+		reader.readAsDataURL(blob);
+		return function() { reader.abort(); };
+	});
+}
+
+var $elm$core$List$cons = _List_cons;
 var $elm$core$Elm$JsArray$foldr = _JsArray_foldr;
 var $elm$core$Array$foldr = F3(
 	function (func, baseCase, _v0) {
@@ -6202,7 +6380,11 @@ var $author$project$Update$initModel = function (_v0) {
 		open: false,
 		pos1: A2($author$project$Vec$Vec2, 0, 0),
 		pos2: A2($author$project$Vec$Vec2, 0, 0),
-		progress: 0,
+		progress: $elm$http$Http$Receiving(
+			{
+				received: 0,
+				size: $elm$core$Maybe$Just(0)
+			}),
 		selected: _List_Nil,
 		selectedBin: _List_Nil,
 		showBound: false,
@@ -6223,40 +6405,35 @@ var $author$project$Update$init = function (flags) {
 			return A3($author$project$Action$getLs, api, jwtToken, dir);
 		}());
 };
-var $author$project$Model$FilesAmount = function (a) {
-	return {$: 'FilesAmount', a: a};
-};
 var $author$project$Model$Open = function (a) {
 	return {$: 'Open', a: a};
 };
 var $author$project$Model$Progress = function (a) {
 	return {$: 'Progress', a: a};
 };
-var $author$project$Model$Uploaded = function (a) {
-	return {$: 'Uploaded', a: a};
-};
 var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $elm$json$Json$Decode$int = _Json_decodeInt;
-var $author$project$Port$onFilesAmount = _Platform_incomingPort('onFilesAmount', $elm$json$Json$Decode$int);
 var $elm$json$Json$Decode$null = _Json_decodeNull;
 var $author$project$Port$onOpen = _Platform_incomingPort(
 	'onOpen',
 	$elm$json$Json$Decode$null(_Utils_Tuple0));
-var $author$project$Port$onProgress = _Platform_incomingPort('onProgress', $elm$json$Json$Decode$int);
-var $author$project$Port$onUploaded = _Platform_incomingPort(
-	'onUploaded',
-	$elm$json$Json$Decode$null(_Utils_Tuple0));
+var $elm$http$Http$track = F2(
+	function (tracker, toMsg) {
+		return $elm$http$Http$subscription(
+			A2($elm$http$Http$MySub, tracker, toMsg));
+	});
 var $author$project$FileManager$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$batch(
 		_List_fromArray(
 			[
 				$author$project$Port$onOpen(
 				A2($elm$core$Basics$composeL, $author$project$Model$EnvMsg, $author$project$Model$Open)),
-				$author$project$Port$onFilesAmount($author$project$Model$FilesAmount),
-				$author$project$Port$onProgress($author$project$Model$Progress),
-				$author$project$Port$onUploaded($author$project$Model$Uploaded)
+				A2($elm$http$Http$track, 'upload', $author$project$Model$Progress)
 			]));
 };
+var $author$project$Model$GotFiles = F2(
+	function (a, b) {
+		return {$: 'GotFiles', a: a, b: b};
+	});
 var $author$project$Model$Refresh = function (a) {
 	return {$: 'Refresh', a: a};
 };
@@ -6345,6 +6522,21 @@ var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Port$download = _Platform_outgoingPort(
 	'download',
 	$elm$json$Json$Encode$list($elm$json$Json$Encode$string));
+var $elm$time$Time$Posix = function (a) {
+	return {$: 'Posix', a: a};
+};
+var $elm$time$Time$millisToPosix = $elm$time$Time$Posix;
+var $elm$file$File$Select$files = F2(
+	function (mimes, toMsg) {
+		return A2(
+			$elm$core$Task$perform,
+			function (_v0) {
+				var f = _v0.a;
+				var fs = _v0.b;
+				return A2(toMsg, f, fs);
+			},
+			_File_uploadOneOrMore(mimes));
+	});
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
 		return A3(
@@ -6655,9 +6847,12 @@ var $author$project$Env$handleEnvMsg = F2(
 					_Utils_update(
 						model,
 						{
+							drag: false,
+							mouseDown: false,
 							selected: function () {
 								if (maybe.$ === 'Just') {
-									return model.selectedBin;
+									var file = maybe.a;
+									return A2($elm$core$List$cons, file, model.selectedBin);
 								} else {
 									return _List_Nil;
 								}
@@ -6734,13 +6929,65 @@ var $author$project$Action$rename = F5(
 			$elm$json$Json$Decode$succeed(_Utils_Tuple0),
 			A2($elm$core$Basics$composeL, $author$project$Model$EnvMsg, $author$project$Model$Refresh));
 	});
-var $author$project$Port$upload = _Platform_outgoingPort('upload', $elm$json$Json$Encode$string);
+var $author$project$Model$Uploaded = function (a) {
+	return {$: 'Uploaded', a: a};
+};
+var $elm$http$Http$expectBytesResponse = F2(
+	function (toMsg, toResult) {
+		return A3(
+			_Http_expect,
+			'arraybuffer',
+			_Http_toDataView,
+			A2($elm$core$Basics$composeR, toResult, toMsg));
+	});
+var $elm$http$Http$expectWhatever = function (toMsg) {
+	return A2(
+		$elm$http$Http$expectBytesResponse,
+		toMsg,
+		$elm$http$Http$resolve(
+			function (_v0) {
+				return $elm$core$Result$Ok(_Utils_Tuple0);
+			}));
+};
+var $elm$http$Http$filePart = _Http_pair;
+var $elm$http$Http$multipartBody = function (parts) {
+	return A2(
+		_Http_pair,
+		'',
+		_Http_toFormData(parts));
+};
+var $elm$http$Http$stringPart = _Http_pair;
+var $author$project$Action$upload = F3(
+	function (jwtToken, dir, file) {
+		return $elm$http$Http$request(
+			{
+				body: $elm$http$Http$multipartBody(
+					_List_fromArray(
+						[
+							A2($elm$http$Http$stringPart, 'dir', dir),
+							A2($elm$http$Http$filePart, 'file', file)
+						])),
+				expect: $elm$http$Http$expectWhatever($author$project$Model$Uploaded),
+				headers: _List_fromArray(
+					[
+						A2($elm$http$Http$header, 'Authorization', 'Bearer ' + jwtToken)
+					]),
+				method: 'POST',
+				timeout: $elm$core$Maybe$Nothing,
+				tracker: $elm$core$Maybe$Just('upload'),
+				url: '/upload'
+			});
+	});
 var $author$project$Update$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
 			case 'EnvMsg':
 				var message = msg.a;
 				return A2($author$project$Env$handleEnvMsg, message, model);
+			case 'ChooseFiles':
+				return _Utils_Tuple2(
+					model,
+					A2($elm$file$File$Select$files, _List_Nil, $author$project$Model$GotFiles));
 			case 'ShowDrop':
 				return _Utils_Tuple2(
 					_Utils_update(
@@ -6753,12 +7000,14 @@ var $author$project$Update$update = F2(
 						model,
 						{showDrop: false}),
 					$elm$core$Platform$Cmd$none);
-			case 'Upload':
+			case 'GotFiles':
+				var file = msg.a;
+				var files = msg.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{showContextMenu: false}),
-					$author$project$Port$upload(model.dir));
+					A3($author$project$Action$upload, model.jwtToken, model.dir, file));
 			case 'FilesAmount':
 				var amount = msg.a;
 				return _Utils_Tuple2(
@@ -6776,20 +7025,25 @@ var $author$project$Update$update = F2(
 			case 'Cancel':
 				return _Utils_Tuple2(model, $elm$browser$Browser$Navigation$reload);
 			case 'Uploaded':
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{filesAmount: model.filesAmount - 1}),
-					A3($author$project$Action$getLs, model.api, model.jwtToken, model.dir));
+				var result = msg.a;
+				if (result.$ === 'Ok') {
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{filesAmount: model.filesAmount - 1}),
+						A3($author$project$Action$getLs, model.api, model.jwtToken, model.dir));
+				} else {
+					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 			case 'OpenNameDialog':
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
 							name: function () {
-								var _v1 = model.caller;
-								if (_v1.$ === 'Just') {
-									var file = _v1.a;
+								var _v2 = model.caller;
+								if (_v2.$ === 'Just') {
+									var file = _v2.a;
 									return file.name;
 								} else {
 									return '';
@@ -6847,9 +7101,9 @@ var $author$project$Update$update = F2(
 						model,
 						{load: true, showNameDialog: false}),
 					function () {
-						var _v2 = model.caller;
-						if (_v2.$ === 'Just') {
-							var file = _v2.a;
+						var _v3 = model.caller;
+						if (_v3.$ === 'Just') {
+							var file = _v3.a;
 							return A5($author$project$Action$rename, model.api, model.jwtToken, model.dir, file.name, model.name);
 						} else {
 							return $elm$core$Platform$Cmd$none;
@@ -6871,9 +7125,9 @@ var $author$project$Update$update = F2(
 						model,
 						{clipboardFiles: _List_Nil, load: true, showContextMenu: false}),
 					function () {
-						var _v3 = model.caller;
-						if (_v3.$ === 'Just') {
-							var file = _v3.a;
+						var _v4 = model.caller;
+						if (_v4.$ === 'Just') {
+							var file = _v4.a;
 							return file.isDir ? A5($author$project$Action$move, model.api, model.jwtToken, model.clipboardDir, model.clipboardFiles, model.dir + (file.name + '/')) : $elm$core$Platform$Cmd$none;
 						} else {
 							return A5($author$project$Action$move, model.api, model.jwtToken, model.clipboardDir, model.clipboardFiles, model.dir);
@@ -7091,29 +7345,12 @@ var $author$project$View$bar = F2(
 				]));
 	});
 var $author$project$Model$Cancel = {$: 'Cancel'};
+var $author$project$Model$ChooseFiles = {$: 'ChooseFiles'};
 var $author$project$Model$Cut = {$: 'Cut'};
 var $author$project$Model$Delete = {$: 'Delete'};
 var $author$project$Model$Download = {$: 'Download'};
 var $author$project$Model$OpenNameDialog = {$: 'OpenNameDialog'};
 var $author$project$Model$Paste = {$: 'Paste'};
-var $author$project$Model$Upload = {$: 'Upload'};
-var $elm$html$Html$input = _VirtualDom_node('input');
-var $elm$html$Html$label = _VirtualDom_node('label');
-var $elm$json$Json$Encode$bool = _Json_wrap;
-var $elm$html$Html$Attributes$boolProperty = F2(
-	function (key, bool) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$bool(bool));
-	});
-var $elm$html$Html$Attributes$multiple = $elm$html$Html$Attributes$boolProperty('multiple');
-var $author$project$Events$onChange = function (message) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'change',
-		$elm$json$Json$Decode$succeed(message));
-};
 var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$core$String$fromFloat = _String_fromNumber;
@@ -7236,20 +7473,14 @@ var $author$project$View$contextMenu = F5(
 					return _List_fromArray(
 						[
 							A2(
-							$elm$html$Html$label,
-							_List_Nil,
+							$author$project$Util$button,
 							_List_fromArray(
 								[
-									A2(
-									$elm$html$Html$input,
-									_List_fromArray(
-										[
-											$elm$html$Html$Attributes$class('fm-file-input'),
-											$elm$html$Html$Attributes$type_('file'),
-											$elm$html$Html$Attributes$multiple(true),
-											$author$project$Events$onChange($author$project$Model$Upload)
-										]),
-									_List_Nil),
+									$elm$html$Html$Attributes$class('div white'),
+									$elm$html$Html$Events$onClick($author$project$Model$ChooseFiles)
+								]),
+							_List_fromArray(
+								[
 									$elm$html$Html$text('Upload')
 								])),
 							A2(
@@ -7345,7 +7576,31 @@ var $author$project$Events$onDragOver = function (message) {
 			true,
 			$elm$json$Json$Decode$succeed(message)));
 };
-var $author$project$Events$onDrop = function (message) {
+var $elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
+	});
+var $elm$file$File$decoder = _File_decoder;
+var $elm$json$Json$Decode$fail = _Json_fail;
+var $elm$json$Json$Decode$oneOrMoreHelp = F2(
+	function (toValue, xs) {
+		if (!xs.b) {
+			return $elm$json$Json$Decode$fail('a ARRAY with at least ONE element');
+		} else {
+			var y = xs.a;
+			var ys = xs.b;
+			return $elm$json$Json$Decode$succeed(
+				A2(toValue, y, ys));
+		}
+	});
+var $elm$json$Json$Decode$oneOrMore = F2(
+	function (toValue, decoder) {
+		return A2(
+			$elm$json$Json$Decode$andThen,
+			$elm$json$Json$Decode$oneOrMoreHelp(toValue),
+			$elm$json$Json$Decode$list(decoder));
+	});
+var $author$project$Events$onDrop = function (handler) {
 	return A2(
 		$elm$html$Html$Events$custom,
 		'drop',
@@ -7353,7 +7608,11 @@ var $author$project$Events$onDrop = function (message) {
 			$author$project$Events$options,
 			false,
 			true,
-			$elm$json$Json$Decode$succeed(message)));
+			A2(
+				$elm$json$Json$Decode$at,
+				_List_fromArray(
+					['dataTransfer', 'files']),
+				A2($elm$json$Json$Decode$oneOrMore, handler, $elm$file$File$decoder))));
 };
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
 var $elm$json$Json$Decode$map3 = _Json_map3;
@@ -7598,6 +7857,15 @@ var $author$project$View$renderFile = F3(
 						]))
 				]));
 	});
+var $author$project$View$getReceived = function (progress) {
+	if (progress.$ === 'Receiving') {
+		var size = progress.a.size;
+		var received = progress.a.received;
+		return (A2($elm$core$Maybe$withDefault, 0, size) / received) | 0;
+	} else {
+		return 0;
+	}
+};
 var $author$project$View$renderUploading = F2(
 	function (progress, i) {
 		return A2(
@@ -7624,7 +7892,8 @@ var $author$project$View$renderUploading = F2(
 									A2(
 									$elm$html$Html$Attributes$style,
 									'width',
-									$author$project$View$toPx(progress))
+									$author$project$View$toPx(
+										$author$project$View$getReceived(progress)))
 								]),
 							_List_Nil) : A2($elm$html$Html$div, _List_Nil, _List_Nil)
 						])),
@@ -7695,7 +7964,7 @@ var $author$project$View$files = function (model) {
 						$elm$html$Html$Attributes$class('fm-drop'),
 						$author$project$Events$onDragLeave($author$project$Model$HideDrop),
 						$author$project$Events$onDragOver($author$project$Model$None),
-						$author$project$Events$onDrop($author$project$Model$HideDrop)
+						$author$project$Events$onDrop($author$project$Model$GotFiles)
 					]),
 				_List_Nil) : A2($elm$html$Html$div, _List_Nil, _List_Nil)
 			]));
@@ -7714,6 +7983,8 @@ var $author$project$Model$Name = function (a) {
 var $author$project$Model$NewDir = {$: 'NewDir'};
 var $author$project$Model$Rename = {$: 'Rename'};
 var $elm$html$Html$br = _VirtualDom_node('br');
+var $elm$html$Html$input = _VirtualDom_node('input');
+var $elm$html$Html$label = _VirtualDom_node('label');
 var $elm$html$Html$Events$alwaysStop = function (x) {
 	return _Utils_Tuple2(x, true);
 };
@@ -7726,10 +7997,6 @@ var $elm$html$Html$Events$stopPropagationOn = F2(
 			$elm$virtual_dom$VirtualDom$on,
 			event,
 			$elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
-	});
-var $elm$json$Json$Decode$at = F2(
-	function (fields, decoder) {
-		return A3($elm$core$List$foldr, $elm$json$Json$Decode$field, decoder, fields);
 	});
 var $elm$html$Html$Events$targetValue = A2(
 	$elm$json$Json$Decode$at,
@@ -7966,59 +8233,7 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
 				A2($elm$json$Json$Decode$field, 'jwtToken', $elm$json$Json$Decode$string));
 		},
 		A2($elm$json$Json$Decode$field, 'thumbnailsUrl', $elm$json$Json$Decode$string)))(0)}});}(this));var FileManager = function () {
-  var renderDrop = function renderDrop() {
-    var observer = new MutationObserver(function () {
-      var files = document.querySelector('.fm-files');
-
-      if (files) {
-        files.ondrop = function (ev) {
-          var dir = document.querySelector('.fm-text').innerText;
-          var files = Array.from(ev.dataTransfer.files);
-          fm.ports.onFilesAmount.send(files.length);
-          uploadFiles(dir, files);
-        };
-
-        observer.disconnect();
-      }
-    });
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  };
-
-  var upload = function upload(dir) {
-    var input = document.querySelector('.fm-file-input');
-    var files = Array.from(input.files);
-    fm.ports.onFilesAmount.send(files.length);
-    uploadFiles(dir, files);
-  };
-
-  var uploadFiles = function uploadFiles(dir, files) {
-    if (files.length == 0) {
-      return;
-    }
-
-    var file = files.shift();
-    var formData = new FormData();
-    formData.append('dir', dir);
-    formData.append('file', file);
-    var xhr = new XMLHttpRequest();
-
-    xhr.upload.onprogress = function (ev) {
-      if (ev.lengthComputable) {
-        fm.ports.onProgress.send(Math.floor(ev.loaded * 100 / ev.total));
-      }
-    };
-
-    xhr.onload = function () {
-      fm.ports.onUploaded.send(null);
-      uploadFiles(dir, files);
-    };
-
-    xhr.open('POST', uploadsUrl);
-    xhr.send(formData);
-  };
+  var downloadsUrl;
 
   var download = function download(files) {
     files.forEach(function (file) {
@@ -8026,15 +8241,12 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
     });
   };
 
-  var uploadsUrl;
-  var downloadsUrl;
-  var fm;
   return function (options) {
-    renderDrop();
     uploadsUrl = options.uploadsUrl;
     downloadsUrl = options.downloadsUrl;
-    var container;
 
+    var container;
+    
     if (!options.container) {
       container = document.createElement('div');
       document.body.appendChild(container);
@@ -8042,7 +8254,7 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
       container = options.container;
     }
 
-    fm = Elm.FileManager.init({
+    var fm = Elm.FileManager.init({
       node: container,
       flags: {
         api: options.api,
@@ -8051,8 +8263,9 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
         dir: options.dir || "/"
       }
     });
-    fm.ports.upload.subscribe(upload);
+
     fm.ports.download.subscribe(download);
+
     return {
       open: function open() {
         fm.ports.onOpen.send(null);
@@ -8061,7 +8274,6 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
       set onClose(callback) {
         fm.ports.close.subscribe(callback);
       }
-
     };
   };
 }();

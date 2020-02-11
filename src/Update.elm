@@ -3,7 +3,9 @@ module Update exposing (..)
 import Action exposing (..)
 import Browser.Navigation exposing (reload)
 import Env exposing (handleEnvMsg)
+import File.Select
 import List exposing (head, indexedMap, map, map2, filter, isEmpty, member)
+import Http
 import Model exposing (..)
 import Maybe exposing (withDefault, andThen)
 import Port exposing (..)
@@ -35,7 +37,7 @@ initModel { api, thumbnailsUrl, jwtToken, dir } =
   , selectedBin = []
   , showDrop = False
   , filesAmount = 0
-  , progress = 0
+  , progress = Http.Receiving { received = 0, size = Just 0 }
   , showNameDialog = False
   , name = ""
   , clipboardDir = ""
@@ -45,13 +47,17 @@ initModel { api, thumbnailsUrl, jwtToken, dir } =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model = case msg of
   EnvMsg message -> handleEnvMsg message model
+  ChooseFiles -> (model, File.Select.files [] GotFiles)
   ShowDrop -> ({ model | showDrop = True }, Cmd.none)
   HideDrop -> ({ model | showDrop = False }, Cmd.none)
-  Upload -> ({ model | showContextMenu = False }, upload model.dir)
+  -- Upload -> ({ model | showContextMenu = False }, upload model.dir)
+  GotFiles file files -> ({ model | showContextMenu = False }, Action.upload model.jwtToken model.dir file)
   FilesAmount amount -> ({ model | filesAmount = amount }, Cmd.none)
   Progress progress -> ({ model | progress = progress }, Cmd.none)
   Cancel -> (model, reload)
-  Uploaded () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.api model.jwtToken model.dir)
+  Uploaded result -> case result of
+    Ok () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.api model.jwtToken model.dir)
+    Err _ -> (model, Cmd.none)
   OpenNameDialog ->
     ( { model
       | showNameDialog = True

@@ -1,6 +1,7 @@
 module Model exposing (..)
 
 import Browser.Dom exposing (Element)
+import File exposing (File)
 import Http exposing (Error)
 import Vec exposing (..)
 
@@ -22,38 +23,39 @@ type alias Model =
   , pos2: Vec2
   , mouseDown: Bool
   , ctrl: Bool
-  , caller: Maybe File
-  , files: List File
+  , caller: Maybe Path
+  , files: List Path
   , showBound: Bool
   , bound: Bound
   , bounds: List Bound
-  , selected: List File
+  , selected: List Path
   , drag: Bool
   , showContextMenu: Bool
-  , selectedBin: List File
+  , selectedBin: List Path
   , showDrop: Bool
   , filesAmount: Int
-  , progress: Int
+  , progress: Http.Progress
   , showNameDialog: Bool
   , name: String
   , clipboardDir: String
-  , clipboardFiles: List File
+  , clipboardFiles: List Path
   }
 
-type alias File =
+type alias Path =
   { name: String
   , isDir: Bool
   }
 
 type Msg
   = EnvMsg EnvMsg
+  | ChooseFiles
   | ShowDrop
   | HideDrop
-  | Upload
+  | GotFiles File (List File)
   | FilesAmount Int
-  | Progress Int
+  | Progress Http.Progress
   | Cancel
-  | Uploaded ()
+  | Uploaded (Result Http.Error ())
   | OpenNameDialog
   | CloseNameDialog
   | Name String
@@ -69,11 +71,11 @@ type EnvMsg
   = Open ()
   | Close
   | Accept
-  | MouseDown (Maybe File) Vec2 Bool
+  | MouseDown (Maybe Path) Vec2 Bool
   | GetBounds (Result Browser.Dom.Error (List Element))
   | MouseMove Vec2
-  | MouseUp (Maybe File)
-  | ContextMenu (Maybe File)
+  | MouseUp (Maybe Path)
+  | ContextMenu (Maybe Path)
   | GetLs String
-  | LsGotten (Result Error (List File)) 
+  | LsGotten (Result Error (List Path)) 
   | Refresh (Result Error ())

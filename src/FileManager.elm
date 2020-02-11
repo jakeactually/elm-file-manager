@@ -1,6 +1,7 @@
 module FileManager exposing (..)
 
 import Browser exposing (element)
+import Http
 import Model exposing (..)
 import Update exposing (..)
 import View exposing (..)
@@ -17,7 +18,5 @@ main = element
 subscriptions : Model -> Sub Msg
 subscriptions _ = Sub.batch
   [ onOpen (EnvMsg << Open)
-  , onFilesAmount FilesAmount
-  , onProgress Progress
-  , onUploaded Uploaded
+  , Http.track "upload" Progress
   ]

@@ -1,5 +1,6 @@
 module Events exposing (..)
 
+import File exposing (File)
 import Json.Decode as Decode exposing (Decoder)
 import Html exposing (Attribute)
 import Html.Events exposing (on, custom)
@@ -42,9 +43,11 @@ onDragOver : msg -> Attribute msg
 onDragOver message =
   custom "dragover" <| options False True <| Decode.succeed message
 
-onDrop : msg -> Attribute msg
-onDrop message =
-  custom "drop" <| options False True <| Decode.succeed message
+onDrop : (File -> List File -> msg) -> Attribute msg
+onDrop handler
+  = custom "drop"
+  <| options False True
+  <| Decode.at [ "dataTransfer", "files" ] (Decode.oneOrMore handler File.decoder)
 
 options : Bool -> Bool -> Decoder msg -> Decoder
     { message : msg
