@@ -46,7 +46,7 @@ handleEnvMsg msg model = case msg of
       }
       , Cmd.none
     )
-  MouseUp maybe buttons -> if (log "but" buttons) == 2
+  MouseUp maybe buttons -> if buttons == 2
     then
       ( { model
         | mouseDown = False
