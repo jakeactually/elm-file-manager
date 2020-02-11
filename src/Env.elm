@@ -49,11 +49,13 @@ handleEnvMsg msg model = case msg of
   MouseUp maybe buttons -> if (log "but" buttons) == 2
     then
       ( { model
-        | showContextMenu = case maybe of
+        | mouseDown = False
+        , drag = False
+        , showContextMenu = case maybe of
             Just file -> not <| model.dir == model.clipboardDir && member file model.clipboardFiles
             Nothing -> True
         , selected = case maybe of
-            Just _ -> model.selectedBin
+            Just _ -> model.selected
             Nothing -> []
         }
         , Cmd.none
