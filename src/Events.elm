@@ -26,7 +26,7 @@ onMouseUp message =
 
 onContextMenu : msg -> Attribute msg
 onContextMenu message =
-  custom "contextmenu" <| options True True <| Decode.succeed message
+  custom "contextmenu" <| options False True <| Decode.succeed message
 
 onChange : msg -> Attribute msg
 onChange message =

@@ -58,6 +58,7 @@ update msg model = case msg of
       | showContextMenu = False
       , uploadQueue = files
       , filesAmount = List.length files + 1
+      , showDrop = False
       }
       , Action.upload model.jwtToken model.dir file
     )
