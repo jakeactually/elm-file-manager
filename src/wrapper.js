@@ -1,16 +1,5 @@
 var FileManager = function () {
-  var downloadsUrl;
-
-  var download = function download(files) {
-    files.forEach(function (file) {
-      return window.open(downloadsUrl + file);
-    });
-  };
-
   return function (options) {
-    uploadsUrl = options.uploadsUrl;
-    downloadsUrl = options.downloadsUrl;
-
     var container;
     
     if (!options.container) {
