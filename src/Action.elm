@@ -52,12 +52,12 @@ getLs api jwtToken dir = get
   (Decode.list fileDecoder)
   (EnvMsg << LsGotten)
 
-fileDecoder : Decode.Decoder Path
+fileDecoder : Decode.Decoder FileMeta
 fileDecoder = Decode.map2 (\x y -> { name = x, isDir = y })
   (Decode.field "name" Decode.string)
   (Decode.field "isDir" Decode.bool)
 
-move : String -> String -> String -> List Path -> String -> Cmd Msg
+move : String -> String -> String -> List FileMeta -> String -> Cmd Msg
 move api jwtToken srcDir files dstDir = post
   jwtToken
   (api ++ "/move")
@@ -68,10 +68,10 @@ move api jwtToken srcDir files dstDir = post
 urlBody : List QueryParameter -> Body
 urlBody = stringBody "application/x-www-form-urlencoded" << dropLeft 1 << toQuery
 
-encodeFiles : List Path -> List QueryParameter
+encodeFiles : List FileMeta -> List QueryParameter
 encodeFiles = map (string "files" << .name)
 
-delete : String -> String -> String -> List Path -> Cmd Msg
+delete : String -> String -> String -> List FileMeta -> Cmd Msg
 delete api jwtToken dir files = post
   jwtToken
   (api ++ "/delete")

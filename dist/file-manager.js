@@ -6359,6 +6359,7 @@ var $author$project$Vec$newBound = {height: 0, width: 0, x: 0, y: 0};
 var $author$project$Update$initModel = function (_v0) {
 	var api = _v0.api;
 	var thumbnailsUrl = _v0.thumbnailsUrl;
+	var downloadsUrl = _v0.downloadsUrl;
 	var jwtToken = _v0.jwtToken;
 	var dir = _v0.dir;
 	return {
@@ -6370,6 +6371,7 @@ var $author$project$Update$initModel = function (_v0) {
 		clipboardFiles: _List_Nil,
 		ctrl: false,
 		dir: dir,
+		downloadsUrl: downloadsUrl,
 		drag: false,
 		files: _List_Nil,
 		filesAmount: 0,
@@ -6391,7 +6393,8 @@ var $author$project$Update$initModel = function (_v0) {
 		showContextMenu: false,
 		showDrop: false,
 		showNameDialog: false,
-		thumbnailsUrl: thumbnailsUrl
+		thumbnailsUrl: thumbnailsUrl,
+		uploadQueue: _List_Nil
 	};
 };
 var $author$project$Update$init = function (flags) {
@@ -6434,6 +6437,7 @@ var $author$project$Model$GotFiles = F2(
 	function (a, b) {
 		return {$: 'GotFiles', a: a, b: b};
 	});
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $author$project$Model$Refresh = function (a) {
 	return {$: 'Refresh', a: a};
 };
@@ -6509,19 +6513,6 @@ var $author$project$Action$delete = F4(
 			$elm$json$Json$Decode$succeed(_Utils_Tuple0),
 			A2($elm$core$Basics$composeL, $author$project$Model$EnvMsg, $author$project$Model$Refresh));
 	});
-var $elm$json$Json$Encode$list = F2(
-	function (func, entries) {
-		return _Json_wrap(
-			A3(
-				$elm$core$List$foldl,
-				_Json_addEntry(func),
-				_Json_emptyArray(_Utils_Tuple0),
-				entries));
-	});
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $author$project$Port$download = _Platform_outgoingPort(
-	'download',
-	$elm$json$Json$Encode$list($elm$json$Json$Encode$string));
 var $elm$time$Time$Posix = function (a) {
 	return {$: 'Posix', a: a};
 };
@@ -6548,6 +6539,16 @@ var $elm$core$List$filter = F2(
 			_List_Nil,
 			list);
 	});
+var $elm$json$Json$Encode$list = F2(
+	function (func, entries) {
+		return _Json_wrap(
+			A3(
+				$elm$core$List$foldl,
+				_Json_addEntry(func),
+				_Json_emptyArray(_Utils_Tuple0),
+				entries));
+	});
+var $elm$json$Json$Encode$string = _Json_wrap;
 var $author$project$Port$close = _Platform_outgoingPort(
 	'close',
 	$elm$json$Json$Encode$list($elm$json$Json$Encode$string));
@@ -6609,7 +6610,6 @@ var $author$project$Util$isJust = function (maybe) {
 		return false;
 	}
 };
-var $elm$core$Debug$log = _Debug_log;
 var $elm$core$List$any = F2(
 	function (isOkay, list) {
 		any:
@@ -6658,7 +6658,6 @@ var $author$project$Action$move = F5(
 			A2($elm$core$Basics$composeL, $author$project$Model$EnvMsg, $author$project$Model$Refresh));
 	});
 var $elm$core$Basics$neq = _Utils_notEqual;
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Basics$not = _Basics_not;
 var $elm$core$Tuple$second = function (_v0) {
@@ -6791,13 +6790,15 @@ var $author$project$Env$handleEnvMsg = F2(
 			case 'MouseUp':
 				var maybe = msg.a;
 				var buttons = msg.b;
-				return (A2($elm$core$Debug$log, 'but', buttons) === 2) ? _Utils_Tuple2(
+				return (buttons === 2) ? _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
+							drag: false,
+							mouseDown: false,
 							selected: function () {
 								if (maybe.$ === 'Just') {
-									return model.selectedBin;
+									return model.selected;
 								} else {
 									return _List_Nil;
 								}
@@ -6974,6 +6975,12 @@ var $author$project$Action$upload = F3(
 				url: '/upload'
 			});
 	});
+var $elm$file$File$Download$url = function (href) {
+	return A2(
+		$elm$core$Task$perform,
+		$elm$core$Basics$never,
+		_File_downloadUrl(href));
+};
 var $author$project$Update$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -7002,15 +7009,12 @@ var $author$project$Update$update = F2(
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{showContextMenu: false}),
+						{
+							filesAmount: $elm$core$List$length(files) + 1,
+							showContextMenu: false,
+							uploadQueue: files
+						}),
 					A3($author$project$Action$upload, model.jwtToken, model.dir, file));
-			case 'FilesAmount':
-				var amount = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{filesAmount: amount}),
-					$elm$core$Platform$Cmd$none);
 			case 'Progress':
 				var progress = msg.a;
 				return _Utils_Tuple2(
@@ -7023,11 +7027,27 @@ var $author$project$Update$update = F2(
 			case 'Uploaded':
 				var result = msg.a;
 				if (result.$ === 'Ok') {
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{filesAmount: model.filesAmount - 1}),
-						A3($author$project$Action$getLs, model.api, model.jwtToken, model.dir));
+					var _v2 = model.uploadQueue;
+					if (_v2.b) {
+						var file = _v2.a;
+						var files = _v2.b;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{filesAmount: model.filesAmount - 1, uploadQueue: files}),
+							$elm$core$Platform$Cmd$batch(
+								_List_fromArray(
+									[
+										A3($author$project$Action$getLs, model.api, model.jwtToken, model.dir),
+										A3($author$project$Action$upload, model.jwtToken, model.dir, file)
+									])));
+					} else {
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{filesAmount: 0}),
+							A3($author$project$Action$getLs, model.api, model.jwtToken, model.dir));
+					}
 				} else {
 					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
@@ -7037,9 +7057,9 @@ var $author$project$Update$update = F2(
 						model,
 						{
 							name: function () {
-								var _v2 = model.caller;
-								if (_v2.$ === 'Just') {
-									var file = _v2.a;
+								var _v3 = model.caller;
+								if (_v3.$ === 'Just') {
+									var file = _v3.a;
 									return file.name;
 								} else {
 									return '';
@@ -7073,12 +7093,16 @@ var $author$project$Update$update = F2(
 					_Utils_update(
 						model,
 						{showContextMenu: false}),
-					$author$project$Port$download(
+					$elm$core$Platform$Cmd$batch(
 						A2(
 							$elm$core$List$map,
 							A2(
 								$elm$core$Basics$composeL,
-								$elm$core$Basics$append(model.dir),
+								A2(
+									$elm$core$Basics$composeL,
+									$elm$file$File$Download$url,
+									$elm$core$Basics$append(
+										_Utils_ap(model.downloadsUrl, model.dir))),
 								function ($) {
 									return $.name;
 								}),
@@ -7097,9 +7121,9 @@ var $author$project$Update$update = F2(
 						model,
 						{load: true, showNameDialog: false}),
 					function () {
-						var _v3 = model.caller;
-						if (_v3.$ === 'Just') {
-							var file = _v3.a;
+						var _v4 = model.caller;
+						if (_v4.$ === 'Just') {
+							var file = _v4.a;
 							return A5($author$project$Action$rename, model.api, model.jwtToken, model.dir, file.name, model.name);
 						} else {
 							return $elm$core$Platform$Cmd$none;
@@ -7121,9 +7145,9 @@ var $author$project$Update$update = F2(
 						model,
 						{clipboardFiles: _List_Nil, load: true, showContextMenu: false}),
 					function () {
-						var _v4 = model.caller;
-						if (_v4.$ === 'Just') {
-							var file = _v4.a;
+						var _v5 = model.caller;
+						if (_v5.$ === 'Just') {
+							var file = _v5.a;
 							return file.isDir ? A5($author$project$Action$move, model.api, model.jwtToken, model.clipboardDir, model.clipboardFiles, model.dir + (file.name + '/')) : $elm$core$Platform$Cmd$none;
 						} else {
 							return A5($author$project$Action$move, model.api, model.jwtToken, model.clipboardDir, model.clipboardFiles, model.dir);
@@ -7854,11 +7878,11 @@ var $author$project$View$renderFile = F3(
 						]))
 				]));
 	});
-var $author$project$View$getReceived = function (progress) {
-	if (progress.$ === 'Receiving') {
+var $author$project$View$getSent = function (progress) {
+	if (progress.$ === 'Sending') {
 		var size = progress.a.size;
-		var received = progress.a.received;
-		return (A2($elm$core$Maybe$withDefault, 0, size) / received) | 0;
+		var sent = progress.a.sent;
+		return ((sent * 100) / size) | 0;
 	} else {
 		return 0;
 	}
@@ -7890,7 +7914,7 @@ var $author$project$View$renderUploading = F2(
 									$elm$html$Html$Attributes$style,
 									'width',
 									$author$project$View$toPx(
-										$author$project$View$getReceived(progress)))
+										$author$project$View$getSent(progress)))
 								]),
 							_List_Nil) : A2($elm$html$Html$div, _List_Nil, _List_Nil)
 						])),
@@ -8216,16 +8240,21 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
 				function (jwtToken) {
 					return A2(
 						$elm$json$Json$Decode$andThen,
-						function (dir) {
+						function (downloadsUrl) {
 							return A2(
 								$elm$json$Json$Decode$andThen,
-								function (api) {
-									return $elm$json$Json$Decode$succeed(
-										{api: api, dir: dir, jwtToken: jwtToken, thumbnailsUrl: thumbnailsUrl});
+								function (dir) {
+									return A2(
+										$elm$json$Json$Decode$andThen,
+										function (api) {
+											return $elm$json$Json$Decode$succeed(
+												{api: api, dir: dir, downloadsUrl: downloadsUrl, jwtToken: jwtToken, thumbnailsUrl: thumbnailsUrl});
+										},
+										A2($elm$json$Json$Decode$field, 'api', $elm$json$Json$Decode$string));
 								},
-								A2($elm$json$Json$Decode$field, 'api', $elm$json$Json$Decode$string));
+								A2($elm$json$Json$Decode$field, 'dir', $elm$json$Json$Decode$string));
 						},
-						A2($elm$json$Json$Decode$field, 'dir', $elm$json$Json$Decode$string));
+						A2($elm$json$Json$Decode$field, 'downloadsUrl', $elm$json$Json$Decode$string));
 				},
 				A2($elm$json$Json$Decode$field, 'jwtToken', $elm$json$Json$Decode$string));
 		},
@@ -8256,12 +8285,11 @@ _Platform_export({'FileManager':{'init':$author$project$FileManager$main(
       flags: {
         api: options.api,
         thumbnailsUrl: options.thumbnailsUrl,
+        downloadsUrl: options.downloadsUrl,
         jwtToken: options.jwtToken || "",
         dir: options.dir || "/"
       }
     });
-
-    fm.ports.download.subscribe(download);
 
     return {
       open: function open() {

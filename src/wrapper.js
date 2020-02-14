@@ -25,12 +25,11 @@ var FileManager = function () {
       flags: {
         api: options.api,
         thumbnailsUrl: options.thumbnailsUrl,
+        downloadsUrl: options.downloadsUrl,
         jwtToken: options.jwtToken || "",
         dir: options.dir || "/"
       }
     });
-
-    fm.ports.download.subscribe(download);
 
     return {
       open: function open() {

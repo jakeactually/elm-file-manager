@@ -90,7 +90,7 @@ handleEnvMsg msg model = case msg of
     Ok () -> (model, getLs model.api model.jwtToken model.dir)
     Err _ -> (model, Cmd.none)
 
-getBounds : List Path -> Cmd Msg
+getBounds : List FileMeta -> Cmd Msg
 getBounds files = Task.attempt (EnvMsg << GetBounds)
   <| sequence
   <| indexedMap (\i _ -> getElement <| "fm-file-" ++ fromInt i) files

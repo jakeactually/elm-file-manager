@@ -90,17 +90,17 @@ back route = "/" ++ (join "/" <| withDefault [] <| andThen tail <| tail <| rever
 renderUploading : Http.Progress -> Int -> Html Msg
 renderUploading progress i = div [ class "fm-file fm-upload" ]
   [ div [ class "fm-thumb" ]
-    [ if i == 0 then div [ class "fm-progress", style "width" (toPx <| toFloat <| getReceived progress) ] [] else div [] []
+    [ if i == 0 then div [ class "fm-progress", style "width" (toPx <| toFloat <| getSent progress) ] [] else div [] []
     ]
   , div [ class "fm-name" ] []
   ]
 
-getReceived : Http.Progress -> Int
-getReceived progress = case progress of
-  Receiving { size, received } -> Maybe.withDefault 0 size // received
+getSent : Http.Progress -> Int
+getSent progress = case progress of
+  Sending { size, sent } -> sent * 100 // size
   _ -> 0
 
-renderFile : Model -> Int -> Path -> Html Msg
+renderFile : Model -> Int -> FileMeta -> Html Msg
 renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i file = div
   [ id <| "fm-file-" ++ fromInt i, class <| "fm-file"
       ++ (if member file selected then " fm-selected" else "")
@@ -115,7 +115,7 @@ renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i
   , div [ class "fm-name" ] [ text file.name ]
   ]
 
-renderThumb : String -> String -> String -> Path -> Html Msg
+renderThumb : String -> String -> String -> FileMeta -> Html Msg
 renderThumb thumbApi api dir { name, isDir } = if isDir
   then div [ class "fm-thumb" ] [ fileIcon ]
   else renderFileThumb api thumbApi <| dir ++ name
@@ -158,7 +158,7 @@ renderHelper b = div
 toPx : Float -> String
 toPx n = fromFloat n ++ "px"
 
-renderCount : Vec2 -> List Path -> Html Msg
+renderCount : Vec2 -> List FileMeta -> Html Msg
 renderCount (Vec2 x y) selected = div
   [ class "fm-count"
   , style "left" (toPx <| x + 5)
@@ -167,7 +167,7 @@ renderCount (Vec2 x y) selected = div
   [ text <| fromInt <| length <| selected
   ]
 
-contextMenu : Vec2 -> Maybe Path -> Bool -> Bool -> Int -> Html Msg
+contextMenu : Vec2 -> Maybe FileMeta -> Bool -> Bool -> Int -> Html Msg
 contextMenu (Vec2 x y) maybe paste many filesAmount = if filesAmount > 0
   then div [ class "fm-context-menu", style "left" (toPx x), style "top" (toPx y) ]
       [ button [ class "div white cancel", onClick Cancel ] [ text "Cancel" ]

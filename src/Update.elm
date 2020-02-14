@@ -3,6 +3,7 @@ module Update exposing (..)
 import Action exposing (..)
 import Browser.Navigation exposing (reload)
 import Env exposing (handleEnvMsg)
+import File.Download
 import File.Select
 import List exposing (head, indexedMap, map, map2, filter, isEmpty, member)
 import Http
@@ -15,9 +16,10 @@ init : Flags -> (Model, Cmd Msg)
 init flags = (initModel flags, let { api, jwtToken, dir } = flags in getLs api jwtToken dir)
 
 initModel : Flags -> Model
-initModel { api, thumbnailsUrl, jwtToken, dir } =
+initModel { api, thumbnailsUrl, downloadsUrl, jwtToken, dir } =
   { api = api
   , thumbnailsUrl = thumbnailsUrl
+  , downloadsUrl = downloadsUrl
   , jwtToken = jwtToken
   , dir = dir
   , open = False
@@ -42,6 +44,7 @@ initModel { api, thumbnailsUrl, jwtToken, dir } =
   , name = ""
   , clipboardDir = ""
   , clipboardFiles = []
+  , uploadQueue = []
   }
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -50,12 +53,29 @@ update msg model = case msg of
   ChooseFiles -> (model, File.Select.files [] GotFiles)
   ShowDrop -> ({ model | showDrop = True }, Cmd.none)
   HideDrop -> ({ model | showDrop = False }, Cmd.none)
-  GotFiles file files -> ({ model | showContextMenu = False }, Action.upload model.jwtToken model.dir file)
-  FilesAmount amount -> ({ model | filesAmount = amount }, Cmd.none)
+  GotFiles file files ->
+    ( { model
+      | showContextMenu = False
+      , uploadQueue = files
+      , filesAmount = List.length files + 1
+      }
+      , Action.upload model.jwtToken model.dir file
+    )
   Progress progress -> ({ model | progress = progress }, Cmd.none)
   Cancel -> (model, reload)
   Uploaded result -> case result of
-    Ok () -> ({ model | filesAmount = model.filesAmount - 1 }, getLs model.api model.jwtToken model.dir)
+    Ok () -> case model.uploadQueue of
+        file :: files ->
+          ( { model
+            | filesAmount = model.filesAmount - 1
+            , uploadQueue = files
+            },
+            Cmd.batch
+              [ getLs model.api model.jwtToken model.dir
+              , Action.upload model.jwtToken model.dir file
+              ]
+          )
+        _ -> ({ model | filesAmount = 0 }, getLs model.api model.jwtToken model.dir)
     Err _ -> (model, Cmd.none)
   OpenNameDialog ->
     ( { model
@@ -70,7 +90,14 @@ update msg model = case msg of
   CloseNameDialog -> ({ model | showNameDialog = False }, Cmd.none)
   Name name -> ({ model | name = name }, Cmd.none)
   NewDir -> ({ model | showNameDialog = False, load = True }, newDir model.api model.jwtToken model.dir model.name)
-  Download -> ({ model | showContextMenu = False }, download <| map ((++) model.dir << .name) <| filter (not << .isDir) model.selected)
+  Download ->
+    ( { model
+      | showContextMenu = False
+      }
+      , Cmd.batch
+      <| map (File.Download.url << (++) (model.downloadsUrl ++ model.dir) << .name)
+      <| filter (not << .isDir) model.selected
+    )
   Rename ->
     ( { model
       | showNameDialog = False
