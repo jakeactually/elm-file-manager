@@ -16,7 +16,7 @@ import Vec exposing (..)
 
 view : Model -> Html Msg
 view model = if model.open
-  then div [ class "fm-simple-screen" ]
+  then div [ class "fm-simple-screen", onContextMenu <| None, onDragOver None ]
     [ div
       [ class "fm-main"
       , onMouseMove (\_ -> None)
@@ -58,7 +58,6 @@ files model = div
   , onMouseMove <| EnvMsg << MouseMove
   , onMouseUp <| EnvMsg << MouseUp Nothing
   , onDragEnter ShowDrop
-  , onContextMenu <| None
   ]
   [ div [ class "fm-wrap" ]
     [ div [ class "fm-fluid" ]
@@ -66,7 +65,7 @@ files model = div
       ++ reverse (map (renderUploading model.progress) (range 0 <| model.filesAmount - 1))
     ]
   , if model.showDrop
-    then div [ class "fm-drop", onDragLeave HideDrop, onDragOver None, onDrop GotFiles ] []
+    then div [ class "fm-drop", onDragLeave HideDrop, onDrop GotFiles ] []
     else div [] []
   ]
 
@@ -108,7 +107,6 @@ renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i
   , title file.name
   , onMouseDown <| (\x y -> EnvMsg <| MouseDown (Just file) x y)
   , onMouseUp <| EnvMsg << (MouseUp <| Just file)
-  , onContextMenu <| None
   , onDoubleClick <| if file.isDir then EnvMsg <| GetLs <| dir ++ file.name ++ "/" else Download
   ]
   [ renderThumb thumbnailsUrl api dir file
