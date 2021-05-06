@@ -60,7 +60,7 @@ update msg model = case msg of
       , filesAmount = List.length files + 1
       , showDrop = False
       }
-      , Action.upload model.jwtToken model.dir file
+      , Action.upload model.api model.jwtToken model.dir file
     )
   Progress progress -> ({ model | progress = progress }, Cmd.none)
   Cancel -> (model, reload)
@@ -73,7 +73,7 @@ update msg model = case msg of
             },
             Cmd.batch
               [ getLs model.api model.jwtToken model.dir
-              , Action.upload model.jwtToken model.dir file
+              , Action.upload model.api model.jwtToken model.dir file
               ]
           )
         _ -> ({ model | filesAmount = 0 }, getLs model.api model.jwtToken model.dir)

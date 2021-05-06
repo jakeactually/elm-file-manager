@@ -33,12 +33,12 @@ post jwtToken url body decoder handler =
     , tracker = Nothing
     }
 
-upload : String -> String -> File -> Cmd Msg
-upload jwtToken dir file =
+upload : String -> String -> String -> File -> Cmd Msg
+upload api jwtToken dir file =
   request
     { method = "POST"
     , headers = [header "Authorization" ("Bearer " ++ jwtToken)]
-    , url = "/upload"
+    , url = api ++ "/upload"
     , body = Http.multipartBody [ Http.stringPart "dir" dir, Http.filePart "file" file ]
     , expect = Http.expectWhatever Uploaded
     , timeout = Nothing
