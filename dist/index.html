@@ -17,13 +17,13 @@
 </body>
 
 <script>
-    const site = "http://localhost:3000";
+    const site = "https://jakeactually.com";
 
     const fileManager = FileManager({
-        api: site,
-        thumbnailsUrl: site + "/static/files",
-        uploadsUrl: site + "/upload",
-        downloadsUrl: site + "/static/files",
+        api: site + '/file-api',
+        thumbnailsUrl: site + "/files",
+        uploadsUrl: site + "/file-api/upload",
+        downloadsUrl: site + "/files",
     });
 
     fileManager.open();
