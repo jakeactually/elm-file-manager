@@ -5,10 +5,9 @@ import Browser.Navigation exposing (reload)
 import Env exposing (handleEnvMsg)
 import File.Download
 import File.Select
-import List exposing (head, indexedMap, map, map2, filter, isEmpty, member)
+import List exposing (map, filter)
 import Http
 import Model exposing (..)
-import Maybe exposing (withDefault, andThen)
 import Port exposing (..)
 import Vec exposing (..)
 

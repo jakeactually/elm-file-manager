@@ -4,9 +4,9 @@ import File exposing (File)
 import Json.Decode as Decode
 import Json.Decode exposing (Decoder)
 import Http exposing (Body, emptyBody, expectJson, header, request, stringBody)
-import List exposing (head, map)
+import List exposing (map)
 import Model exposing (..)
-import String exposing (dropLeft, join)
+import String exposing (dropLeft)
 import Url.Builder exposing (string, toQuery, QueryParameter)
 
 get : String -> String -> Decoder a -> (Result Http.Error a -> msg) -> Cmd msg

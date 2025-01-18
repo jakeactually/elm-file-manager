@@ -1,11 +1,9 @@
 module Util exposing (..)
 
-import Html exposing (Attribute, Html, button, i, text)
-import Html.Attributes exposing (class, title, type_)
-import Html.Events exposing (onClick)
-import Model exposing (Msg)
+import Html exposing (Attribute, Html)
+import Html.Attributes exposing (type_)
 import Array exposing (Array, fromList, get, toList)
-import List exposing (drop, indexedMap, filter, map, map2, member, take)
+import List exposing (drop, indexedMap, map2, take)
 
 -- List
 

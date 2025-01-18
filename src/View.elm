@@ -1,11 +1,11 @@
 module View exposing (..)
 
 import Events exposing (..)
-import Html exposing (Attribute, Html, a, br, div, form, h1, i, input, img, label, strong, text, textarea)
-import Html.Attributes exposing (attribute, action, class, draggable, id, hidden, href, method, multiple, src, style, target, title, type_, value)
+import Html exposing (Html, br, div, i, input, img, label, strong, text)
+import Html.Attributes exposing (attribute, class, draggable, id, src, style, title, type_, value)
 import Html.Events exposing (onClick, onDoubleClick, onInput)
 import Http exposing (Progress(..))
-import List exposing (head, indexedMap, isEmpty, length, map, member, range, repeat, reverse, tail)
+import List exposing (head, indexedMap, isEmpty, length, map, member, range, reverse, tail)
 import Model exposing (..)
 import Maybe exposing (andThen, withDefault)
 import String exposing (fromInt, fromFloat, join, split)
@@ -116,7 +116,7 @@ renderFile { api, thumbnailsUrl, dir, selected, clipboardDir, clipboardFiles } i
 renderThumb : String -> String -> String -> FileMeta -> Html Msg
 renderThumb thumbApi api dir { name, isDir } = if isDir
   then div [ class "fm-thumb" ] [ fileIcon ]
-  else renderFileThumb api thumbApi <| dir ++ name
+  else renderFileThumb thumbApi <| dir ++ name
 
 fileIcon : Html Msg
 fileIcon = svg [ attribute "height" "48", viewBox "0 0 24 24", attribute "width" "48", attribute "xmlns" "http://www.w3.org/2000/svg" ]
@@ -126,8 +126,8 @@ fileIcon = svg [ attribute "height" "48", viewBox "0 0 24 24", attribute "width"
       []
   ]
 
-renderFileThumb : String -> String -> String -> Html Msg
-renderFileThumb api thumbApi fullName = if member (getExt fullName) ["jpg", "jpeg", "png", "PNG"]
+renderFileThumb : String -> String -> Html Msg
+renderFileThumb thumbApi fullName = if member (getExt fullName) ["jpg", "jpeg", "png", "PNG"]
   then div [ class "fm-thumb" ]
     [ img [ src <| thumbApi ++ fullName, draggable "false" ] []
     ]

@@ -4,15 +4,12 @@ import Action exposing (..)
 import Browser.Dom exposing (getElement)
 import List exposing (filter, indexedMap, map, member, reverse)
 import Model exposing (..)
-import Platform.Cmd exposing (batch)
 import Port exposing (close)
 import String exposing (fromInt)
 import Task exposing (sequence)
 import Tuple exposing (first, second)
 import Util exposing (..)
 import Vec exposing (..)
-
-import Debug exposing (log)
 
 handleEnvMsg : EnvMsg -> Model -> (Model, Cmd Msg)
 handleEnvMsg msg model = case msg of
@@ -36,7 +33,7 @@ handleEnvMsg msg model = case msg of
     )
   GetBounds result -> case result of
     Ok(elements) -> ({ model | bounds = map .element elements }, Cmd.none)
-    Err e -> (model, Cmd.none)
+    Err _ -> (model, Cmd.none)
   MouseMove pos2 ->
     ( { model
       | pos2 = pos2
